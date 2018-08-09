@@ -1,2 +1,9 @@
 language: node_js
 node_js: node
+deploy:
+  provider: heroku
+  api_key:
+    secure: e5c8f42d-4915-457b-b3c9-e55e0c992ada
+  app: immense-coast-88549
+  on:
+    repo: MarkWillisford/Capstone-II-FullStack
