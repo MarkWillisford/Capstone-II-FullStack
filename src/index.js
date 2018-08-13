@@ -2,7 +2,17 @@
 
 const express = require('express');
 const app = express();
+const home_router = require('./routers/home.router')
+
+console.log(home_router.route);
+
 app.use(express.static('public'));
+app.use('/home', home_router);
+
+/* Routes */
+//app.use('/home', userRouter);
+//app.use('/login', ingredientsRouter);
+//app.use('/signup', recipesRouter);
 
 let server;
 
