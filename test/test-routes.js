@@ -46,14 +46,14 @@ describe('Home Screen', function(){
 		console.log("about to request");
 		return chai
 			.request(app)
-			.get('/home')
+			.get('/home.html')
 			.then(function(res){
 				expect(res).to.have.status(200);
 				expect(res).to.be.html;
 			});
 	});
 });
-/*
+
 describe('Login Screen', function(){
 	before(function(){
 		return runServer();
@@ -69,7 +69,7 @@ describe('Login Screen', function(){
 	it('should return HTML and status code 200', function(){
 		return chai
 			.request(app)
-			.get('login')
+			.get('/login.html')
 			.then(function(res){
 				expect(res).to.have.status(200);
 				expect(res).to.be.html;
@@ -92,10 +92,10 @@ describe('Signup Screen', function(){
 	it('should return HTML and status code 200', function(){
 		return chai
 			.request(app)
-			.get('signup')
+			.get('/signup.html')
 			.then(function(res){
 				expect(res).to.have.status(200);
 				expect(res).to.be.html;
 			});
 	});
-});*/
+});
