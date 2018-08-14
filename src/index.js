@@ -5,11 +5,6 @@ const app = express();
 
 app.use(express.static('public'));
 
-/* Routes */
-//app.use('/home', userRouter);
-//app.use('/login', ingredientsRouter);
-//app.use('/signup', recipesRouter);
-
 let server;
 
 // this function starts our server and returns a Promise.
