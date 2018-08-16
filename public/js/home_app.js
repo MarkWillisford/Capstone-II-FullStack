@@ -1,5 +1,6 @@
 'use strict';
 
+// "MOCK" objects are fake data
 let MOCK_SHIFT_DATA = {
 	"shifts": [
 		{
@@ -62,8 +63,21 @@ let MOCK_SHIFT_DATA = {
 	]
 };
 
+let MOCK_USER_SETTINGS = {
+	"monthlyIncomeGoal": 4000,
+	"monthlyHourlyGoal": 40,
+	"hourlyWage": 12.5
+};
+
+// This is where we will store our setting data
+let user_Settings = { };
+
 function getShiftData(callbackFn){
 	setTimeout(function(){ callbackFn(MOCK_SHIFT_DATA)}, 100);
+};
+
+function getUserSettings(callbackFn){
+	setTimeout(function(){ callbackFn(MOCK_USER_SETTINGS)}, 100);
 };
 
 // Date function
@@ -77,7 +91,7 @@ function getDate(){
 
 	let dateString = day + " " + monthString + " " + year;
 	return dateString;
-}
+};
 
 // This function will stay when we connect to real API
 function displayShiftData(data){
@@ -103,12 +117,12 @@ function displayShiftData(data){
 	// Set HTML to display data
 	$( ".js_Date" ).html(getDate());
 	$( ".js_monthlyEarned" ).html(`$${dataTotals["net tips"]}`);
-	$( ".js_Target_monthlyEarned" ).html(`$${monthlyIncomeGoal}`);
+	$( ".js_Target_monthlyEarned" ).html(`$${user_Settings.monthlyIncomeGoal}`);
 	$( ".js_monthlyEarnedPercentage" ).html(`${		
-		+((100 * dataTotals["net tips"] / monthlyIncomeGoal).toFixed(0))
+		+((100 * dataTotals["net tips"] / user_Settings.monthlyIncomeGoal).toFixed(0))
 	}%`);	
 	$( ".js_actualHourlyRate" ).html(`$${
-		+(((dataTotals["net tips"] / dataTotals.hours) + hourlyWage).toFixed(2))
+		+(((dataTotals["net tips"] / dataTotals.hours) + user_Settings.hourlyWage).toFixed(2))
 	}`);
 	$( ".js_alcoholSalesPercentage" ).html(`${
 		+((100 * dataTotals.sales["alcoholic beverages"] / 
@@ -127,8 +141,16 @@ function displayShiftData(data){
 		OverUnder = "under"
 	}
 	$(".js_supportDifference" ).html(`${OverUnder} by $${diff}`);
-
 };
+
+// This function will save our user settings into our setting object
+function setUserSettings(data){	
+    // The key is key
+    // The value is obj[key]
+	for(let key in data){
+    user_Settings[key] = data[key];
+	}
+}
 
 // Used to cycle through an array (data) of objects and adds all the values 
 // found in the passed key
@@ -138,7 +160,7 @@ function sumOfObjects(data, key){
 		total += accessValueByKey(data.shifts[i], key);
 	});
 	return total;
-}
+};
 
 // This function will return the value found in the passed 
 // object and key, burrowing as far as needed
@@ -153,13 +175,18 @@ function accessValueByKey(data, key){
 		// recall this function with the new string as the key
 		return accessValueByKey(data[head], tail.join('.'))
 	}
-}
+};
 
 // This function will also stay
 function getAndDisplayShiftData(){
 	getShiftData(displayShiftData);
 };
 
+function getAndSaveConfigData(){
+	getUserSettings(setUserSettings);
+}
+
 $(function(){
+	getAndSaveConfigData();
 	getAndDisplayShiftData();
 });
