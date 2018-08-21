@@ -16,7 +16,15 @@
       <p>Hello World (Login Screen).</p>
       <!-- Views -->
       <p>very simple form</p>
+      <form class="loginForm" onsubmit="myLoginFunction()"> <!--action="js/signup.js" method="post">-->
+      <legend class="loginFields"></legend>
+        <label><input type="text" class="loginEmailText" placeholder="Enter your email:"></label>
+        <label><input type="text" class="loginPasswordText" placeholder="Enter a password"></label>
+
+        <button type="submit" class="submitButton">Login >></button>
+      </form>
       <!-- Scripts -->
+      <script type="text/javascript" src="js/login.js"></script>
       <!--<script src="js/app.js"></script>-->
     </body>
 </html>

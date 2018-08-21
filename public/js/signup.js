@@ -1,10 +1,9 @@
 'use strict';
 
-
 function myFunction() {
-    alert($('.signupEmailText').val());
+    console.log('in signup.js function');
     $.ajax({
-        url: '/users/signup.html',
+        url: '/api/users',
         method: 'POST',
         data: {
             email: `${$('.signupEmailText').val()}`,
@@ -12,6 +11,7 @@ function myFunction() {
             password: `${$('.signupPasswordText').val()}`,
         },
         success: (response) => {
+            console.log('success');
             sessionStorage.setItem('token', response.token);
             location.href = '/home.html';
         }

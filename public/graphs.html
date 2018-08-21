@@ -8,15 +8,25 @@
           src="https://code.jquery.com/jquery-3.2.1.min.js"
           integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
           crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/flatpickr.js"></script>
         <!--<link href="css/main.css" rel="stylesheet" type="text/css" />
         <link href="css/float-grid.css" rel="stylesheet" />-->
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/flatpickr.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/themes/dark.css">
     </head>
     <body>
-      <p>Hello World(Graphs Screen).</p>
-      <!-- Views -->
+      <p>Hello World (Graphs Screen).</p>
+      <hr>
+      <div class=resetDate>
+        <input type="text" placeholder="Select Dates to view. . ." data-input>
+        <button class="input-button" title="clear" data-clear>RESET</button>
+      </div>
 
+      <button type="button" class="js_ViewGraphsBtn" onclick="getAndDisplayDatedData()">View</button>
       <!-- Scripts -->
+
+      <script src="js/MOCK_DATA.js"></script>
+      <script type="text/javascript" src="js/graphs.js"></script>
       <!--<script src="js/app.js"></script>-->
     </body>
 </html>

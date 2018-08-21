@@ -5,7 +5,7 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/main.config');
 const User = require('../models/user.model');
-const errorsParser = require('../helpers/errorsParser.helper');
+const errorsParser = require('../helpers/errorParser.helper');
 const disableWithToken = require('../middlewares/disableWithToken.middleware').disableWithToken;
 const requiredFields = require('../middlewares/requiredFields.middleware');
 
@@ -14,19 +14,20 @@ require('../strategy/jwt.strategy')(passport);
 const router = express.Router();
 
 // This is our post to the /users endpoint
-router.route('/users/signup')
+router.route('/users')
 	// first it tries the middleware function disableWithToken, which checks to see if 
 	// there is an authorization token in the header, if so it returns with an error
 	// if we pass that, we call the requiredFields middleware which checks 
 	.post(disableWithToken, requiredFields('email', 'username', 'password'), (req, res) => {
 		// assuming it passes all tests, we create a user from the req data
+        console.log('within the route');
 		User.create({
 			email: req.body.email,
 			password: req.body.password,
 			username: req.body.username,
 		})
 		// assuming no errors we return a 201 created code
-		.then(() => res.status(201).send());
+		.then(() => res.status(201).send())
 		// if there are errors we catch them and send a 400 code and generate an error
 		.catch(report => res.status(400).json(errorsParser.generateErrorResponse(report)));
 	})

@@ -2,14 +2,47 @@
 
 //require('dotenv').config();
 const express = require('express');
-//const mongoose = require('mongoose');
-//const morgan = require('morgan');
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
+const winston = require('winston');
+const mongoose = require('mongoose');
 //const passport = require('passport');
+const { router: userRouter } = require('./routers/user.router');
 
 const app = express();
 
+mongoose.Promise = global.Promise;
+
+const { PORT, DATABASE_URL, CONCURRENCY: WORKERS, ENV } = require('./config/main.config');
+/* Middlewares */
+// CORS
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+    next();
+});
+
+// Static files
 app.use(express.static('public'));
 
+// Body Parser
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+// Logging
+morgan.token('processId', () => process.pid);
+if (ENV === 'development') {
+    app.use(morgan(':processId - :method :url :status :response-time ms - :res[content-length]'));
+}
+
+
+/* Routes */
+app.use('/api', userRouter);
+
+
+
+// Server scripts
 let server;
 
 // this function starts our server and returns a Promise.
