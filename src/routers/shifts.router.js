@@ -16,17 +16,17 @@ const router = express.Router();
 
 // This is our post to the /users endpoint
 router.route('/shifts')
-	// first we call the requiredFields middleware which checks 
+	// first it tries the middleware function disableWithToken, which checks to see if 
+	// there is an authorization token in the header, if so it returns with an error
+	// if we pass that, we call the requiredFields middleware which checks 
 	.post(requiredFields('user_id', 'date', 'day', 'shift', 'food', 'alcoholicBeverages',
         'guests', 'netTips', 'hours'), (req, res) => {
 		// assuming it passes all tests, we create a user from the req data
-        console.log('within the route');
-
         User.findById(req.body.user_id)
             .then(user => {
                 if(user){
                     Shift.create({
-                        user: req.body.id,
+                        user: req.body.user_id,
                         date: req.body.date,
                         day: req.body.day,
                         shift: req.body.shift,
@@ -71,9 +71,9 @@ router.route('/shifts')
 		// if there are errors we catch them and send a 400 code and generate an error
 		.catch(report => res.status(400).json(errorsParser.generateErrorResponse(report)));
 	})
-	// finally we get the passport we need to set the session and return 200
-	.get(passport.authenticate('jwt', { session: false }), (req, res) => {
-		res.status(200).json(req.user);
+    // finally we get the passport we need to set the session and return 200
+    .get(passport.authenticate('jwt', { session: false }), (req, res) => {
+        res.status(200).json(req.user);
 });
 
 

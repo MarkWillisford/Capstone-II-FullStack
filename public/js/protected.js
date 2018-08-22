@@ -7,6 +7,7 @@ function parseJwt (token) {
 function checkUser() {
     const token = sessionStorage.getItem('token');
     if(!token) {    // If the user is not logged in, send them to the Login Screen
+        console.log('not logged in');
         location.href = 'http://localhost:8080/login.html';
     } else {    // If the user is logged in, check to make sure its a valid token
         $.ajax({
@@ -21,6 +22,7 @@ function checkUser() {
                 globalUser_id = payloadData._id;
             },
             error: () => {
+                console.log('bad token');
                 sessionStorage.removeItem('token');
                 location.href = 'http://localhost:8080/login.html';
             }

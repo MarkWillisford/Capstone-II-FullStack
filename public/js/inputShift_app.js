@@ -41,7 +41,7 @@ function inputListener(){
 	        data: dataToSend,
 	        success: (response) => {
 	            console.log('success');
-	            sessionStorage.setItem('token', response.token);
+	            sessionStorage.setItem('token', response.token);			// <-- this isn't working. 
 	            location.href = '/index.html';
 	        }
 	    })	
