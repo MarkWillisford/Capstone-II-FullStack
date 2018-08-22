@@ -1,5 +1,3 @@
-'use strict';
-
 function parseJwt (token) {
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace('-', '+').replace('_', '/');
@@ -8,9 +6,9 @@ function parseJwt (token) {
 
 function checkUser() {
     const token = sessionStorage.getItem('token');
-    if(!token) {
-        location.href = 'http://localhost:8080/';
-    } else {
+    if(!token) {    // If the user is not logged in, send them to the Login Screen
+        location.href = 'http://localhost:8080/login.html';
+    } else {    // If the user is logged in, check to make sure its a valid token
         $.ajax({
             url: '/api/users',
             headers: {
@@ -18,14 +16,14 @@ function checkUser() {
             },
             success: (response) => {
                 console.log(response)
-                //$('#loader-wrapper').hide();
+                $('#loader-wrapper').hide();
                 const payloadData = parseJwt(token);
-                //$('#email').text(`Welcome back: ${payloadData.email}`)
+                $('#email').text(`Welcome back: ${payloadData.email}`)
             },
             error: () => {
                 sessionStorage.removeItem('token');
-                location.href = 'http://localhost:8080/';
+                location.href = 'http://localhost:8080/login.html';
             }
         })
     }
-};
+}

@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const winston = require('winston');
 const mongoose = require('mongoose');
-//const passport = require('passport');
+const passport = require('passport');
 const { router: userRouter } = require('./routers/user.router');
 
 const app = express();
@@ -36,7 +36,6 @@ morgan.token('processId', () => process.pid);
 if (ENV === 'development') {
     app.use(morgan(':processId - :method :url :status :response-time ms - :res[content-length]'));
 }
-
 
 /* Routes */
 app.use('/api', userRouter);

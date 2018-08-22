@@ -118,7 +118,7 @@ function getAndSaveConfigData(){
 }
 
 $(function(){
-	//checkUser();
+	checkUser();
 	getAndSaveConfigData();
 	getAndDisplayShiftData();
 });

@@ -13,7 +13,7 @@ function myFunction(e){
         success: (response) => {
             console.log('success');
             sessionStorage.setItem('token', response.token);
-            location.href = '/home.html';
+            location.href = '/index.html';
         }
     })
 };

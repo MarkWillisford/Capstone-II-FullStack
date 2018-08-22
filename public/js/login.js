@@ -1,11 +1,12 @@
 'use strict';
+/*
 let user = {
     "email": "someemail@somewhere.com",
     "password": "password",
-}
+}*/
 
 
-function myLoginFunction() {
+function loginListener() {
     /*
     $.ajax({
         url: '/api/login',
@@ -32,3 +33,22 @@ function myLoginFunction() {
         alert("Please enter a valid user and password");
     }
   };
+
+function signupListener(){
+    // ASK MICHAL!!!!!!
+    //$('.signupBtn').click(function() {
+        //console.log('within singup link function');
+        // location.href = 'http://localhost:8080/signup.html'; <-- not working, goes back to login
+        // window.open('http://localhost:8080/signup.html'); <--- works in a new tab . . .   
+        // window.location = 'http://localhost:8080/signup.html'; <--- Also not working
+    //});
+    $('.signupBtn').on('click', function(){
+        console.log('within singup link function');
+        window.location = "http://www.google.com/";    
+    });
+}
+
+$(function(){
+    //loginListener();
+    signupListener();
+});
