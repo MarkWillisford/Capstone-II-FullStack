@@ -8,15 +8,50 @@
           src="https://code.jquery.com/jquery-3.2.1.min.js"
           integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
           crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/flatpickr.js"></script>   
         <!--<link href="css/main.css" rel="stylesheet" type="text/css" />
         <link href="css/float-grid.css" rel="stylesheet" />-->
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/flatpickr.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/themes/dark.css">
     </head>
     <body>
-      <p>Hello World(Input Shift Screen).</p>
-      <!-- Views -->
+      <p>Hello <span class="js_User"></span>.</p>
+      <p>New Shift Form</p>
+
+      <form class="newShiftForm"> <!--action="js/signup.js" method="post">-->
+      <legend class="newShiftFields"></legend>
+        <div class=resetDate>
+          <input type="text" placeholder="Select Date to input. . ." data-input>
+          <button class="input-button" title="clear" data-clear>RESET</button>
+        </div>
+        <label><select class="shiftSelect">
+          <option value="firstOff">First Off</option>
+          <option value="secondOff">Second Off</option>
+          <option value="closer">Closer</option>
+          <option value="bar">Bar</option>
+          <option value="mid">Early Mid</option>
+          <option value="lateMid">Late Mid</option>
+        </select></label>
+        <label><input type="text" class="newShiftFoodSales" placeholder="Enter your food sales:"></label>
+        <label><input type="text" class="newShiftAlcSales" placeholder="Enter your alcohol sales:"></label>
+        <label><input type="text" class="newShiftRoomSales" placeholder="Enter your room charges:"></label>
+
+        <label><input type="text" class="newShiftGuestCount" placeholder="Enter your guest count:"></label>
+
+        <label><input type="text" class="newShiftSupportTips" placeholder="Support tips:"></label>
+        <label><input type="text" class="newShiftBarTips" placeholder="Bar tips:"></label>
+        <label><input type="text" class="newShiftServerTips" placeholder="Server tips:"></label>
+        <label><input type="text" class="newShiftKitchenTips" placeholder="Kitchen tips:"></label>
+        <label><input type="text" class="newShiftNetTips" placeholder="Net tips:"></label>
+
+        <label><input type="text" class="newShiftHours" placeholder="Enter your hours worked:"></label>
+
+        <button type="submit" class="submitButton">Enter >></button>
+      </form>
 
       <!-- Scripts -->
-      <!--<script src="js/app.js"></script>-->
+      <script src="js/protected.js"></script>
+      <script src="js/inputShift_app.js"></script>
     </body>
 </html>

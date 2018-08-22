@@ -7,20 +7,23 @@ let user = {
 
 
 function loginListener() {
+    $('.loginForm').submit(function(e){
+        e.preventDefault();
+        $.ajax({
+            url: '/api/login',
+            method: 'POST',
+            data: {
+                email: $('.loginEmailText').val().trim(),
+                password: $('.loginPasswordText').val().trim(),
+            },
+            success: (response) => {
+                sessionStorage.setItem('token', response.token);
+                location.href = '/index.html';
+            }
+        })
+    });
+    
     /*
-    $.ajax({
-        url: '/api/login',
-        method: 'POST',
-        data: {
-            email: $('.loginEmailText').val().trim(),
-            password: $('.loginPasswordText').val().trim(),
-        },
-        success: (response) => {
-            sessionStorage.setItem('token', response.token);
-            location.href = '/home.html';
-        }
-    })
-    */
     let data = {
             email: $('.loginEmailText').val(),
             password: $('.loginPasswordText').val(),
@@ -31,7 +34,7 @@ function loginListener() {
             location.href = '/home.html';        
     } else {
         alert("Please enter a valid user and password");
-    }
+    }   */
   };
 
 function signupListener(){
@@ -49,6 +52,6 @@ function signupListener(){
 }
 
 $(function(){
-    //loginListener();
+    loginListener();
     signupListener();
 });

@@ -2,6 +2,7 @@
 
 // This is where we will store our setting data
 let user_Settings = { };
+let globalUser_id = '';
 
 function getShiftData(callbackFn){
 	setTimeout(function(){ callbackFn(MOCK_SHIFT_DATA)}, 100);

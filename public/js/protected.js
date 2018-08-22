@@ -15,10 +15,10 @@ function checkUser() {
                 Authorization: `Bearer ${token}`,
             },
             success: (response) => {
-                console.log(response)
                 $('#loader-wrapper').hide();
                 const payloadData = parseJwt(token);
-                $('#email').text(`Welcome back: ${payloadData.email}`)
+                $('.js_User').html(`${payloadData.username}`);
+                globalUser_id = payloadData._id;
             },
             error: () => {
                 sessionStorage.removeItem('token');

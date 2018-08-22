@@ -1,5 +1,6 @@
 'use strict';
 
+let globalUser_id = '';
 const fp = flatpickr(".resetDate", {
     mode: 'range',
     altInput: true,
@@ -109,7 +110,6 @@ function displayData(data){
 	*	myPPASalesChart
 	***************************/
 	displayChart("#myPPASalesChart", dataSet["dates"], "PPA", dataSet["ppa"]);
-
 };
 
 function displayDoubleChart(htmlElement, label, datasetLabel, dataArray, datasetLabel2, dataArray2){
@@ -221,7 +221,19 @@ function displayChart(htmlElement, label, datasetLabel, dataArray){
 	});
 };
 
+function submitListener(){
+	$('.js_ViewGraphsBtn').click(function(e){
+        e.preventDefault();
+        getAndDisplayDatedData();
+    })
+};
+
 // This function will also stay
 function getAndDisplayDatedData(){
 	getDatedDataFuncion(displayData);
 };
+
+$(function(){
+	checkUser();
+	submitListener();
+});
