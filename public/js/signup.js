@@ -1,7 +1,7 @@
 'use strict';
 
-function myFunction() {
-    console.log('in signup.js function');
+function myFunction(e){
+    e.preventDefault();
     $.ajax({
         url: '/api/users',
         method: 'POST',
@@ -18,22 +18,6 @@ function myFunction() {
     })
 };
 
-
-/*
-$(function myfunction() {
-    //$('.submitButton').click(() => {
-    	console.log($('.signupEmailText').text);
-        $.ajax({
-            url: '/users/signup.html',
-            method: 'POST',
-            data: {
-                email: `${'.signupEmailText'}`,
-                password: 'password',
-            },
-            success: (response) => {
-                sessionStorage.setItem('token', response.token);
-                location.href = '/protected.html';
-            }
-        })
-    //})
-})*/
+$(function(){
+    $('.signupForm').submit(myFunction);
+});

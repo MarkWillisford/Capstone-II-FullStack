@@ -5,6 +5,7 @@ let MOCK_SHIFT_DATA = {
 	"shifts": [
 		{
 			"id": 11111,
+			"user": "me",
 			"date": "09Aug2018",
 			"day": "Thursday",
 			"shift": "close",
@@ -13,6 +14,7 @@ let MOCK_SHIFT_DATA = {
 				"alcoholic beverages": 300,
 				"room charges": 0
 			},
+			"guests": 50,
 			"tipouts": {
 				"support": 33,
 				"bar": 0,
@@ -24,6 +26,7 @@ let MOCK_SHIFT_DATA = {
 		},
 		{
 			"id": 11112,
+			"user": "me",
 			"date": "10Aug2018",
 			"day": "Friday",
 			"shift": "close",
@@ -32,6 +35,7 @@ let MOCK_SHIFT_DATA = {
 				"alcoholic beverages": 375,
 				"room charges": 400
 			},
+			"guests": 60,
 			"tipouts": {
 				"support": 46,
 				"bar": 13,
@@ -43,6 +47,7 @@ let MOCK_SHIFT_DATA = {
 		},
 		{
 			"id": 11113,
+			"user": "me",
 			"date": "11Aug2018",
 			"day": "Saturday",
 			"shift": "mid",
@@ -51,6 +56,7 @@ let MOCK_SHIFT_DATA = {
 				"alcoholic beverages": 600,
 				"room charges": 250 
 			},
+			"guests": 55,
 			"tipouts": {
 				"support": 39,
 				"bar": 10,

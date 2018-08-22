@@ -24,7 +24,7 @@
     "morgan": "1.8.2",
     "passport": "0.4.0",
     "passport-jwt": "3.0.1",
-    "throng": "4.0.0",
+    "throng": "^4.0.0",
     "winston": "2.4.0"
   },
   "devDependencies": {

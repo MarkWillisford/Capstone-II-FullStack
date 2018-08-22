@@ -1,6 +1,7 @@
 'use strict';
 
 //require('dotenv').config();
+const throng = require('throng');
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
@@ -43,43 +44,62 @@ app.use('/api', userRouter);
 
 
 // Server scripts
-let server;
 
 // this function starts our server and returns a Promise.
 // In our test code, we need a way of asynchronously starting
 // our server, since we'll be dealing with promises there.
 // this function is responsable for loading the server 
-function runServer(){
-	const port = process.env.PORT || 8080;
-	return new Promise((resolve, reject) => {
-		server = app
-			.listen(port, () => {
-				console.log(`Listening on port ${port}`);
-				resolve(server);
-			})
-			.on('error', err => {
-				reject(err);
-			});
-	});
+let server;
+function runServer(databaseUrl) {
+    return new Promise((res, rej) => {
+        mongoose.connect(databaseUrl, (err) => {
+            if (err) {
+                return rej(err);
+            }
+            if (ENV === 'development') {
+                winston.info(`Connected to ${databaseUrl}`);
+            } else {
+                winston.info('Connected to database');
+            }
+            server = app.listen(PORT, () => {
+                winston.info(`App is listening on port ${PORT}`);
+                winston.info(`App is running in ${ENV} environment`);
+                winston.info(`Worker process id: ${process.pid}`);
+                winston.info('=========================================');
+                res();
+            })
+            .on('error', (error) => {
+                mongoose.disconnect();
+                rej(error);
+            });
+            return server;
+        });
+    });
 }
 
 // like 'runServer', this function also returns a promise
-function closeServer(){
-	return new Promise((resolve, reject) => {
-		console.log('Closing server');
-		server.close(err => {
-			if(err){
-				reject(err);
-				return;
-			}
-			resolve();
-		});
-	});
+function closeServer() {
+    return mongoose.disconnect().then(() => (
+        new Promise((res, rej) => {
+            winston.info('Closing server.');
+            server.close((err) => {
+                if (err) {
+                    return rej(err);
+                }
+                return res();
+            });
+        })
+    ));
 }
 
 // if server.js is called directly . . . 
-if(require.main === module){
-	runServer().catch(err => console.error(err));
+if (require.main === module) {
+    throng({
+        workers: WORKERS,
+        lifetime: Infinity,
+    }, () => {
+        runServer(DATABASE_URL).catch(err => winston.info(err));
+    });
 }
 
 module.exports = { app, runServer, closeServer };
