@@ -9,8 +9,6 @@ const fp = flatpickr(".resetDate", {
     weekNumbers: true,
 }); // flatpickr
 
-let newShift = {};
-
 function inputListener(){
     $('.newShiftForm').on('submit', function(e){
 	    e.preventDefault();

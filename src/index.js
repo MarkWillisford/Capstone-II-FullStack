@@ -10,6 +10,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const { router: userRouter } = require('./routers/user.router');
 const { router: shiftsRouter } = require('./routers/shifts.router');
+const { router: paychecksRouter } = require('./routers/paycheck.router');
 
 const app = express();
 
@@ -41,8 +42,7 @@ if (ENV === 'development') {
 /* Routes */
 app.use('/api', userRouter);
 app.use('/api', shiftsRouter);
-
-
+app.use('/api', paychecksRouter);
 
 // Server scripts
 
