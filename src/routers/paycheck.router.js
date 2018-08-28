@@ -58,10 +58,16 @@ router.route('/paychecks')
             })
 		// if there are errors we catch them and send a 400 code and generate an error
 		.catch(report => res.status(400).json(errorsParser.generateErrorResponse(report)));
-	})
-    // finally we get the passport we need to set the session and return 200
-    .get(passport.authenticate('jwt', { session: false }), (req, res) => {
-        res.status(200).json(req.user);
-});
+    })
+
+    // the GET all route
+    .get((req, res) => {
+        Paycheck.find()        
+        .then(paychecks => res.json(paychecks))
+        .catch(err => {
+          console.error(err);
+          res.status(500).json({ error: 'something went terribly wrong' });
+        });
+    });
 
 module.exports = { router };

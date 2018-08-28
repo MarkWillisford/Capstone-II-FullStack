@@ -13,10 +13,29 @@
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     </head>
     <body>
-      <p>Hello World(Setting Screen).</p>
+      <p>Hello World (Setting Screen).</p>
       <!-- Views -->
+      <p>Current User Settings:</p>
+      <p class="incomeGoalLbl">Income goal is: <span class="js_incomeGoalSpan"></span></p>
+      <p class="calHourlyWageGoalLbl">Calculated Hourly Wage is: <span class="js_calHourlyWageGoalSpan"></span></p>
+      <p class="hourlyWageLbl">Hourly Wage is: <span class="js_hourlyWageSpan"></span></p>
+      <br><button class="changeSettingsBtn">Edit Settings >></button>
 
+      <main class="main" aria-live="assertive">
+        <form class="settingsForm disabled" disabled="true"> <!--action="js/signup.js" method="post">-->
+        <legend class="settingsFields disabled" disabled="true"></legend>
+          <label><input type="text" class="incomeGoalText disabled" placeholder="Enter a new income goal:" disabled="true"></label>
+          <label><input type="text" class="calHourlyWageGoalText disabled" placeholder="Enter a new calculated hourly wage" disabled="true"></label>
+          <label><input type="text" class="hourlyWageText disabled"" placeholder="Enter a new hourly wage" disabled="true"></label>
+
+          <button type="submit" class="submitButton disabled" disabled="true">Submit changes >></button>
+          <a href="/settings.html" class="disabled" disabled="true">Cancel changes >></a><br>
+        </form>
+
+      </main>
       <!-- Scripts -->
-      <!--<script src="js/app.js"></script>-->
+      <script src="js/MOCK_DATA.js"></script>
+      <script src="js/protected.js"></script>
+      <script src="js/settings.js"></script>
     </body>
 </html>

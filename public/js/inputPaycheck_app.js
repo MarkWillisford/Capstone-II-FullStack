@@ -37,21 +37,30 @@ function inputListener(){
             taxes: `${$('.newPaycheckTaxes').val()}`,
             netPay: `${$('.newPaycheckNetPay').val()}`,
         };
-	    console.log(dataToSend);
+
+        let dataToCompare = { };
+
+
+
+
+
 	    $.ajax({
 	        url: '/api/paychecks',
 	        method: 'POST',
 	        data: dataToSend,
 	        success: (response) => {
 	            console.log('success');
-	            //sessionStorage.setItem('token', response.token);			// <-- this isn't working. 
 	            location.href = '/index.html';
 	        }
 	    })	
+
+
+
+
+
     });
 }
 
 $(function(){
-	checkUser();
-	inputListener();
+	checkUser(inputListener);	
 });

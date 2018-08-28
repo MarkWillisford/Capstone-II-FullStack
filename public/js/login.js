@@ -1,10 +1,4 @@
 'use strict';
-/*
-let user = {
-    "email": "someemail@somewhere.com",
-    "password": "password",
-}*/
-
 
 function loginListener() {
     $('.loginForm').submit(function(e){

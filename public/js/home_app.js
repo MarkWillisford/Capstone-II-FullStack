@@ -1,15 +1,22 @@
 'use strict';
 
 // This is where we will store our setting data
-let user_Settings = { };
 let globalUser_id = '';
 
 function getShiftData(callbackFn){
-	setTimeout(function(){ callbackFn(MOCK_SHIFT_DATA)}, 100);
-};
-
-function getUserSettings(callbackFn){
-	setTimeout(function(){ callbackFn(MOCK_USER_SETTINGS)}, 100);
+	//setTimeout(function(){ callbackFn(MOCK_SHIFT_DATA)}, 100);
+    const token = sessionStorage.getItem('token');
+	$.ajax({
+		url: '/api/shifts',
+	    type: 'GET',
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+	    success: (response) => {
+	    	callbackFn(response);
+        },
+	    error: function(err) { console.log(err); }
+	});
 };
 
 // Date function
@@ -28,33 +35,37 @@ function getDate(){
 // This function will stay when we connect to real API
 function displayShiftData(data){
 	// lets total the data we have recieved
+	console.log('data is: ');
+	console.log(data);
 	let dataTotals = {};
 
 	let key = "hours";
 	dataTotals[key] = sumOfObjects(data, key);
-	key = "net tips";
+	key = "netTips";
 	dataTotals[key] = sumOfObjects(data, key);
 
 	dataTotals.sales = {
-		"food and NA beverages": sumOfObjects(data, "sales.food and NA beverages"),
-		"alcoholic beverages": sumOfObjects(data, "sales.alcoholic beverages"),
-		"room charges": sumOfObjects(data, "sales.room charges")
+		"food and NA beverages": sumOfObjects(data, "food"),
+		"alcoholic beverages": sumOfObjects(data, "alcoholicBeverages"),
+		"room charges": sumOfObjects(data, "roomCharges")
 	};
 	dataTotals.tipouts = {
-		"support": sumOfObjects(data, "tipouts.support"),
-		"bar": sumOfObjects(data, "tipouts.bar"),
-		"kitchen": sumOfObjects(data, "tipouts.kitchen")
+		"support": sumOfObjects(data, "support"),
+		"bar": sumOfObjects(data, "bar"),
+		"kitchen": sumOfObjects(data, "kitchen")
 	};
 
+	console.log(user_Settings);
+	console.log(user_Settings.monthlyIncomeGoal);
 	// Set HTML to display data
 	$( ".js_Date" ).html(getDate());
-	$( ".js_monthlyEarned" ).html(`$${dataTotals["net tips"]}`);
+	$( ".js_monthlyEarned" ).html(`$${dataTotals["netTips"]}`);
 	$( ".js_Target_monthlyEarned" ).html(`$${user_Settings.monthlyIncomeGoal}`);
 	$( ".js_monthlyEarnedPercentage" ).html(`${		
-		+((100 * dataTotals["net tips"] / user_Settings.monthlyIncomeGoal).toFixed(0))
+		+((100 * dataTotals["netTips"] / user_Settings.monthlyIncomeGoal).toFixed(0))
 	}%`);	
 	$( ".js_actualHourlyRate" ).html(`$${
-		+(((dataTotals["net tips"] / dataTotals.hours) + user_Settings.hourlyWage).toFixed(2))
+		+(((dataTotals["netTips"] / dataTotals.hours) + user_Settings.hourlyWage).toFixed(2))
 	}`);
 	$( ".js_alcoholSalesPercentage" ).html(`${
 		+((100 * dataTotals.sales["alcoholic beverages"] / 
@@ -80,7 +91,7 @@ function setUserSettings(data){
     // The key is key
     // The value is obj[key]
 	for(let key in data){
-    user_Settings[key] = data[key];
+    	user_Settings[key] = data[key];
 	}
 }
 
@@ -88,8 +99,8 @@ function setUserSettings(data){
 // found in the passed key
 function sumOfObjects(data, key){
 	let total = 0;
-	$.each(data.shifts, function(i, item){
-		total += accessValueByKey(data.shifts[i], key);
+	$.each(data, function(i, item){
+		total += accessValueByKey(data[i], key);
 	});
 	return total;
 };
@@ -109,17 +120,12 @@ function accessValueByKey(data, key){
 	}
 };
 
-// This function will also stay
 function getAndDisplayShiftData(){
 	getShiftData(displayShiftData);
-};
-
-function getAndSaveConfigData(){
-	getUserSettings(setUserSettings);
 }
 
 $(function(){
-	checkUser();
-	getAndSaveConfigData();
-	getAndDisplayShiftData();
+	checkUser(getAndDisplayShiftData);
+
+	//js_testingGETListener();
 });

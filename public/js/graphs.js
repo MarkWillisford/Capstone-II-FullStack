@@ -234,6 +234,5 @@ function getAndDisplayDatedData(){
 };
 
 $(function(){
-	checkUser();
-	submitListener();
+	checkUser(submitListener);
 });
