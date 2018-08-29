@@ -20,7 +20,7 @@ function checkUser(callback) {
                 Authorization: `Bearer ${token}`,
             },
             success: (response) => {
-                console.log(response)
+                //console.log(response)
                 $('#loader-wrapper').hide();
                 const payloadData = parseJwt(token);
                 $('.js_User').html(`${payloadData.username}`);
