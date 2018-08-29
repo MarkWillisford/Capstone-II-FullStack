@@ -3,7 +3,6 @@
 let globalUser_id = '';
 let settings = {};
 
-/*
 // This function will save our user settings into our setting object
 function displayUserSettings(){	
 	$('.js_incomeGoalSpan').html(user_Settings.monthlyIncomeGoal);
@@ -13,7 +12,6 @@ function displayUserSettings(){
 	settings.monthlyHourlyGoal = user_Settings.monthlyHourlyGoal;
 	settings.hourlyWage = user_Settings.hourlyWage;
 }
-*/
 
 function editSettingsBtnListener(){
 	$('.changeSettingsBtn').click(function(e){
@@ -38,29 +36,49 @@ function submitListener(){
     	let calHourlyWageGoal = $('.calHourlyWageGoalText').val();
     	let hourlyWage = $('.hourlyWageText').val();
 
+        // set up our object to store it
+        let newSettings = {};
+
     	/**************************************************
     	* I'm not really happy with this architecture. 
     	* Maybe Michal can suggest something cleaner
     	* I think there is an example of something similar 
     	* in Thinkful's authentication section 
     	**************************************************/
+        // a few flags 
+        let changed = false;
         let error = false;
     	// check for empty strings, non numbers and below zero values.
         if(hourlyWage != ""){
+            // there is input, check it
             if(!($.isNumeric( hourlyWage ) && hourlyWage > 0)){  
+                // there is input but its bad
                 $('.hourlyWageError').html('please enter valid data; your wage must be a number above 0');
                 $('.hourlyWageText').val("");
                 $('.hourlyWageText').focus();  
                 error = true;
+            } else {
+                // new input is good, save it and set the changed tag to true
+                newSettings.hourlyWage = $('.hourlyWageText').val();
+                changed = true;
             }
+        } else {
+            // there is no new input, use old input
+            newSettings.hourlyWage = settings.hourlyWage;
         }
-        if(calHourlyWageGoal != ""){
+        if(calHourlyWageGoal != ""){    // same story different variable and input
             if(!($.isNumeric( calHourlyWageGoal ) && calHourlyWageGoal > 0)){
                 $('.calHourlyWageGoalError').html('please enter valid data; your hourly goal must be a number above 0');
                 $('.calHourlyWageGoalText').val("");
                 $('.calHourlyWageGoalText').focus();  
                 error = true;
+            } else {
+                newSettings.monthlyHourlyGoal = $('.calHourlyWageGoalText').val();
+                changed = true;
             }
+        } else {
+            // there is no new input, use old input
+            newSettings.monthlyHourlyGoal = settings.monthlyHourlyGoal;
         }
     	if(incomeGoal != ""){
     		if(!($.isNumeric( incomeGoal ) && incomeGoal > 0)){
@@ -68,26 +86,32 @@ function submitListener(){
                 $('.incomeGoalText').val("");
                 $('.incomeGoalText').focus();
                 error = true;
-    		}
-    	}
+    		} else {
+                newSettings.monthlyIncomeGoal = $('.incomeGoalText').val();
+                changed = true;
+            }
+    	} else {
+            // there is no new input, use old input
+            newSettings.monthlyIncomeGoal = settings.monthlyIncomeGoal;
+        }
+
+        // if there is an error, return out without sending
         if(error){
             return;
         }
 
-        // create new settings object
-        let newSettings = {};
-        newSettings.monthlyIncomeGoal = $('.incomeGoalText').val();
-        newSettings.monthlyHourlyGoal = $('.calHourlyWageGoalText').val();
-        newSettings.hourlyWage = $('.hourlyWageText').val();
+        // If changed, Ajax call with new object
+        if(changed){
+            
+        }
 
-        // Ajax call with new object
-        
     });
 }
 
 function runApp(){
     editSettingsBtnListener();
     submitListener();    
+    displayUserSettings();
 }
 
 $(function(){
