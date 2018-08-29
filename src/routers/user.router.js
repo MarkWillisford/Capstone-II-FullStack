@@ -52,6 +52,7 @@ router.post('/login', disableWithToken, requiredFields('email', 'password'), (re
         return foundResult;
     })
     .then((foundUser) => {
+        // console.log(foundUser); <!-- remove 
     	// okay we found a user, compare the password
         foundUser.comparePassword(req.body.password)
         .then((comparingResult) => {

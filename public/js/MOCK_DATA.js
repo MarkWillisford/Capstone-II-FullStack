@@ -69,8 +69,3 @@ let MOCK_SHIFT_DATA = {
 	]
 };
 
-let MOCK_USER_SETTINGS = {
-	"monthlyIncomeGoal": 4000,
-	"monthlyHourlyGoal": 40,
-	"hourlyWage": 12.5
-};
