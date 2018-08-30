@@ -5,6 +5,8 @@ const chaiHttp = require('chai-http');
 const expect = chai.expect;
 const faker = require('faker');
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+const config = require('../src/config/main.config');
 
 const User = require('../src/models/user.model');
 const { app, runServer, closeServer } = require('../src/index');
@@ -17,9 +19,8 @@ chai.use(chaiHttp);
 /********************
 *
 *	These are all throwing something and crashing the server.  GRRRR>>>>>
-
-
-describe('Landing Page', function(){
+*/
+describe('tests', function(){
 	before(function(){
 		return runServer(TEST_DATABASE_URL);
 	});
@@ -28,205 +29,149 @@ describe('Landing Page', function(){
 		return closeServer();
 	});
 
-	// Test Strategy:
-	// 1. make request to root
-	// 2. ensure return object is HTML with status code 200
-	it('should return HTML and status code 200', function(){
-		return chai
-			.request(app)
-			.get('/')
-			.then(function(res){
-				expect(res).to.have.status(200);
-				expect(res).to.be.html;
+	describe('HTML Paths', function(){
+		it('/ should return HTML and status code 200', function(){
+			return chai
+				.request(app)
+				.get('/')
+				.then(function(res){
+					expect(res).to.have.status(200);
+					expect(res).to.be.html;
+				});
+		});
+		it('/login should return HTML and status code 200', function(){
+			return chai
+				.request(app)
+				.get('/login.html')
+				.then(function(res){
+					expect(res).to.have.status(200);
+					expect(res).to.be.html;
+				});
+		});
+		it('/signup should return HTML and status code 200', function(){
+			return chai
+				.request(app)
+				.get('/signup.html')
+				.then(function(res){
+					expect(res).to.have.status(200);
+					expect(res).to.be.html;
+				});
+		});
+		it('/input_shift should return HTML and status code 200', function(){
+			return chai
+				.request(app)
+				.get('/input_shift.html')
+				.then(function(res){
+					expect(res).to.have.status(200);
+					expect(res).to.be.html;
+				});
+		});
+		it('/input_paycheck should return HTML and status code 200', function(){
+			return chai
+				.request(app)
+				.get('/input_paycheck.html')
+				.then(function(res){
+					expect(res).to.have.status(200);
+					expect(res).to.be.html;
+				});
+		});
+		it('/paycheck_varification should return HTML and status code 200', function(){
+			return chai
+				.request(app)
+				.get('/paycheck_varification.html')
+				.then(function(res){
+					expect(res).to.have.status(200);
+					expect(res).to.be.html;
+				});
+		});
+		it('/settings should return HTML and status code 200', function(){
+			return chai
+				.request(app)
+				.get('/settings.html')
+				.then(function(res){
+					expect(res).to.have.status(200);
+					expect(res).to.be.html;
+				});
+		});
+		it('/graphs should return HTML and status code 200', function(){
+			return chai
+				.request(app)
+				.get('/graphs.html')
+				.then(function(res){
+					expect(res).to.have.status(200);
+					expect(res).to.be.html;
+				});
+		});
+	});
+
+	describe('Api Calls', function(){
+		let user = null;
+		let token = null;
+		beforeEach(function(){
+			return seedUser()
+				.then(function(userData){
+					user = userData;	
+					const tokenPayload = {
+		                _id: user._id
+		            }; 
+		            token = jwt.sign(tokenPayload, config.SECRET, {
+		                expiresIn: config.EXPIRATION,
+		            }); 				
+				})	
+				//.then(seedTestingData); <-- more data to seed
+		});
+
+		afterEach(function(){
+			return tearDownDb();
+		});
+
+		// I'll use nested 'describe blocks' to make cleaner, 
+		// clearer code to prove smaller goals
+		describe('User GET endpoint', function(){
+			it('should return user with correct fields', function(){
+				// authenticatedUser has been populated
+
+				// strategy
+				// 1. get back all users retruned by Get request to /users
+				// 2. prove res has right status and data type
+				// 3. prove the number of users we got back is equal to 
+				// 		the number in the db
+
+				let res;			
+				return chai.request(app)
+					.get('/api/users')
+					.set('Authorization', `Bearer ${token}`)
+					.then(function(_res){
+						res = _res;
+						expect(res).to.have.status(200);
+						expect(res).to.be.a('object');
+						/*expect(res).to.include.keys(
+							'id', 'email', 'username', 'password', 'monthlyIncomeGoal',
+							'monthlyHourlyGoal', 'hourlyWage', 'role');*/
+						return User.findById(res.id);
+					})
+					then(function(user){
+						expect(resUser.id).to.equal(user.id);
+						expect(resUser.email).to.equal(user.email);
+						expect(resUser.username).to.equal(user.username);
+						expect(resUser.password).to.equal(user.password);
+						expect(resUser.monthlyIncomeGoal).to.equal(user.monthlyIncomeGoal);
+						expect(resUser.monthlyHourlyGoal).to.equal(user.monthlyIncomeGoal);
+						expect(resUser.hourlyWage).to.equal(user.hourlyWage);
+						expect(resUser.role).to.equal(user.role);
+					});				
 			});
+		});
+
+		// TODO! describe('User POST endpoint', function(){});
+		// TODO! describe('User PUT endpoint', function(){});
+		// TODO! describe('Login endpoint', function(){});
+		// TODO! describe('Shift POST endpoint', function(){});
+		// TODO! describe('Shift GET endpoint', function(){});
+		// TODO! describe('Paychecks POST endpoint', function(){});
+		// TODO! describe('Paychecks GET endpoint', function(){});
 	});
 });
-
-describe('Login Screen', function(){
-	before(function(){
-		return runServer();
-	});
-
-	after(function(){
-		return closeServer();
-	});
-
-	// Test Strategy:
-	// 1. make request to root
-	// 2. ensure return object is HTML with status code 200
-	it('should return HTML and status code 200', function(){
-		return chai
-			.request(app)
-			.get('/login.html')
-			.then(function(res){
-				expect(res).to.have.status(200);
-				expect(res).to.be.html;
-			});
-	});
-});
-
-describe('Signup Screen', function(){
-	before(function(){
-		return runServer();
-	});
-
-	after(function(){
-		return closeServer();
-	});
-
-	// Test Strategy:
-	// 1. make request to root
-	// 2. ensure return object is HTML with status code 200
-	it('should return HTML and status code 200', function(){
-		return chai
-			.request(app)
-			.get('/signup.html')
-			.then(function(res){
-				expect(res).to.have.status(200);
-				expect(res).to.be.html;
-			});
-	});
-});
-
-describe('Shift Input Screen', function(){
-	before(function(){
-		return runServer();
-	});
-
-	after(function(){
-		return closeServer();
-	});
-
-	// Test Strategy:
-	// 1. make request to root
-	// 2. ensure return object is HTML with status code 200
-	it('should return HTML and status code 200', function(){
-		return chai
-			.request(app)
-			.get('/input_shift.html')
-			.then(function(res){
-				expect(res).to.have.status(200);
-				expect(res).to.be.html;
-			});
-	});
-});
-
-describe('Paycheck Input Screen', function(){
-	before(function(){
-		return runServer();
-	});
-
-	after(function(){
-		return closeServer();
-	});
-
-	// Test Strategy:
-	// 1. make request to root
-	// 2. ensure return object is HTML with status code 200
-	it('should return HTML and status code 200', function(){
-		return chai
-			.request(app)
-			.get('/input_paycheck.html')
-			.then(function(res){
-				expect(res).to.have.status(200);
-				expect(res).to.be.html;
-			});
-	});
-});
-
-describe('Paycheck Varification Screen', function(){
-	before(function(){
-		return runServer();
-	});
-
-	after(function(){
-		return closeServer();
-	});
-
-	// Test Strategy:
-	// 1. make request to root
-	// 2. ensure return object is HTML with status code 200
-	it('should return HTML and status code 200', function(){
-		return chai
-			.request(app)
-			.get('/paycheck_varification.html')
-			.then(function(res){
-				expect(res).to.have.status(200);
-				expect(res).to.be.html;
-			});
-	});
-});
-
-describe('Settings Screen', function(){
-	before(function(){
-		return runServer();
-	});
-
-	after(function(){
-		return closeServer();
-	});
-
-	// Test Strategy:
-	// 1. make request to root
-	// 2. ensure return object is HTML with status code 200
-	it('should return HTML and status code 200', function(){
-		return chai
-			.request(app)
-			.get('/settings.html')
-			.then(function(res){
-				expect(res).to.have.status(200);
-				expect(res).to.be.html;
-			});
-	});
-});
-
-describe('Graphs Screen', function(){
-	before(function(){
-		return runServer();
-	});
-
-	after(function(){
-		return closeServer();
-	});
-
-	// Test Strategy:
-	// 1. make request to root
-	// 2. ensure return object is HTML with status code 200
-	it('should return HTML and status code 200', function(){
-		return chai
-			.request(app)
-			.get('/graphs.html')
-			.then(function(res){
-				expect(res).to.have.status(200);
-				expect(res).to.be.html;
-			});
-	});
-});
-
-describe('Tables Screen', function(){
-	before(function(){
-		return runServer();
-	});
-
-	after(function(){
-		return closeServer();
-	});
-
-	// Test Strategy:
-	// 1. make request to root
-	// 2. ensure return object is HTML with status code 200
-	it('should return HTML and status code 200', function(){
-		return chai
-			.request(app)
-			.get('/tables.html')
-			.then(function(res){
-				expect(res).to.have.status(200);
-				expect(res).to.be.html;
-			});
-	});
-});
-
-*/
 
 // used to put randomish documents in db
 // so we have data to work with and assert about.
@@ -234,7 +179,11 @@ describe('Tables Screen', function(){
 // generate placeholder values for content
 // and then we insert that data into mongo
 
-function seedUsers(){
+function seedTestingData(){
+	const seedData = [];
+};
+
+function seedUser(){
 	console.info('seeding user data');
 
 	/*
@@ -244,38 +193,23 @@ function seedUsers(){
 		seedUserData.push(generateUserData());
 	}
 
-	// set the authenticated user for our testing to the first in the array
-	userCredentials.email = seedUserData[0].email;
-	userCredentials.password = seedUserData[0].password;
-	// this will return a promise
-	return User.insertMany(seedUserData);	// <-- this isn't inserting 
-	// .then(results => {
-    //   const { insertedIds } = results;
-    //   return insertedIds.map(id => `Found _id: ${id}`)
-    // });				<-- this returns TypeError: Cannot read property 'map' of undefined
-
     */
 
-    console.info('testing single create');
     let seedUserData = generateUserData();
 	userCredentials.email = seedUserData.email;
 	userCredentials.password = seedUserData.password;
 
-	console.info('seedUserData is: ');
-	console.info(seedUserData);
 	return User.create(seedUserData);
-
-
-
 }
 
+// used by generateUserData to create a random role
 function generateRole(){
 	const roles = ['user', 'admin'];
 	const role = roles[Math.floor(Math.random() * roles.length)];
 	return role;	
 }
 
-// first test the users endpoint
+// generates a fake User object for testing
 function generateUserData(){
 	return {
 		email: faker.internet.email(),
@@ -301,96 +235,7 @@ function tearDownDb() {
 
 
 
-describe('User API resource', function(){
-	// hook function to return promises
-	before(function(){
-		return runServer(TEST_DATABASE_URL);
-	});
 
-	beforeEach(function(){
-		return seedUsers();		
-	});
-
-	//now let's login the user before we run any tests
-	beforeEach(function(done){
-		console.log(userCredentials);			
-		  chai.request(app)
-		    .post('/api/login')
-		    .send(userCredentials)
-		    .end(function(err, res){
-		      expect(res).to.have.status(200);
-		      expect('Location', '/index');
-		      done();
-		    });
-	});
-
-	afterEach(function(){
-		return tearDownDb();
-	});
-
-	after(function(){
-		return closeServer();
-	});
-
-	// I'll use nested 'describe blocks' to make cleaner, 
-	// clearer code to prove smaller goals
-	describe('GET endpoint', function(){
-		it('should return all existing users', function(){
-			// authenticatedUser has been populated
-
-
-			// strategy
-			// 1. get back all users retruned by Get request to /users
-			// 2. prove res has right status and data type
-			// 3. prove the number of users we got back is equal to 
-			// 		the number in the db
-
-			let res;
-			return chai.request(app)
-				.get('/api/users')
-				.then(function(_res){
-					res = _res;
-					expect(res).to.have.status(200);
-					expect(res.body.users).to.have.lengthOf.at.least(1);
-					return User.count();
-				})
-				.then(function(count){
-					expect(res.body.users).to.have.lengthOf(count);
-				});
-		});
-
-		it('should return users with the right fields', function(){
-			let resUser;
-			return chai.request(app)
-				.get('/api/users')
-				.then(function(res){
-					expect(res).to.have.status(200);
-					expect(res).to.be.json;
-					expect(res.body.users).to.be.a('array');
-					expect(res.body.users).to.have.lengthOf.at.least(1);
-
-					res.body.users.forEach(function(user){
-						expect(user).to.be.a('object');
-						expect(user).to.include.keys(
-							'id', 'email', 'username', 'password', 'monthlyIncomeGoal',
-							'monthlyHourlyGoal', 'hourlyWage', 'role');
-					});
-					resUser = res.body.users[0];
-					return User.findById(resUser.id);
-				})
-				then(function(user){
-					expect(resUser.id).to.equal(user.id);
-					expect(resUser.email).to.equal(user.email);
-					expect(resUser.username).to.equal(user.username);
-					expect(resUser.password).to.equal(user.password);
-					expect(resUser.monthlyIncomeGoal).to.equal(user.monthlyIncomeGoal);
-					expect(resUser.monthlyHourlyGoal).to.equal(user.monthlyIncomeGoal);
-					expect(resUser.hourlyWage).to.equal(user.hourlyWage);
-					expect(resUser.role).to.equal(user.role);
-				});
-		});
-	});
-});
 
 
 
