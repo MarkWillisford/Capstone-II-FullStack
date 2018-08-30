@@ -75,13 +75,19 @@ router.route('/shifts')
     // the GET all route
     .get(passport.authenticate('jwt', { session: false }), (req, res) => {
         // const filters = {'user_id':req.query['user_id']};
-
         User.findById(req.user._id)
             .then(user => {
                 if(user){
                     // turn the id into the right data type to search for
                     let myObjectID = mongoose.Types.ObjectId(user._id);
-                    const filters = { user: myObjectID };
+                    const filters = { 
+                        user: myObjectID,
+                        // adding the ability to search for an optional range
+                        date: {
+                            $gte: req.query.start,
+                            $lt: req.query.end
+                        }
+                    };
                     Shift.find(filters) 
                     .then(shifts => res.json(shifts))
                     .catch(err => {

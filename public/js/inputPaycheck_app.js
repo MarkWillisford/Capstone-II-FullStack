@@ -1,6 +1,9 @@
 'use strict';
 
 let globalUser_id = '';
+let dataToSend = { };
+let dataToCompare = { };
+
 const fpDate = flatpickr(".dateOfCheck", {
     altInput: true,
     altFormat: "F j, Y",
@@ -18,15 +21,20 @@ const fpPayPeriod = flatpickr(".payperiod", {
     weekNumbers: true,
 }); // flatpickr
 
+const payPeriodPromiseCall = new Promise((resolve, reject) => {
+    setTimeout(function () {
+    resolve('in promise: ');
+  }, 1000);
+});
+
 function inputListener(){
     $('.newPaycheckForm').on('submit', function(e){
 	    e.preventDefault();
-	    console.log('in listener function');
     	// get the form data and put it in the newShift object
 		let dateOfCheckArray = fpDate.selectedDates;
         let payPeriodArray = fpPayPeriod.selectedDates;
 
-		let dataToSend = {
+		dataToSend = {
             user_id: `${globalUser_id}`,
             dateOfCheck: `${dateOfCheckArray[0]}`,
             startDate: `${payPeriodArray[0]}`,
@@ -38,11 +46,19 @@ function inputListener(){
             netPay: `${$('.newPaycheckNetPay').val()}`,
         };
 
-        let dataToCompare = { };
+        console.log('in listener: ');
+            console.log(dataToSend);
+        dataToCompare = { };
+        payPeriodPromiseCall.then(msg => {
+            console.log('in then: ');
+            console.log(msg);
+        });
+        // we need an ajax call to compare our check to. It needs to be in a promise so we 
+        // wait before attempting the compare . . .   
 
 
 
-
+/*
 
 	    $.ajax({
 	        url: '/api/paychecks',
@@ -54,7 +70,7 @@ function inputListener(){
 	        }
 	    })	
 
-
+*/
 
 
 

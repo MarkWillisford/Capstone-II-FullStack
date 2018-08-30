@@ -20,6 +20,18 @@ const UserSchema = new mongoose.Schema({
 		min: 7,
 		max: 72, // due to bcrypt truncating
 	}, 
+	monthlyIncomeGoal: {
+		type: Number,
+		default: 0,
+	},
+	monthlyHourlyGoal: {
+		type: Number,
+		default: 0,
+	},
+	hourlyWage: {
+		type: Number,
+		default: 0,
+	},
 	role: {
 		type: String,
 		enum: ['user','admin'],

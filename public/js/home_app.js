@@ -3,14 +3,26 @@
 // This is where we will store our setting data
 let globalUser_id = '';
 
-function getShiftData(callbackFn){
+function getMonthlyShiftData(callbackFn){
 	//setTimeout(function(){ callbackFn(MOCK_SHIFT_DATA)}, 100);
+	// first I need the current month and year
+	let month = (new Date().getMonth()) + 1; // Jan = 0, Feb = 1 etc
+	let year = new Date().getFullYear(); 
+	let date = year + "-" + month + "-01";	// create a string
+
+	let start = new Date(date);	// make a date object representing the beginning of this month
+	let end = new Date();	// make a date object representing now
+
     const token = sessionStorage.getItem('token');
 	$.ajax({
 		url: '/api/shifts',
 	    type: 'GET',
         headers: {
             Authorization: `Bearer ${token}`,
+        },
+        data: {
+        	start: start,	// pass a range from the beginning to this month to now
+        	end: end,
         },
 	    success: (response) => {
 	    	callbackFn(response);
@@ -35,8 +47,6 @@ function getDate(){
 // This function will stay when we connect to real API
 function displayShiftData(data){
 	// lets total the data we have recieved
-	console.log('data is: ');
-	console.log(data);
 	let dataTotals = {};
 
 	let key = "hours";
@@ -55,8 +65,6 @@ function displayShiftData(data){
 		"kitchen": sumOfObjects(data, "kitchen")
 	};
 
-	console.log(user_Settings);
-	console.log(user_Settings.monthlyIncomeGoal);
 	// Set HTML to display data
 	$( ".js_Date" ).html(getDate());
 	$( ".js_monthlyEarned" ).html(`$${dataTotals["netTips"]}`);
@@ -121,11 +129,9 @@ function accessValueByKey(data, key){
 };
 
 function getAndDisplayShiftData(){
-	getShiftData(displayShiftData);
+	getMonthlyShiftData(displayShiftData);
 }
 
 $(function(){
 	checkUser(getAndDisplayShiftData);
-
-	//js_testingGETListener();
 });

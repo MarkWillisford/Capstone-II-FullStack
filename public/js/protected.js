@@ -26,10 +26,9 @@ function checkUser(callback) {
                 $('.js_User').html(`${payloadData.username}`);
                 globalUser_id = payloadData._id;
                 user_Settings = {
-                    // ADD TO USER MODEL
-                    "monthlyIncomeGoal": 4000,
-                    "monthlyHourlyGoal": 40,
-                    "hourlyWage": 12.5
+                    "monthlyIncomeGoal": payloadData.monthlyIncomeGoal,
+                    "monthlyHourlyGoal": payloadData.monthlyHourlyGoal,
+                    "hourlyWage": payloadData.hourlyWage,
                 };
                 callback();
             },

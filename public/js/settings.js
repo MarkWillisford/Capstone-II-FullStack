@@ -102,7 +102,24 @@ function submitListener(){
 
         // If changed, Ajax call with new object
         if(changed){
-            
+            const token = sessionStorage.getItem('token');
+            // add the id to the newSettings
+            newSettings.id = globalUser_id;
+            // lets see what we are about to send
+            console.log('sending: ');
+            console.log(newSettings);
+
+            $.ajax({
+                url: '/api/users',
+                method: 'PUT',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                data: newSettings,
+                success: (response) => {
+                    location.href = '/index.html';
+                }
+            });         
         }
 
     });
