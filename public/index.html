@@ -13,19 +13,33 @@
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     </head>
     <body>
-      <p>Hello World(Really?  Yes really).</p>
-      <h1>Welcome to the Income and Tips tracker</h1>
-      <h2>By restaurant workers for restaurant workers</h2>
-      
-      <a href="/home.html">Home</a><br>
-
-
       <main class="main" aria-live="assertive">
+        <h2>Current status</h2>
+        <p>Hello <span class="js_User"></span>.</p>
+        <p>Current status as of <span class="js_Date"></span>:</p>
+        <p>You have earned <span class="js_monthlyEarned"></span>, <span class="js_monthlyEarnedPercentage"></span> of <span class="js_Target_monthlyEarned"></span></p>
+        <p>Your actual hourly rate is <span class="js_actualHourlyRate"></span>.<!-- <span class="js_actualHourlyRatePercentage"></span>. --> Alcohol sales are at <span class="js_alcoholSalesPercentage"></span> and you have tipped your support staff <span class="js_supportTipoutPercentage"></span>, <span class="js_supportDifference"></span>.</p>
+
+        <p>        
+          <a href="/graphs.html">Graphs</a><br>
+          <a href="/input_shift.html">Enter a new Shift</a><br>
+          <a href="/input_paycheck.html">Enter a new Paycheck</a><br>
+          <a href="/settings.html">Edit your settings</a><br>
+          <button class="js_testingGETbtn">testing get</button>
+
+        </p>
+        <p>
+          <dir class="js_myGetFunctionOutput">
+            
+          </dir>
+        </p>
 
       </main>
-      <!-- Views -->
 
       <!-- Scripts -->
-      <!--<script src="js/app.js"></script>-->
+      <script src="js/MOCK_DATA.js"></script>
+      <script src="js/protected.js"></script>
+      <script src="js/get_shift.js"></script>
+      <script src="js/home_app.js"></script>
     </body>
 </html>

@@ -17,6 +17,7 @@
     "cross-env": "5.0.1",
     "dotenv": "4.0.0",
     "express": "^4.16.3",
+    "faker": "^4.1.0",
     "flatpickr": "^4.5.1",
     "jsonwebtoken": "7.4.1",
     "mongoose": "4.10.5",

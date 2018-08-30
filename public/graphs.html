@@ -12,19 +12,21 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
         <!--<link href="css/main.css" rel="stylesheet" type="text/css" />
         <link href="css/float-grid.css" rel="stylesheet" />-->
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/flatpickr.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">  
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/flatpickr.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/themes/dark.css">
     </head>
     <body>
-      <p>Hello World (Graphs Screen).</p>
+      <p>Hello <span class="js_User"></span>.</p>
       <hr>
       <div class=resetDate>
         <input type="text" placeholder="Select Dates to view. . ." data-input>
         <button class="input-button" title="clear" data-clear>RESET</button>
       </div>
 
-      <button type="button" class="js_ViewGraphsBtn" onclick="getAndDisplayDatedData()">View</button>
+      <button type="button" class="js_ViewGraphsBtn">View</button>
       <br>
+      <a href="/index.html">Home</a><br>
 
       <canvas id="myNetTipsChart" width="100 px" height="100 px"></canvas>
       <canvas id="myTipsPercentageChart" width="100 px" height="100 px"></canvas>
@@ -33,9 +35,9 @@
       <canvas id="myAlcoholSalesChart" width="100 px" height="100 px"></canvas>
       <canvas id="myPPASalesChart" width="100 px" height="100 px"></canvas>
 
-
       <!-- Scripts -->
       <script src="js/MOCK_DATA.js"></script>
+      <script src="js/protected.js"></script>
       <script type="text/javascript" src="js/graphs.js"></script>
     </body>
 </html>

@@ -1,5 +1,6 @@
 'use strict';
 
+let globalUser_id = '';
 const fp = flatpickr(".resetDate", {
     mode: 'range',
     altInput: true,
@@ -10,7 +11,32 @@ const fp = flatpickr(".resetDate", {
 }); // flatpickr
 
 function getDatedDataFuncion(callbackFn){
-	let selectedDates = fp.selectedDates;
+	let selectedDates = fp.selectedDates;	// this array holds our beginning and end dates
+	let start = selectedDates[0];
+	let end = selectedDates[1];
+	end.setHours(23,59,59,999);
+
+	console.log('start at: ' + start);
+	console.log('end at: ' + end);
+
+	const token = sessionStorage.getItem('token');
+	$.ajax({
+		url: '/api/shifts',
+	    type: 'GET',
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        data: {
+        	start: start,	// pass a range from the beginning to this month to now
+        	end: end,
+        },
+	    success: (response) => {
+	    	console.log(response);
+	    	callbackFn(response);
+        },
+	    error: function(err) { console.log(err); }
+	});
+	/*
 	let selectedData = [];
 
 	for(let i=0; i<MOCK_SHIFT_DATA.shifts.length; i++){
@@ -22,6 +48,7 @@ function getDatedDataFuncion(callbackFn){
 	}
 
 	setTimeout(function(){ callbackFn(		selectedData		)}, 100);
+	*/
 };
 
 function displayData(data){
@@ -37,43 +64,45 @@ function displayData(data){
 		"ppa": [], // calc
 	}
 
+	console.log(data);
+
 	// iterate through our data to build our dataSet
 	for(let i=0; i<data.length; i++){
 		dataSet.dates.push(data[i].date);		
-		dataSet["net tips"].push(data[i]["net tips"]);
+		dataSet["net tips"].push(data[i]["netTips"]);
 		dataSet["tip %"].push( + // calculations and the toFixed() to make it a %
 			(	
-				(100 * data[i]["net tips"] / 
-					(data[i]["sales"]["food and NA beverages"] +
-					data[i]["sales"]["alcoholic beverages"] + 
-					data[i]["sales"]["room charges"])
+				(100 * data[i]["netTips"] / 
+					(data[i]["food"] +
+					data[i]["alcoholicBeverages"] + 
+					data[i]["roomCharges"])
 				).toFixed(2)
 			)
 		);
 		dataSet["calculated hourly"].push( + // calculations and the toFixed() to make it a $
 			(
-				(12.5 + (data[i]["net tips"] / data[i]["hours"])
+				(12.5 + (data[i]["netTips"] / data[i]["hours"])
 				).toFixed(2)
 			) 
 		);
 		dataSet["net sales"].push((
-			data[i]["sales"]["food and NA beverages"] +
-			data[i]["sales"]["alcoholic beverages"] + 
-			data[i]["sales"]["room charges"]
+			data[i]["food"] +
+			data[i]["alcoholicBeverages"] + 
+			data[i]["roomCharges"]
 			));
-		dataSet["alcohol sales"].push(data[i]["sales"]["alcoholic beverages"]);
+		dataSet["alcohol sales"].push(data[i]["alcoholicBeverages"]);
 		dataSet["alcohol %"].push( + // calculations and the toFixed() to make it a %
 			(
-				(100 * data[i]["sales"]["alcoholic beverages"] /
-					(data[i]["sales"]["food and NA beverages"] + 
-						data[i]["sales"]["alcoholic beverages"])
+				(100 * data[i]["alcoholicBeverages"] /
+					(data[i]["food"] + 
+						data[i]["alcoholicBeverages"])
 				).toFixed(0)
 			)
 		);
 		dataSet["ppa"].push( + // calculations and the toFixed() to make it a $
 			(
-				((data[i]["sales"]["food and NA beverages"] + 
-					data[i]["sales"]["alcoholic beverages"]) / 
+				((data[i]["food"] + 
+					data[i]["alcoholicBeverages"]) / 
 					data[i]["guests"]
 				).toFixed(2)
 			)
@@ -109,7 +138,6 @@ function displayData(data){
 	*	myPPASalesChart
 	***************************/
 	displayChart("#myPPASalesChart", dataSet["dates"], "PPA", dataSet["ppa"]);
-
 };
 
 function displayDoubleChart(htmlElement, label, datasetLabel, dataArray, datasetLabel2, dataArray2){
@@ -221,7 +249,18 @@ function displayChart(htmlElement, label, datasetLabel, dataArray){
 	});
 };
 
+function submitListener(){
+	$('.js_ViewGraphsBtn').click(function(e){
+        e.preventDefault();
+        getAndDisplayDatedData();
+    })
+};
+
 // This function will also stay
 function getAndDisplayDatedData(){
 	getDatedDataFuncion(displayData);
 };
+
+$(function(){
+	checkUser(submitListener);
+});

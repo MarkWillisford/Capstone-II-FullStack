@@ -8,15 +8,40 @@
           src="https://code.jquery.com/jquery-3.2.1.min.js"
           integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
           crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/flatpickr.js"></script>  
         <!--<link href="css/main.css" rel="stylesheet" type="text/css" />
         <link href="css/float-grid.css" rel="stylesheet" />-->
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/flatpickr.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/themes/dark.css">
     </head>
     <body>
-      <p>Hello World(Input Paycheck Screen).</p>
-      <!-- Views -->
+      <p>Hello <span class="js_User"></span>.</p>
+      <p>New Paycheck Form</p>
+
+      <form class="newPaycheckForm"> <!--action="js/signup.js" method="post">-->
+      <legend class="newPaycheckFields"></legend>
+        <div class=dateOfCheck>
+          <input type="text" placeholder="Date of Check" data-input>
+          <button class="input-button" title="clear" data-clear>RESET</button>
+        </div>        
+        <div class=payperiod>
+          <input type="text" placeholder="Pay Period" data-input>
+          <button class="input-button" title="clear" data-clear>RESET</button>
+        </div>
+
+        <label><input type="text" class="newPaycheckHours" placeholder="Enter your hours worked:"></label>
+        <label><input type="text" class="newPaycheckWages" placeholder="Enter your wages earned:"></label>
+        <label><input type="text" class="newPaycheckTips" placeholder="Enter your declared tips:"></label>
+        <label><input type="text" class="newPaycheckTaxes" placeholder="Enter how many taxes were paid:"></label>
+        <label><input type="text" class="newPaycheckNetPay" placeholder="Enter your check amount:"></label>
+
+        <button type="submit" class="submitButton">Enter >></button>
+      </form>
+      <a href="/index.html">Home</a><br>
 
       <!-- Scripts -->
-      <!--<script src="js/app.js"></script>-->
+      <script src="js/protected.js"></script>
+      <script src="js/inputPaycheck_app.js"></script>
     </body>
 </html>

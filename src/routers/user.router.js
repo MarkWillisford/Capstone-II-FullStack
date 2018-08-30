@@ -34,7 +34,22 @@ router.route('/users')
 	// finally we get the passport we need to set the session and return 200
 	.get(passport.authenticate('jwt', { session: false }), (req, res) => {
 		res.status(200).json(req.user);
+    })
+    .put(passport.authenticate('jwt', { session: false }), (req, res) => {
+        const updated = {};
+        const updateableFields = ['monthlyIncomeGoal', 'monthlyHourlyGoal', 'hourlyWage'];
+        updateableFields.forEach(field => {
+            if (field in req.body) {
+                updated[field] = req.body[field];
+            }
+        });
+
+        User
+        .findByIdAndUpdate(req.body.id, { $set: updated }, { new: true })
+        .then(updatedUser => res.status(204).end())
+        .catch(err => res.status(500).json({ message: 'Something went wrong' }));
 });
+
 
 // To access the login page, we run through the disableWithToken
 // and the requiredFields
@@ -42,6 +57,7 @@ router.post('/login', disableWithToken, requiredFields('email', 'password'), (re
 	// Assuming you have both we look for a user with that email
     User.findOne({ email: req.body.email })
     .then((foundResult) => {
+        console.log(foundResult);           // <-- resulting in NULL
     	// if we didn't find it
         if (!foundResult) {
             return res.status(400).json({
@@ -50,8 +66,10 @@ router.post('/login', disableWithToken, requiredFields('email', 'password'), (re
         }
         // if we did we continue
         return foundResult;
-    })
+    })                              // <!-- Solve one thing at at time. Jay suggested this, but now it breaks
+                                    // everything!
     .then((foundUser) => {
+        // console.log(foundUser); //<!-- remove 
     	// okay we found a user, compare the password
         foundUser.comparePassword(req.body.password)
         .then((comparingResult) => {
@@ -68,6 +86,9 @@ router.post('/login', disableWithToken, requiredFields('email', 'password'), (re
                 email: foundUser.email,
                 username: foundUser.username,
                 role: foundUser.role,
+                monthlyIncomeGoal: foundUser.monthlyIncomeGoal,
+                monthlyHourlyGoal: foundUser.monthlyHourlyGoal,
+                hourlyWage: foundUser.hourlyWage
             }; // send it off in a token
             const token = jwt.sign(tokenPayload, config.SECRET, {
                 expiresIn: config.EXPIRATION,
