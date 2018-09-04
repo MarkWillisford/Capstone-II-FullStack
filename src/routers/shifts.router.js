@@ -27,7 +27,7 @@ router.route('/shifts')
             .then(user => {
                 if(user){
                     Shift.create({
-                        user: req.body.user_id,
+                        user_id: req.body.user_id,
                         date: req.body.date,
                         day: req.body.day,
                         shift: req.body.shift,
@@ -42,23 +42,23 @@ router.route('/shifts')
                         netTips: req.body.netTips,
                         hours: req.body.hours,
                     })
-                        .then(shift => res.status(201).json({
-                            id:shift.id,
-                            user: `${user.username}`,
-                            date: shift.date,
-                            day: shift.day,
-                            shift: shift.shift,
-                            food: shift.food,
-                            alcoholicBeverages: shift.alcoholicBeverages,
-                            roomCharges: shift.roomCharges,
-                            guests: shift.guests,
-                            support: shift.support,
-                            bar: shift.bar,
-                            servers: shift.servers,
-                            kitchen: shift.kitchen,
-                            netTips: shift.netTips,
-                            hours: shift.hours
-                        }))
+                    .then(shift => res.status(201).json({
+                        id:shift.id,
+                        user: `${user.username}`,
+                        date: shift.date,
+                        day: shift.day,
+                        shift: shift.shift,
+                        food: shift.food,
+                        alcoholicBeverages: shift.alcoholicBeverages,
+                        roomCharges: shift.roomCharges,
+                        guests: shift.guests,
+                        support: shift.support,
+                        bar: shift.bar,
+                        servers: shift.servers,
+                        kitchen: shift.kitchen,
+                        netTips: shift.netTips,
+                        hours: shift.hours
+                    }))
                     .catch(err => {
                       console.error(err);
                       res.status(500).json({ message: "Internal server error" });
@@ -81,14 +81,16 @@ router.route('/shifts')
                     // turn the id into the right data type to search for
                     let myObjectID = mongoose.Types.ObjectId(user._id);
                     const filters = { 
-                        user: myObjectID,
-                        // adding the ability to search for an optional range
-                        date: {
+                        user_id: user._id,
+                    };
+                    // adding the ability to search for an optional range
+                    if(req.query["start"]){
+                        filters[date] = {
                             $gte: req.query.start,
                             $lt: req.query.end
-                        }
+                        };                        
                     };
-                    Shift.find(filters) 
+                    Shift.find(filters)                
                     .then(shifts => res.json(shifts))
                     .catch(err => {
                       console.error(err);

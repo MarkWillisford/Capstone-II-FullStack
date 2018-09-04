@@ -20,14 +20,19 @@ router.route('/users')
 	// if we pass that, we call the requiredFields middleware which checks 
 	.post(disableWithToken, requiredFields('email', 'username', 'password'), (req, res) => {
 		// assuming it passes all tests, we create a user from the req data
-        console.log('within the route');
+        // console.log('within the route');
 		User.create({
 			email: req.body.email,
 			password: req.body.password,
 			username: req.body.username,
 		})
 		// assuming no errors we return a 201 created code
-		.then(() => res.status(201).send())
+		.then(user => res.status(201).json({
+            id: user.id,
+            email: user.email,
+            username: user.username,
+            password: user.password,
+        }))                                                    
 		// if there are errors we catch them and send a 400 code and generate an error
 		.catch(report => res.status(400).json(errorsParser.generateErrorResponse(report)));
 	})
@@ -57,11 +62,11 @@ router.post('/login', disableWithToken, requiredFields('email', 'password'), (re
 	// Assuming you have both we look for a user with that email
     User.findOne({ email: req.body.email })
     .then((foundResult) => {
-        console.log(foundResult);           // <-- resulting in NULL
+        // console.log(foundResult);           
     	// if we didn't find it
         if (!foundResult) {
             return res.status(400).json({
-                generalMessage: 'Email or password is incorrect',
+                generalMessage: 'Email or password is incorrect',      
             });
         }
         // if we did we continue

@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/main.config');
 const Paycheck = require('../models/paycheck.model');
 const User = require('../models/user.model');
+const mongoose = require('mongoose');
 const errorsParser = require('../helpers/errorParser.helper');
 const disableWithToken = require('../middlewares/disableWithToken.middleware').disableWithToken;
 const requiredFields = require('../middlewares/requiredFields.middleware');
@@ -24,7 +25,7 @@ router.route('/paychecks')
             .then(user => {
                 if(user){
                     Paycheck.create({
-                        user: req.body.user_id,
+                        user_id: req.body.user_id,
                         dateOfCheck: req.body.dateOfCheck,
                         startDate: req.body.startDate,
                         endDate: req.body.endDate,
@@ -36,7 +37,7 @@ router.route('/paychecks')
                     })
                         .then(paycheck => res.status(201).json({
                             id:paycheck.id,
-                            user: `${user.username}`,
+                            user_id: `${user.username}`,
                             dateOfCheck: paycheck.dateOfCheck,
                             startDate: paycheck.startDate,
                             endDate: paycheck.endDate,
@@ -61,13 +62,30 @@ router.route('/paychecks')
     })
 
     // the GET all route
-    .get((req, res) => {
-        Paycheck.find()        
-        .then(paychecks => res.json(paychecks))
-        .catch(err => {
-          console.error(err);
-          res.status(500).json({ error: 'something went terribly wrong' });
-        });
+    .get(passport.authenticate('jwt', { session: false }), (req, res) => {
+        User.findById(req.user._id)
+            .then(user => {
+                if(user){
+                    // turn the id into the right data type to search for
+                    let myObjectID = mongoose.Types.ObjectId(user._id);
+                    const filters = { 
+                        user_id: user._id,
+                    };
+                    Paycheck.find(filters)                
+                    .then(paychecks => res.json(paychecks))
+                    .catch(err => {
+                      console.error(err);
+                      res.status(500).json({ error: 'something went terribly wrong' });
+                    });
+                } else {
+                const message = `User not found which should never happen, contact your system admin`;
+                console.error(message);
+                return res.status(400).send(message);
+                }
+            })
+        // if there are errors we catch them and send a 400 code and generate an error
+        .catch(report => res.status(400).json(errorsParser.generateErrorResponse(report)));         
     });
+
 
 module.exports = { router };
