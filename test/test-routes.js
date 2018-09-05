@@ -30,6 +30,16 @@ describe('tests', function(){
 		return closeServer();
 	});
 
+
+
+
+	/*
+
+
+
+
+
+
 	describe('HTML Paths', function(){
 		it('/ should return HTML and status code 200', function(){
 			return chai
@@ -105,6 +115,13 @@ describe('tests', function(){
 		});
 	});
 
+
+
+	*/
+
+
+
+
 	describe('Api Calls', function(){
 		beforeEach(function(){
 			return seedUser()
@@ -130,6 +147,13 @@ describe('tests', function(){
 			return tearDownDb();
 		});
 
+
+
+		/*
+
+
+
+
 		// I'll use nested 'describe blocks' to make cleaner, 
 		// clearer code to prove smaller goals
 		describe('User GET endpoint', function(){
@@ -150,9 +174,9 @@ describe('tests', function(){
 						res = _res;
 						expect(res).to.have.status(200);
 						expect(res).to.be.a('object');
-						/*expect(res).to.include.keys(
-							'id', 'email', 'username', 'password', 'monthlyIncomeGoal',
-							'monthlyHourlyGoal', 'hourlyWage', 'role');*/
+						// expect(res).to.include.keys(
+						// 	'id', 'email', 'username', 'password', 'monthlyIncomeGoal',
+						// 	'monthlyHourlyGoal', 'hourlyWage', 'role');
 						return User.findById(res.id);
 					})
 					then(function(user){
@@ -263,6 +287,13 @@ describe('tests', function(){
 						/*********  oh wow, I don't need this until later***
 						* seedShifts(testUserID);
 						****************************************************/
+
+
+
+
+						/*
+
+
 						let data = generateShiftData(testUserID);
 						return chai.request(app)
 						.post('/api/shifts')
@@ -293,6 +324,13 @@ describe('tests', function(){
 					});
 			});
 		});
+
+
+
+		*/
+
+
+
 		// describe('Shift GET endpoint', function(){});
 		describe('Shift GET endpoint', function(){
 			it('should return all shifts', function(){
@@ -308,8 +346,6 @@ describe('tests', function(){
 					.get('/api/users')
 					.set('Authorization', `Bearer ${token}`)
 					.then(function(res){
-						// console.log('we are looking for shifts with id: ');
-						// console.log(testUserID);
 						let _res;
 						return chai.request(app)
 						.get('/api/shifts')
@@ -327,15 +363,66 @@ describe('tests', function(){
 					});	
 			});
 
-			/*
+			
 			it('should return shifts within the date range', function(){
 				// strategy
 				// 1. authenticate
-				// 2. make get request with random dates
-				// 3. prove res has correct status
-				// 4. 
+				return chai.request(app)
+					.get('/api/users')
+					.set('Authorization', `Bearer ${token}`)
+				// 2. create array from Shift.find();
+					.then(function(res){
+						let shiftArray = [];
+				// 3. pick two random dates
+						let beginDate = faker.date.past(1);
+						let endDate = faker.date.between(beginDate, new Date());
+						let datedShiftsArray = [];
+						Shift.find()
+						.then(shifts => {
+							//console.log(shifts);
+							shiftArray = shifts;
+							return shiftArray;
+						})
+						.then(function(){
+				// 4. remove all shifts outside that range
+							for(let i=0; i<shiftArray.length; i++){
+								/*console.log('is ');
+								console.log(shiftArray[i].date);
+								console.log('between')
+								console.log(beginDate);
+								console.log('and');
+								console.log(endDate);*/
+								if(shiftArray[i].date < endDate && shiftArray[i].date > beginDate){
+									console.log('within range');
+									datedShiftsArray.push(shiftArray[i]);
+								};
+							};
+				// 5. ensure there is at least one shift available
+				// well crap, can I put promises in loops?  keep trying to do xyz until . . .   ?
+						})
+				// 6. make get request with dates
+						.then(function(){
+							let _res;
+							return chai.request(app)
+							.get('/api/shifts')
+							.set('Authorization', `Bearer ${token}`)
+							.query({start: beginDate, end: endDate}) 
+							.then(function(res){
+								_res = res;
+								console.log(_res);
+							})
+
+						})
+						// .catch(e => {
+						// 	console.error(e);
+						// 	throw e;
+						// })
+					})
+				// 7. prove res has correct status
+				// 8. prove res has correct number of shifts
+				// 9. prove res has correct shift._ids
 			});
-			*/
+			
 		});
 		// describe('Paychecks POST endpoint', function(){});
 		describe('Paychecks POST endpoint', function(){
@@ -373,7 +460,7 @@ describe('tests', function(){
 					});
 			});
 		});
-		// TODO! describe('Paychecks GET endpoint', function(){});
+		// describe('Paychecks GET endpoint', function(){});
 		describe('Paychecks GET endpoint', function(){
 			it('should return all paychecks', function(){
 				// strategy

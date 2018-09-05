@@ -83,13 +83,16 @@ router.route('/shifts')
                     const filters = { 
                         user_id: user._id,
                     };
+                    // console.log('within API, query is: ');
+                    // console.log(req.query);
                     // adding the ability to search for an optional range
-                    if(req.query["start"]){
-                        filters[date] = {
+                    if(req.query['start']){
+                        filters['date'] = {
                             $gte: req.query.start,
                             $lt: req.query.end
                         };                        
                     };
+                    // console.log(filters);
                     Shift.find(filters)                
                     .then(shifts => res.json(shifts))
                     .catch(err => {

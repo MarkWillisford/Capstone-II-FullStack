@@ -12,7 +12,7 @@ function checkUser(callback) {
     const token = sessionStorage.getItem('token');
     if(!token) { // If the user is not logged in, send them to the Login Screen
         console.log('not logged in');
-        location.href = 'http://localhost:8080/login.html';
+        location.href = '/login.html';
     } else { // If the user is logged in, check to make sure its a valid token
         $.ajax({
             url: '/api/users',
@@ -34,7 +34,7 @@ function checkUser(callback) {
             },
             error: () => {
                 sessionStorage.removeItem('token');
-                location.href = 'http://localhost:8080/login.html';
+                location.href = '/login.html';
             }
         })
     }

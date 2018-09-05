@@ -1,1 +1,3 @@
 user.routers.js ln 30. 		.then(() => res.status(201).json(User))       // This seems dangerous. yet it is what is discribed for testing purposes. 
+
+Two questions, 1.) app isn't running off of mlab, its still 

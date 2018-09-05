@@ -11,7 +11,6 @@ function loginListener() {
                 password: $('.loginPasswordText').val().trim(),
             },
             success: (response) => {
-                debugger;
                 sessionStorage.setItem('token', response.token);
                 location.href = '/index.html';
             }
