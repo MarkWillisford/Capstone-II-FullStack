@@ -22,7 +22,7 @@ function checkUser(callback) {
             success: (response) => {
                 //console.log(response)
                 $('#loader-wrapper').hide();
-                const payloadData = parseJwt(token);
+                const payloadData = response; //parseJwt(token);
                 $('.js_User').html(`${payloadData.username}`);
                 globalUser_id = payloadData._id;
                 console.log(payloadData);

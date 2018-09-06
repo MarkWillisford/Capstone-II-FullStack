@@ -31,7 +31,7 @@ function getDatedDataFuncion(callbackFn){
         	end: end,
         },
 	    success: (response) => {
-	    	console.log(response);
+	    	//console.log(response);
 	    	callbackFn(response);
         },
 	    error: function(err) { console.log(err); }
@@ -64,7 +64,7 @@ function displayData(data){
 		"ppa": [], // calc
 	}
 
-	console.log(data);
+	// console.log(data);
 
 	// iterate through our data to build our dataSet
 	for(let i=0; i<data.length; i++){

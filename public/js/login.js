@@ -13,6 +13,9 @@ function loginListener() {
             success: (response) => {
                 sessionStorage.setItem('token', response.token);
                 location.href = '/index.html';
+            },
+            error: (err) => {
+                // do cool html stuff
             }
         })
     });
@@ -32,13 +35,6 @@ function loginListener() {
   };
 
 function signupListener(){
-    // ASK MICHAL!!!!!!
-    //$('.signupBtn').click(function() {
-        //console.log('within singup link function');
-        // location.href = 'http://localhost:8080/signup.html'; <-- not working, goes back to login
-        // window.open('http://localhost:8080/signup.html'); <--- works in a new tab . . .   
-        // window.location = 'http://localhost:8080/signup.html'; <--- Also not working
-    //});
     $('.signupBtn').on('click', function(){
         console.log('within singup link function');
         window.location = "http://www.google.com/";    

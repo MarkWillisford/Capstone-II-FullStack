@@ -19,6 +19,9 @@ module.exports = (passport) => {
                         email: user.email,
                         username: user.username,
                         role: user.role,
+                        monthlyIncomeGoal: user.monthlyIncomeGoal,
+                        monthlyHourlyGoal: user.monthlyHourlyGoal,
+                        hourlyWage: user.hourlyWage
                     };
                     // and pass it to the done function?
                     done(null, userData);

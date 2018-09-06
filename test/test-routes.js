@@ -338,7 +338,7 @@ describe('tests', function(){
 					});	
 			});
 			
-			//************************** BROKEN *************************************
+			// //************************** DON'T NEED! *************************************
 			// it('should return shifts within the date range', function(){
 			// 	// strategy
 			// 	// 1. authenticate
@@ -372,13 +372,14 @@ describe('tests', function(){
 			// 	// 6. make get request with dates
 			// 			.then(function(){
 			// 				let _res;
+			// 				console.log(token);
 			// 				return chai.request(app)
 			// 				.get('/api/shifts')
+			// 				// .query({start: beginDate, end: endDate}) 
 			// 				.set('Authorization', `Bearer ${token}`)
-			// 				.query({start: beginDate, end: endDate}) 
 			// 				.then(function(res){
 			// 					_res = res;
-			// 					console.log(_res);
+			// 					// console.log(_res);
 			// 				})
 
 			// 			})

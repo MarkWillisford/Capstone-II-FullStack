@@ -8,6 +8,6 @@ settings.js doesn't seem to be saving settings data
 	calls protected.js ln 24 shows that settings are not received from the server 
 	user.router.js ln 41 returns req.user on a successful get request. 
 	This only seems to happen until you log out and relog at which point the app can find your settings
-testing getting a range of shifts returning unauthorized
+SKIPPED - testing getting a range of shifts returning unauthorized
 
 FIXED - sign up doesn't log you in.
