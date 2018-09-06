@@ -42,6 +42,7 @@ router.route('/users')
             const token = jwt.sign(tokenPayload, config.SECRET, {
                 expiresIn: config.EXPIRATION,
             }); // and return it
+            //console.log(token);
             return res.status(201).json({ token: token });
 
             
@@ -77,8 +78,8 @@ router.route('/users')
             }
         });
 
-        console.log('within user.router.js, req.body is: ');
-        console.log(req.body);
+        // console.log('within user.router.js, req.body is: ');
+        // console.log(req.body);
 
         User
         .findByIdAndUpdate(req.body.id, { $set: updated }, { new: true })
