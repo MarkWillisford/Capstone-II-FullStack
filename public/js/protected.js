@@ -25,11 +25,14 @@ function checkUser(callback) {
                 const payloadData = parseJwt(token);
                 $('.js_User').html(`${payloadData.username}`);
                 globalUser_id = payloadData._id;
+                console.log(payloadData);
                 user_Settings = {
                     "monthlyIncomeGoal": payloadData.monthlyIncomeGoal,
                     "monthlyHourlyGoal": payloadData.monthlyHourlyGoal,
                     "hourlyWage": payloadData.hourlyWage,
                 };
+                console.log('in protected.js checkUser() success call. res is: ');
+                console.log(user_Settings);
                 callback();
             },
             error: () => {

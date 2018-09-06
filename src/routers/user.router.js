@@ -27,12 +27,40 @@ router.route('/users')
 			username: req.body.username,
 		})
 		// assuming no errors we return a 201 created code
-		.then(user => res.status(201).json({
-            id: user.id,
-            email: user.email,
-            username: user.username,
-            password: user.password,
-        }))                                                    
+
+        .then(user => {
+            // if we got here, create a token payload (user)
+            const tokenPayload = {
+                _id: user._id,
+                email: user.email,
+                username: user.username,
+                role: user.role,
+                monthlyIncomeGoal: user.monthlyIncomeGoal,
+                monthlyHourlyGoal: user.monthlyHourlyGoal,
+                hourlyWage: user.hourlyWage
+            }; // send it off in a token
+            const token = jwt.sign(tokenPayload, config.SECRET, {
+                expiresIn: config.EXPIRATION,
+            }); // and return it
+            return res.status(201).json({ token: token });
+
+            
+        })
+
+
+
+		// .then(user => res.status(201).json({
+  //           id: user.id,
+  //           email: user.email,
+  //           username: user.username,
+  //           password: user.password,
+  //       }))                                            
+
+
+
+
+
+
 		// if there are errors we catch them and send a 400 code and generate an error
 		.catch(report => res.status(400).json(errorsParser.generateErrorResponse(report)));
 	})
@@ -48,6 +76,9 @@ router.route('/users')
                 updated[field] = req.body[field];
             }
         });
+
+        console.log('within user.router.js, req.body is: ');
+        console.log(req.body);
 
         User
         .findByIdAndUpdate(req.body.id, { $set: updated }, { new: true })
@@ -66,8 +97,8 @@ router.post('/login', disableWithToken, requiredFields('email', 'password'), (re
     	// if we didn't find it
         if (!foundResult) {
             return res.status(400).json({
-                generalMessage: 'Email or password is incorrect',      
-            });
+                generalMessage: 'Email or password is incorrect',       // <!-- if this is returned the following
+            });                                                         // then statement breaks
         }
         // if we did we continue
         return foundResult;
