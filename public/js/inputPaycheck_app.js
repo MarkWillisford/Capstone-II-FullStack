@@ -21,61 +21,77 @@ const fpPayPeriod = flatpickr(".payperiod", {
     weekNumbers: true,
 }); // flatpickr
 
-const payPeriodPromiseCall = new Promise((resolve, reject) => {
-    setTimeout(function () {
-    resolve('in promise: ');
-  }, 1000);
-});
+// const payPeriodPromiseCall = new Promise((resolve, reject) => {
+//     setTimeout(function () {
+//     resolve('in promise: ');
+//   }, 1000);
+// });
 
 function inputListener(){
     $('.newPaycheckForm').on('submit', function(e){
-	    e.preventDefault();
-    	// get the form data and put it in the newShift object
-		let dateOfCheckArray = fpDate.selectedDates;
-        let payPeriodArray = fpPayPeriod.selectedDates;
+        e.preventDefault();
+        confirmationListener();
+        confirmation_anotherListener();
+        cancelListener();
 
-		dataToSend = {
-            user_id: `${globalUser_id}`,
-            dateOfCheck: `${dateOfCheckArray[0]}`,
-            startDate: `${payPeriodArray[0]}`,
-            endDate: `${payPeriodArray[1]}`,
-            hours: `${$('.newPaycheckHours').val()}`,
-            wages: `${$('.newPaycheckWages').val()}`,
-            declaredTips: `${$('.newPaycheckTips').val()}`,
-            taxes: `${$('.newPaycheckTaxes').val()}`,
-            netPay: `${$('.newPaycheckNetPay').val()}`,
-        };
-
-        console.log('in listener: ');
-            console.log(dataToSend);
-        dataToCompare = { };
-        payPeriodPromiseCall.then(msg => {
-            console.log('in then: ');
-            console.log(msg);
-        });
-        // we need an ajax call to compare our check to. It needs to be in a promise so we 
-        // wait before attempting the compare . . .   
-
-
-
-/*
-
-	    $.ajax({
-	        url: '/api/paychecks',
-	        method: 'POST',
-	        data: dataToSend,
-	        success: (response) => {
-	            console.log('success');
-	            location.href = '/index.html';
-	        }
-	    })	
-
-*/
-
-
-
+        $(".js_confirmation").show();
+        $(".confirmationSpn").show();
+        $(".cancelBtn").show();
+        $(".confirmationBtn").show();
+        $(".confirmation_anotherBtn").show();
     });
 }
+
+function confirmationListener(){
+    $('.confirmationBtn').on('click', function(e){
+        ajaxCall('/index.html');
+    });
+};
+
+function confirmation_anotherListener(){
+    $('.confirmation_anotherBtn').on('click', function(e){
+        ajaxCall('/inputShift.html');
+    });
+};
+
+function cancelListener(){
+    $('.cancelBtn').on('click', function(e){
+        $(".js_confirmation").hide();
+        $(".confirmationSpn").hide();
+        $(".cancelBtn").hide();
+        $(".confirmationBtn").hide();
+        $(".confirmation_anotherBtn").hide();       
+        $(".shiftSelect").focus();
+    });
+};
+
+function ajaxCall(destination){
+    // get the form data and put it in the newShift object
+    let dateOfCheckArray = fpDate.selectedDates;
+    let payPeriodArray = fpPayPeriod.selectedDates;
+
+    dataToSend = {
+        user_id: `${globalUser_id}`,
+        dateOfCheck: `${dateOfCheckArray[0]}`,
+        startDate: `${payPeriodArray[0]}`,
+        endDate: `${payPeriodArray[1]}`,
+        hours: `${$('.newPaycheckHours').val()}`,
+        wages: `${$('.newPaycheckWages').val()}`,
+        declaredTips: `${$('.newPaycheckTips').val()}`,
+        taxes: `${$('.newPaycheckTaxes').val()}`,
+        netPay: `${$('.newPaycheckNetPay').val()}`,
+    };
+
+    $.ajax({
+        url: '/api/paychecks',
+        method: 'POST',
+        data: dataToSend,
+        success: (response) => {
+            console.log('success');
+            location.href = destination; 
+        }
+    });
+};
 
 $(function(){
 	checkUser(inputListener);	

@@ -33,12 +33,19 @@
         <label><input type="text" class="newPaycheckHours" placeholder="Enter your hours worked:"></label>
         <label><input type="text" class="newPaycheckWages" placeholder="Enter your wages earned:"></label>
         <label><input type="text" class="newPaycheckTips" placeholder="Enter your declared tips:"></label>
-        <label><input type="text" class="newPaycheckTaxes" placeholder="Enter how many taxes were paid:"></label>
+        <label><input type="text" class="newPaycheckTaxes" placeholder="Enter how much taxes were:"></label>
         <label><input type="text" class="newPaycheckNetPay" placeholder="Enter your check amount:"></label>
 
         <button type="submit" class="submitButton">Enter >></button>
       </form>
       <a href="/index.html">Home</a><br>
+
+      <div class="js_confirmation" style="display: none">
+        <span class="confirmationSpn" style="display: none">Is the above data correct?</span><br>
+        <button class="cancelBtn" style="display: none"><< No, reenter shift</button>
+        <button class="confirmationBtn" style="display: none">Yes >></button>
+        <button class="confirmation_anotherBtn"  style="display: none">Yes and enter another >></button>
+      </div>
 
       <!-- Scripts -->
       <script src="js/protected.js"></script>

@@ -75,7 +75,15 @@ function displayData(data){
 
 	// iterate through our data to build our dataSet
 	for(let i=0; i<data.length; i++){
-		dataSet.dates.push(data[i].date);		
+		// I should format the dates as they go into the dataSet array
+		// options: weekday: "narrow", "short", "long"
+		// year:  "numeric", "2-digit"
+		// month: "numeric", "2-digit", "narrow", "short", "long"
+		// day: "numeric", "2-digit"
+		let options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+		let dateToFormat  = data[i].date;
+
+		dataSet.dates.push(new Date(dateToFormat).toLocaleDateString("en-US", options));		
 		dataSet["net tips"].push(data[i]["netTips"]);
 		dataSet["tip %"].push( + // calculations and the toFixed() to make it a %
 			(	
