@@ -64,7 +64,14 @@ function displayData(data){
 		"ppa": [], // calc
 	}
 
-	// console.log(data);
+	console.log(data);
+	// first lets sort our data by date
+	data.sort(function(a,b){
+		var c = new Date(a.date);
+		var d = new Date(b.date);
+		return c-d;
+	});
+	console.log(data);
 
 	// iterate through our data to build our dataSet
 	for(let i=0; i<data.length; i++){
@@ -109,6 +116,8 @@ function displayData(data){
 		);
 	}
 	
+	//console.log(dataSet);
+
 	/***************************
 	*	myNetTipsChart
 	***************************/

@@ -84,7 +84,7 @@ function displayShiftData(data){
 	}%`);
 	
 	let fourPercent = dataTotals.sales["food and NA beverages"]*.04;
-	let diff = dataTotals.tipouts["support"] - fourPercent;
+	let diff = (dataTotals.tipouts["support"] - fourPercent).toFixed(2);
 	let OverUnder = "";
 	if(diff > 0){
 		OverUnder = "over"
