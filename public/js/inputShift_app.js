@@ -32,7 +32,7 @@ function confirmationListener(){
 
 function confirmation_anotherListener(){
     $('.confirmation_anotherBtn').on('click', function(e){
-        ajaxCall('/inputShift.html');
+        ajaxCall('/input_shift.html');
     });
 };
 

@@ -19,6 +19,9 @@
     <body>
       <p>Hello <span class="js_User"></span>.</p>
       <hr>
+      <!-- daily / weekly / monthly -->
+      <!-- this month / 1 month / 3 months / 6 months / 1 year / total / selct range -->
+
       <div class=resetDate>
         <input type="text" placeholder="Select Dates to view. . ." data-input>
         <button class="input-button" title="clear" data-clear>RESET</button>
@@ -28,12 +31,12 @@
       <br>
       <a href="/index.html">Home</a><br>
 
-      <canvas id="myNetTipsChart" width="100 px" height="100 px"></canvas>
-      <canvas id="myTipsPercentageChart" width="100 px" height="100 px"></canvas>
-      <canvas id="myCalculatedHourlyChart" width="100 px" height="100 px"></canvas>
-      <canvas id="mySalesChart" width="100 px" height="100 px"></canvas>
-      <canvas id="myAlcoholSalesChart" width="100 px" height="100 px"></canvas>
-      <canvas id="myPPASalesChart" width="100 px" height="100 px"></canvas>
+      <div class="canvasDiv"><canvas id="myNetTipsChart" width="100 px" height="100 px"></canvas></div>
+      <div class="canvasDiv"><canvas id="myTipsPercentageChart" width="100 px" height="100 px"></canvas></div>
+      <div class="canvasDiv"><canvas id="myCalculatedHourlyChart" width="100 px" height="100 px"></canvas></div>
+      <div class="canvasDiv"><canvas id="mySalesChart" width="100 px" height="100 px"></canvas></div>
+      <div class="canvasDiv"><canvas id="myAlcoholSalesChart" width="100 px" height="100 px"></canvas></div>
+      <div class="canvasDiv"><canvas id="myPPASalesChart" width="100 px" height="100 px"></canvas></div>
 
       <!-- Scripts -->
       <script src="js/MOCK_DATA.js"></script>
