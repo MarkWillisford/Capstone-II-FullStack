@@ -26,7 +26,7 @@ function inputListener(){
 
 function confirmationListener(){
     $('.confirmationBtn').on('click', function(e){
-        ajaxCall('/index.html');
+        ajaxCall('/home.html');
     });
 };
 

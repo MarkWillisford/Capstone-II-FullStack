@@ -19,6 +19,7 @@
     "express": "^4.16.3",
     "faker": "^4.1.0",
     "flatpickr": "^4.5.1",
+    "jquery-circle-progress": "^1.2.2",
     "jsonwebtoken": "7.4.1",
     "mongoose": "4.10.5",
     "mongoose-unique-validator": "1.0.6",

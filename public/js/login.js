@@ -12,7 +12,7 @@ function loginListener() {
             },
             success: (response) => {
                 sessionStorage.setItem('token', response.token);
-                location.href = '/index.html';
+                location.href = '/home.html';
             },
             error: (err) => {
                 // do cool html stuff
@@ -42,6 +42,7 @@ function signupListener(){
 }
 
 $(function(){
+    $('.loginEmailText').focus();
     loginListener();
-    signupListener();
+    //signupListener();
 });

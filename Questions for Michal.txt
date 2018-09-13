@@ -15,7 +15,16 @@ FIXED - sign up doesn't log you in.
 - graphs.html   display dates in an easy to read way, 
 - graphs.html   display data sorted by date
 - input paycheck.html   "enter how MUCH taxes were"
-input paycheck.html   on enter does nothing		?????
+- input paycheck.html   on enter does nothing		?????
 - input shift   needs confirmation before sending
 input shift   should have a way to easly see what days you have already entered. 
+
+TODO
+- change html links to 'index' to home
+- build landing page
+	- loosing background color when float:left is used at larger screen widths
+	loosing image behind header
+change singup / login pages to some sort of animated span
+Home page
+	dropdown isn't changing display on :hover
 
