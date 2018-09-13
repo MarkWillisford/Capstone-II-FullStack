@@ -20,11 +20,13 @@
           <a href="/index.html" class="main-title">Tip Tracker</a>
           <div class="navbar">
             <a href="/graphs.html">Graphs</a> || 
-            <span class="dropdown">Input </span><i class="fa fa-caret-down"></i>
-              <div class="dropdown-content">
+            <div class="dropdown-wrapper">
+              <span class="dropdown">Input </span><i class="fa fa-caret-down"></i>
+                <div class="dropdown-content">
                   <a href="/input_shift.html">Enter a new Shift</a>
-                  <a href="/input_paycheck.html">Enter a new Paycheck</a>
-              </div>
+                  <a href="/input_paycheck.html" class="blackText">Enter a new Paycheck</a>
+                </div>
+            </div>
              || 
             <a href="/settings.html">Settings</a>
           </div>
@@ -37,6 +39,25 @@
         <p>Current status as of <span class="js_Date"></span>:</p>
         <p>You have earned <span class="js_monthlyEarned"></span>, <span class="js_monthlyEarnedPercentage"></span> of <span class="js_Target_monthlyEarned"></span></p>
         <p>Your actual hourly rate is <span class="js_actualHourlyRate"></span>.<!-- <span class="js_actualHourlyRatePercentage"></span>. --> Alcohol sales are at <span class="js_alcoholSalesPercentage"></span> and you have tipped your support staff <span class="js_supportTipoutPercentage"></span>, <span class="js_supportDifference"></span>.</p>
+
+
+<script src="https://rawgit.com/kottenator/jquery-circle-progress/1.2.2/dist/circle-progress.js"></script>
+
+        <div class="circle" data-thickness="15">
+          <strong><i>%</i></strong>
+        </div>
+
+        <script>
+          let variable = 1.1;
+            $('.circle').circleProgress({
+              value: variable
+            }).on('circle-animation-progress', function(event, progress) {
+              $(this).find('strong').html(Math.round(100 * progress) + '<i>%</i>');
+            });
+        </script>
+
+
+
       </main>
 
       <!-- Scripts -->

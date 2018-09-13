@@ -22,8 +22,9 @@ input shift   should have a way to easly see what days you have already entered.
 TODO
 - change html links to 'index' to home
 - build landing page
-	loosing background color when float:left is used at larger screen widths
+	- loosing background color when float:left is used at larger screen widths
 	loosing image behind header
 change singup / login pages to some sort of animated span
 Home page
 	dropdown isn't changing display on :hover
+

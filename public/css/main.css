@@ -11,6 +11,7 @@
 body{
     font-family: 'Open Sans', sans-serif;
     color: black;/*white;*/
+    margin: 0;
 }
 header{
     width: 100%;
@@ -38,6 +39,10 @@ a{
     color: white;
 }
 
+.dropdown-wrapper{
+    position: relative;
+    display: inline-block;
+}
 .dropdown{
     text-decoration: underline;
     cursor: pointer;
@@ -45,47 +50,55 @@ a{
 .dropdown-content{
     display: none;
 }
-.dropdown:hover .dropdown-content{
+.dropdown-content a{
     display: block;
 }
-/*.dropdown {
-
-    overflow: hidden;
-}
-.dropdown .dropbtn {
-    font-size: 16px;    
-    border: none;
-    outline: none;
-    color: white;
-    padding: 14px 16px;
-    background-color: inherit;
-    font-family: inherit;
-    margin: 0;
-    display: flex;
-}
-.dropdown-content {
-    display: none;
+.dropdown-wrapper:hover .dropdown-content,
+.dropdown-wrapper:focus .dropdown-content{
+    display: block;
     position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+    left: 0;
+    top: 100%;
+    white-space: nowrap;
 }
-.dropdown-content a {
-    float: none;
+.blackText{
     color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
 }
-.dropdown-content a:hover {
-    background-color: #ddd;
+
+/*************************/
+/*   Rules for circles   */
+/*************************/
+
+.circle {
+  width: 100px;
+  margin: 6px 6px 20px;
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  line-height: 1.2;
 }
-.dropdown:hover .dropdown-content {
-    display: block;
+.circle canvas {
+  vertical-align: top;
 }
-*/
+.circle strong {
+  position: absolute;
+  top: 30px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  line-height: 40px;
+  font-size: 30px;
+}
+.circle strong i {
+  font-style: normal;
+  font-size: 0.6em;
+  font-weight: normal;
+}
+.circle span {
+  display: block;
+  color: #aaa;
+  margin-top: 12px;
+}
 
 
 
@@ -102,13 +115,39 @@ a{
 
 .landingImage{
     background-color: white;
-    background: url("../images/busy_restaurant2.jpg") no-repeat center center; 
+    background: url("../images/busy_restaurant.jpg") no-repeat center center; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
     height: 80vh;
     width: 100%;
+    position: relative;
+/*
+    background-color: white;
+    background: url(../images/busy_restaurant2.jpg) no-repeat left top;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: auto;
+    height: 80vh;
+    max-height: 464px;
+    width: 100%;
+
+set media query at >700px
+*/
+
+
+
+}
+.bold {
+    font-weight: bold;
+}
+.sloganText{
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    font-size: 20px;
 }
 .landingFeatures{
     background-color: #600000;
