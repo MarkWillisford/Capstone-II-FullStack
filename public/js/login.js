@@ -42,6 +42,7 @@ function signupListener(){
 }
 
 $(function(){
+    $('.loginEmailText').focus();
     loginListener();
-    signupListener();
+    //signupListener();
 });
