@@ -8,24 +8,52 @@
           src="https://code.jquery.com/jquery-3.2.1.min.js"
           integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
           crossorigin="anonymous"></script>
-        <!--<link href="css/main.css" rel="stylesheet" type="text/css" />
-        <link href="css/float-grid.css" rel="stylesheet" />-->
+        <link href="css/main.css" rel="stylesheet" type="text/css" />
+        <link href="css/float-grid.css" rel="stylesheet" />
+        <link href="css/animate.css" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     </head>
     <body>
-      <h1>Welcome to the Income and Tips tracker</h1>
-      <h2>By restaurant workers for restaurant workers</h2>
+      <header role="header" class="header">
+        <nav>
+          <a href="/index.html" class="main-title">Tip Tracker</a>
+        </nav>
+      </header>
 
-      <form class="loginForm"> <!--action="js/signup.js" method="post">-->
-      <legend class="loginFields"></legend>
-        <label><input type="text" class="loginEmailText" placeholder="Enter your email:"></label>
-        <label><input type="text" class="loginPasswordText" placeholder="Enter a password"></label>
+      <div class=backgroundImage>
+        <div class="centeredContainer">
+          <div class="loginButtons" id="loginButton">LOGIN</div>
+          <div class="loginButtons" id="signupButton">SIGNUP</div>
+          <h1>Welcome to Tips Tracker</h1>
+          <h2>An income and sales statistics tracking tool</h2>
+          <h2>By restaurant workers for restaurant workers</h2>
 
-        <button type="submit" class="submitButton">Login >></button>
-        <a href="/signup.html">Sign Up >></a><br>
-      </form>
+          <!-------- LOGIN FORM -------->
+          <form class="loginForm"> 
+          <legend class="loginFields"></legend>
+            <label><input type="text" class="loginEmailText" placeholder="Enter your email:"></label>
+            <label><input type="text" class="loginPasswordText" placeholder="Enter a password:"></label>
+            <br>
+            <button type="submit" class="submitButton">Login >></button>
+          </form>
+          <!---------------------------->
+
+          <!-------- SIGNUP FORM -------->
+          <form class="signupForm" style="display: none"> 
+          <legend class="signupFields"></legend>
+            <label><input type="text" class="signupEmailText" placeholder="Enter your email:"></label>
+            <label><input type="text" class="signupUserNameText" placeholder="Enter an user name:"></label>
+            <label><input type="text" class="signupPasswordText" placeholder="Enter a password:"></label>
+            <br>
+            <button type="submit" class="submitButton">Signup >></button>
+          </form>
+          <!---------------------------->
+        </div>
+      </div>
       <!-- Scripts -->
+      <script type="text/javascript" src="js/loginSignupToggle.js"></script>
       <script type="text/javascript" src="js/login.js"></script>
+      <script type="text/javascript" src="js/signup.js"></script>
       <!--<script src="js/app.js"></script>-->
     </body>
 </html>

@@ -20,7 +20,28 @@
       <p>Hello <span class="js_User"></span>.</p>
       <hr>
       <!-- daily / weekly / monthly -->
+      <div class="dataGrouping">
+        <select>
+          <option value="0">Group data by: </option>
+          <option value="daily">Daily</option>
+          <option value="weekly">Weekly</option>
+          <option value="monthly">Monthly</option>
+        </select>
+      </div>
+
       <!-- this month / 1 month / 3 months / 6 months / 1 year / total / selct range -->
+      <div class="">
+        <select>
+          <option value="0">View data from: </option>
+          <option value="thisMonth">This month</option>
+          <option value="1month">1 month</option>
+          <option value="3months">3 months</option>
+          <option value="6months">6 months</option>
+          <option value="1year">1 year</option>
+          <option value="all">All</option>
+          <option value="selectRange">Select range</option>
+        </select>
+      </div>
 
       <div class=resetDate>
         <input type="text" placeholder="Select Dates to view. . ." data-input>
@@ -29,7 +50,7 @@
 
       <button type="button" class="js_ViewGraphsBtn">View</button>
       <br>
-      <a href="/index.html">Home</a><br>
+      <a href="/home.html">Home</a><br>
 
       <div class="canvasDiv"><canvas id="myNetTipsChart" width="100 px" height="100 px"></canvas></div>
       <div class="canvasDiv"><canvas id="myTipsPercentageChart" width="100 px" height="100 px"></canvas></div>

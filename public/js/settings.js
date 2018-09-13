@@ -117,7 +117,7 @@ function submitListener(){
                 },
                 data: newSettings,
                 success: (response) => {
-                    location.href = '/index.html';
+                    location.href = '/home.html';
                 }
             });         
         }

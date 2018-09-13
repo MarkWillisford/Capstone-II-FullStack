@@ -8,17 +8,77 @@
           src="https://code.jquery.com/jquery-3.2.1.min.js"
           integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
           crossorigin="anonymous"></script>
-        <!--<link href="css/main.css" rel="stylesheet" type="text/css" />
-        <link href="css/float-grid.css" rel="stylesheet" />-->
+        <link href="css/main.css" rel="stylesheet" type="text/css" />
+        <link href="css/float-grid.css" rel="stylesheet" />
+        <link href="css/animate.css" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     </head>
     <body>
-      <main class="main" aria-live="assertive">
+      <header role="header" class="header">
+        <nav>
+          <a href="/index.html" class="main-title">Tip Tracker</a>
+          <div class="navbar">
+            <a href="/login.html" class="loginLink">Log In</a>
+          </div>
+        </nav>
+      </header>
+
+      <main class="main">
+        <div class="toFade">
+          <div class="landingImage">
+            
+          </div>
+
+          <div class="landingFeatures">
+            <div class="features col-4">
+              <div class="feature_Icon">ICON</div>
+              <p>Input and save shift and paycheck data for secure storage so you never lose your records.</p>
+            </div>
+            <div class="features col-4">
+              <div class="feature_Icon">ICON</div>
+              <p>Track and view sales, alcohol sales percentages, calculated hourly wages, tip out percentages and more, over time or for a single shift.</p>
+            </div>
+            <div class="features col-4">
+              <div class="feature_Icon">ICON</div>
+              <p>Save user settings for hourly rates, sales goals and more. Easily tracking and displaying your goals and progress</p>
+            </div>
+          </div>
+
+          <div class="landingMore">
+            <div><p>IMAGE</p></div>
+            <div>
+              <h2>Built by Servers.</h2>
+              <p>During my years in the restaurant industry, I needed a way to track my income, sales and other relevant information. Tips Tracker was built to facilitate those tasks in my career and now in yours as well.</p>
+            </div>
+            <div><p>IMAGE</p></div>
+            <div>
+              <h2>Agile Development.</h2>
+              <p>I am constantly growing my codebase to add or improve features. With so many professional servers out there, I want to make a product that is viable, maintainable and helpful for my users.</p>
+            </div>
+            <div><p>IMAGE</p></div>        
+            <div>
+              <h2>Open Source.</h2>
+              <p>Tips Tracker is open source. I would encourage you to offer suggestions, or even help improve this tool and grow your coding skills at the same time. Find me on <a href="">Github.</a></p>
+            </div>          
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+<!--
+
+
+
         <h2>Current status</h2>
         <p>Hello <span class="js_User"></span>.</p>
         <p>Current status as of <span class="js_Date"></span>:</p>
         <p>You have earned <span class="js_monthlyEarned"></span>, <span class="js_monthlyEarnedPercentage"></span> of <span class="js_Target_monthlyEarned"></span></p>
-        <p>Your actual hourly rate is <span class="js_actualHourlyRate"></span>.<!-- <span class="js_actualHourlyRatePercentage"></span>. --> Alcohol sales are at <span class="js_alcoholSalesPercentage"></span> and you have tipped your support staff <span class="js_supportTipoutPercentage"></span>, <span class="js_supportDifference"></span>.</p>
+        <p>Your actual hourly rate is <span class="js_actualHourlyRate"></span>.<!-- <span class="js_actualHourlyRatePercentage"></span>. --> <!-- Alcohol sales are at <span class="js_alcoholSalesPercentage"></span> and you have tipped your support staff <span class="js_supportTipoutPercentage"></span>, <span class="js_supportDifference"></span>.</p>
 
         <p>        
           <a href="/graphs.html">Graphs</a><br>
@@ -33,12 +93,19 @@
           </dir>
         </p>
 
+
+      -->
+
       </main>
 
       <!-- Scripts -->
       <script src="js/MOCK_DATA.js"></script>
       <script src="js/protected.js"></script>
       <script src="js/get_shift.js"></script>
-      <script src="js/home_app.js"></script>
+      <script src="js/index.js"></script>
+      <!--<script src="js/home_app.js"></script>-->
+      <div class="loginSignup">
+        
+      </div>
     </body>
 </html>
