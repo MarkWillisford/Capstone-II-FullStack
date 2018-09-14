@@ -67,7 +67,6 @@ function displayShiftData(data){
 
 	// Set HTML to display data
 	$( ".js_Date" ).html(getDate());
-	$( ".js_monthlyEarned" ).html(`$${dataTotals["netTips"]}`);
 	$( ".js_Target_monthlyEarned" ).html(`$${user_Settings.monthlyIncomeGoal}`);
 	$( ".js_monthlyEarnedPercentage" ).html(`${		
 		+((100 * dataTotals["netTips"] / user_Settings.monthlyIncomeGoal).toFixed(0))
@@ -92,6 +91,47 @@ function displayShiftData(data){
 		OverUnder = "under"
 	}
 	$(".js_supportDifference" ).html(`${OverUnder} by $${diff}`);
+
+
+
+
+
+	let wages = dataTotals.hours * user_Settings.hourlyWage;
+	console.log('hours: ');
+	console.log(dataTotals.hours);
+	console.log("*")
+	console.log('wages: ');
+	console.log(user_Settings.hourlyWage);
+	console.log('= ');
+	console.log(wages);
+
+	// calculate the total earnings
+	let totalEarned = dataTotals["netTips"] + wages;
+	// if total earnings is over the target, activate the arrow
+	if(totalEarned > user_Settings.monthlyIncomeGoal){
+		$(".overageArrowCard").show();
+		$(".js_Target_MonthlyEarned_Overage").html(`+$${(totalEarned - user_Settings.monthlyIncomeGoal).toFixed(2)}`);
+	};
+
+	$( ".js_monthlyEarned" ).html(`$${totalEarned.toFixed(2)}`);
+    let monthlyEarnedPercentage = (+((totalEarned) / user_Settings.monthlyIncomeGoal).toFixed(2));
+    console.log(monthlyEarnedPercentage);
+	    $('#incomeCircle').circleProgress({
+	      value: monthlyEarnedPercentage
+	    }).on('circle-animation-progress', function(event, progress, stepValue) {
+	      $(this).find('strong').html(100 * (stepValue.toFixed(2).substr(1)) + '<i>%</i>');
+	    });
+
+    let alcoholSalesPercentage = (+(dataTotals.sales["alcoholic beverages"] / 
+		( dataTotals.sales["alcoholic beverages"] + dataTotals.sales["food and NA beverages"] )).toFixed(2));
+    console.log(alcoholSalesPercentage);
+	    $('#alcCircle').circleProgress({
+	      value: alcoholSalesPercentage
+	    }).on('circle-animation-progress', function(event, progress, stepValue) {
+	      $(this).find('strong').html(100 * (stepValue.toFixed(2).substr(1)) + '<i>%</i>');
+	    });
+
+
 };
 
 // This function will save our user settings into our setting object

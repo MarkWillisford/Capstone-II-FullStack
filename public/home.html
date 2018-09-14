@@ -10,6 +10,7 @@
           crossorigin="anonymous"></script>
         <link href="css/main.css" rel="stylesheet" type="text/css" />
         <link href="css/float-grid.css" rel="stylesheet" />
+        <link href="css/arrows.css" rel="stylesheet" />
         <link href="css/animate.css" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -41,29 +42,67 @@
         <p>Your actual hourly rate is <span class="js_actualHourlyRate"></span>.<!-- <span class="js_actualHourlyRatePercentage"></span>. --> Alcohol sales are at <span class="js_alcoholSalesPercentage"></span> and you have tipped your support staff <span class="js_supportTipoutPercentage"></span>, <span class="js_supportDifference"></span>.</p>
 
 
-<script src="https://rawgit.com/kottenator/jquery-circle-progress/1.2.2/dist/circle-progress.js"></script>
 
-        <div class="circle" data-thickness="15">
-          <strong><i>%</i></strong>
+        <div class="container">
+          <div class="circleDisplays">
+            <div class="circleCard">
+              <div class="topLabel"><span class="js_monthlyEarned bold"></span></div>
+              <div class="circleWrapper">
+                <div class="circle" id="incomeCircle" data-thickness="15">
+                  <strong><i>%</i></strong>
+                </div>
+              </div>
+              <div class="bottomLabel bold">Income Goal:<br>
+                <span class="js_Target_monthlyEarned bold"></span></div>
+            </div>
+            <div class="overageArrowCard" style="display: none">
+              <div class="topLabel"></div>
+              <div class="arrowWrapper">
+                <span class="arrowUp">&#8593;</span>
+              </div>
+              <div class="bottomLabel bold"><span class="js_Target_MonthlyEarned_Overage"></span></div>
+            </div>
+            <div class="circleCard">
+              <div class="topLabel"></div>
+              <div class="circleWrapper">
+                <div class="circle" id="alcCircle" data-thickness="15">
+                  <strong><i>%</i></strong><br>
+                </div>
+              </div>
+              <div class="bottomLabel bold">Alcohol Sales<br>
+                <span class="bold"></span></div>
+            </div>            
+          </div>
+          <div class="statDisplays">
+            <div class="statsCard" id="calculatedWage">
+              
+            </div>
+            <div class="statsCard" id="tipPercentages">
+              
+            </div>
+          </div>
+
+
         </div>
-
-        <script>
-          let variable = 1.1;
-            $('.circle').circleProgress({
-              value: variable
-            }).on('circle-animation-progress', function(event, progress) {
-              $(this).find('strong').html(Math.round(100 * progress) + '<i>%</i>');
-            });
-        </script>
 
 
 
       </main>
 
       <!-- Scripts -->
+      <script src="https://rawgit.com/kottenator/jquery-circle-progress/1.2.2/dist/circle-progress.js"></script>
       <script src="js/MOCK_DATA.js"></script>
       <script src="js/protected.js"></script>
       <script src="js/get_shift.js"></script>
       <script src="js/home_app.js"></script>
+
+<!--         <script>
+          let variable = 1.1;
+            $('.circle').circleProgress({
+              value: variable
+            }).on('circle-animation-progress', function(event, progress) {
+              $(this).find('strong').html(Math.round(100 * progress) + '<i>%</i>');
+            });
+        </script> -->
     </body>
 </html>
