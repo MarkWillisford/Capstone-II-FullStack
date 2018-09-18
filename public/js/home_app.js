@@ -44,6 +44,35 @@ function getDate(){
 	return dateString;
 };
 
+function tipsListener(){
+	$('input[type=radio][name=tips]').on('change', function() {
+	    switch($(this).val()) {
+	        case 'gross':           
+        		$(".gross").show();
+        		$(".walk").hide();
+        		$(".tipout").hide();
+        		$(".tipPercentagesSpanWrapper").css("transform", "translateY(50%)");
+        		$(".tipPercentagesSpanWrapper").css("text-align", "center");
+	            break;
+	        case 'walk':
+        		$(".gross").hide();
+        		$(".walk").show();
+        		$(".tipout").hide();
+        		$(".tipPercentagesSpanWrapper").css("transform", "translateY(50%)");
+        		$(".tipPercentagesSpanWrapper").css("text-align", "center");
+	            break;
+	        case 'tipout':
+        		$(".gross").hide();
+        		$(".walk").hide();
+        		$(".tipout").show();
+        		$(".tipout").css("font weight","normal");
+        		$(".tipPercentagesSpanWrapper").css("transform", "none");
+        		$(".tipPercentagesSpanWrapper").css("text-align", "left");
+	            break;
+	    }
+	});
+};
+
 // This function will stay when we connect to real API
 function displayShiftData(data){
 	// lets total the data we have recieved
@@ -73,15 +102,33 @@ function displayShiftData(data){
 	}%`);	
 	$( ".js_actualHourlyRate" ).html(`$${
 		+(((dataTotals["netTips"] / dataTotals.hours) + user_Settings.hourlyWage).toFixed(2))
-	}`);
+	}/hr`);
 	$( ".js_alcoholSalesPercentage" ).html(`${
 		+((100 * dataTotals.sales["alcoholic beverages"] / 
 						( dataTotals.sales["alcoholic beverages"] + dataTotals.sales["food and NA beverages"] )).toFixed(0))
 	}%`);
-	$( ".js_supportTipoutPercentage" ).html(`${
+
+	console.log(dataTotals);
+	$(".walk").html(`${
+		+((100 * dataTotals.netTips / ( dataTotals.sales["alcoholic beverages"]
+		+ dataTotals.sales["food and NA beverages"] + dataTotals.sales["room charges"])).toFixed(1))
+	}%`);
+	$(".gross").html(`${
+		+((100 * (dataTotals.netTips
+			+ dataTotals.tipouts.bar
+			+ dataTotals.tipouts.kitchen
+			+ dataTotals.tipouts.support) /  
+		( dataTotals.sales["alcoholic beverages"]
+		+ dataTotals.sales["food and NA beverages"] + dataTotals.sales["room charges"])).toFixed(1))
+	}%`);
+	$(".tipoutBar").html(`Bar: ${
+		+((100 * dataTotals.tipouts["bar"] / dataTotals.sales["alcoholic beverages"]).toFixed(1))
+	}%`)
+	$(".tipoutSupport").html(`Support: ${
 		+((100 * dataTotals.tipouts["support"] / dataTotals.sales["food and NA beverages"]).toFixed(1))
 	}%`);
-	
+
+
 	let fourPercent = dataTotals.sales["food and NA beverages"]*.04;
 	let diff = (dataTotals.tipouts["support"] - fourPercent).toFixed(2);
 	let OverUnder = "";
@@ -97,13 +144,13 @@ function displayShiftData(data){
 
 
 	let wages = dataTotals.hours * user_Settings.hourlyWage;
-	console.log('hours: ');
-	console.log(dataTotals.hours);
-	console.log("*")
-	console.log('wages: ');
-	console.log(user_Settings.hourlyWage);
-	console.log('= ');
-	console.log(wages);
+	// console.log('hours: ');
+	// console.log(dataTotals.hours);
+	// console.log("*")
+	// console.log('wages: ');
+	// console.log(user_Settings.hourlyWage);
+	// console.log('= ');
+	// console.log(wages);
 
 	// calculate the total earnings
 	let totalEarned = dataTotals["netTips"] + wages;
@@ -115,7 +162,6 @@ function displayShiftData(data){
 
 	$( ".js_monthlyEarned" ).html(`$${totalEarned.toFixed(2)}`);
     let monthlyEarnedPercentage = (+((totalEarned) / user_Settings.monthlyIncomeGoal).toFixed(2));
-    console.log(monthlyEarnedPercentage);
 	    $('#incomeCircle').circleProgress({
 	      value: monthlyEarnedPercentage
 	    }).on('circle-animation-progress', function(event, progress, stepValue) {
@@ -124,7 +170,6 @@ function displayShiftData(data){
 
     let alcoholSalesPercentage = (+(dataTotals.sales["alcoholic beverages"] / 
 		( dataTotals.sales["alcoholic beverages"] + dataTotals.sales["food and NA beverages"] )).toFixed(2));
-    console.log(alcoholSalesPercentage);
 	    $('#alcCircle').circleProgress({
 	      value: alcoholSalesPercentage
 	    }).on('circle-animation-progress', function(event, progress, stepValue) {
@@ -174,4 +219,5 @@ function getAndDisplayShiftData(){
 
 $(function(){
 	checkUser(getAndDisplayShiftData);
+	tipsListener();
 });

@@ -38,6 +38,9 @@ header nav .navbar{
 a{
     color: white;
 }
+h2{
+    text-align: center;
+}
 
 .dropdown-wrapper{
     position: relative;
@@ -160,7 +163,7 @@ set media query at >700px
 
 @media only screen and (min-width: 640px){
     .centeredContainer{
-        border: 1px solid black;
+/*        border: 1px solid black;*/
         max-width: 400px;
         margin-right: auto;
         margin-left: auto;
@@ -216,7 +219,7 @@ set media query at >700px
 }
 @media only screen and (min-width: 640px){
     .container{
-            border: 1px solid yellow;
+/*            border: 1px solid yellow;*/
         max-width: 75%;
         margin-right: auto;
         margin-left: auto;
@@ -226,15 +229,31 @@ set media query at >700px
 }
 .circleDisplays{
     height: 200px;
-        border: 1px solid red;
+/*        border: 1px solid red;*/
     display: flex;
     justify-content: center;
+}
+.statDisplays{
+    margin-top: 5em;
+    height: 100px;
+/*        border: 1px solid red;*/
+    display: flex;
+    justify-content: space-around;
 }
 .circleCard{
     float: left;
         width: 150px;
         height: 200px;
     position: relative;
+}
+.statsCard{
+    float: left;
+        width: 150px;
+        height: 100px;
+    position: relative;
+    display: flex;
+/*    border: 1px solid green;*/
+    align-items: center;
 }
 .overageArrowCard{
     float: left;
@@ -249,6 +268,44 @@ set media query at >700px
     width: 100%;
     height: 25px;
 }
+.calculatedWageLabel{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+/*    border: 1px solid black;*/
+}
+.tipPercentagesTopLabel{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 25px;
+/*    border: 1px solid black*/
+}
+.tipPercentagesSpanWrapper{
+    transform: translateY(50%);
+    top: 50%; 
+}
+.js_TipoutPercentageDiv{
+    font-size: 14px;
+}
+.tipButtonWrapper{
+/*    border: 1px solid black;*/
+    width: 70px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: translateX(50%);
+    right: 0;
+    font-size: 14px;
+    text-align: left;
+}
+.tipout{
+    text-align: center;
+    font-size: 14px;
+}
 .circleWrapper{    
     position: absolute;
     top: 25px;
@@ -260,6 +317,24 @@ set media query at >700px
     top: 25px;
     left: 0;
     width: 100%; 
+}
+.statsLabel{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 25px;
+    transform: translateY(25%);
+    top: 50%; 
+    font-size: 22px;
+}
+.tipPercentagesStatsLabel{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 75px;
+    font-size: 22px;   
 }
 .bottomLabel{
     position: absolute;

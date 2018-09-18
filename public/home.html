@@ -35,11 +35,9 @@
       </header>
 
       <main class="main" aria-live="assertive">
-        <h2>Current status</h2>
-        <p>Hello <span class="js_User"></span>.</p>
-        <p>Current status as of <span class="js_Date"></span>:</p>
-        <p>You have earned <span class="js_monthlyEarned"></span>, <span class="js_monthlyEarnedPercentage"></span> of <span class="js_Target_monthlyEarned"></span></p>
-        <p>Your actual hourly rate is <span class="js_actualHourlyRate"></span>.<!-- <span class="js_actualHourlyRatePercentage"></span>. --> Alcohol sales are at <span class="js_alcoholSalesPercentage"></span> and you have tipped your support staff <span class="js_supportTipoutPercentage"></span>, <span class="js_supportDifference"></span>.</p>
+        <h2>Welcome back <span class="js_User"></span>.</h2>
+        <p style="text-align: center">Monthly data as of <span class="js_Date"></span>:</p>
+<!--         <span class="js_supportDifference"></span>.</p> -->
 
 
 
@@ -75,9 +73,26 @@
           </div>
           <div class="statDisplays">
             <div class="statsCard" id="calculatedWage">
+              <div class="calculatedWageLabel bold">Calculated Hourly Wage</div>
+              <div class="statsLabel"><span class="js_actualHourlyRate bold"></span></div>
               
             </div>
             <div class="statsCard" id="tipPercentages">
+              <div class="tipPercentagesTopLabel bold">Tips</div>
+              <div class="tipPercentagesStatsLabel">
+                <div class="tipPercentagesSpanWrapper">
+                  <!-- Three spans, 1 default set to display, the others turned off -->
+                  <span class="js_TipoutPercentage bold gross" style="display: none"></span>
+                  <span class="js_TipoutPercentage bold walk"></span>
+                  <span class="js_TipoutPercentage tipout tipoutBar" style="display: none"></span><br>
+                  <span class="js_TipoutPercentage tipout tipoutSupport" style="display: none"></span>
+                </div>
+                <div class="tipButtonWrapper">
+                  <input type="radio" name="tips" value="gross">Gross
+                  <input type="radio" name="tips" value="walk" checked>Walk
+                  <input type="radio" name="tips" value="tipout">tipouts
+                </div>
+              </div>
               
             </div>
           </div>
