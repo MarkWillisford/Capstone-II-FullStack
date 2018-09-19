@@ -9,15 +9,94 @@ const fp = flatpickr(".resetDate", {
     wrap: true,
     weekNumbers: true,
 }); // flatpickr
+let groupDataBy = "";
+let viewDataFrom = "";
 
 function getDatedDataFuncion(callbackFn){
-	let selectedDates = fp.selectedDates;	// this array holds our beginning and end dates
-	let start = selectedDates[0];
-	let end = selectedDates[1];
-	end.setHours(23,59,59,999);
+	let selectedDates = {};
+	let start = "";
+	let end = "";
+	let day = "";
+	let month = "";
+	let year = "";
+	let date = "";
 
-	console.log('start at: ' + start);
-	console.log('end at: ' + end);
+	switch(viewDataFrom){
+		case "thisMonth":
+			month = (new Date().getMonth()) + 1; // Jan = 0, Feb = 1 etc
+			year = new Date().getFullYear(); 
+			date = year + "-" + month + "-01";	// create a string
+			start = new Date(date);	// make a date object representing the beginning of this month
+			end = new Date();
+			end.setHours(23,59,59,999);
+			break;
+		case "1month":
+			day = (new Date().getDate());
+			month = (new Date().getMonth()); // remove the +1 to get last month
+			if(month < 0){
+				month = month+12;
+			};
+			year = new Date().getFullYear(); 
+			date = year + "-" + month + "-" + day;	// create a string
+			start = new Date(date);	// make a date object representing this day, last month
+			end = new Date();
+			end.setHours(23,59,59,999);
+			break;
+		case "3months":
+			day = (new Date().getDate());
+			month = (new Date().getMonth() - 2); // 3 months ago
+			if(month < 0){
+				month = month+12;
+			};
+			year = new Date().getFullYear(); 
+			date = year + "-" + month + "-" + day;	// create a string
+			start = new Date(date);	
+			end = new Date();
+			end.setHours(23,59,59,999);
+			break;
+		case "6months":
+			day = (new Date().getDate());
+			month = (new Date().getMonth() - 5); // 6 months ago
+			if(month < 0){
+				month = month+12;
+			};
+			year = new Date().getFullYear(); 
+			date = year + "-" + month + "-" + day;	// create a string
+			start = new Date(date);	
+			end = new Date();
+			end.setHours(23,59,59,999);
+			break;
+		case "1year":
+			day = (new Date().getDate());
+			month = (new Date().getMonth() + 1); 
+			if(month < 0){
+				month = month+12;
+			};
+			year = (new Date().getFullYear() - 1); 
+			date = year + "-" + month + "-" + day;	// create a string
+			start = new Date(date);	
+			end = new Date();
+			end.setHours(23,59,59,999);
+			break;
+		case "all":
+			day = (new Date().getDate());
+			month = (new Date().getMonth() + 1); 
+			if(month < 0){
+				month = month+12;
+			};
+			year = (new Date().getFullYear() - 5); // sets it before the app was live
+			date = year + "-" + month + "-" + day;	// create a string
+			start = new Date(date);	
+			end = new Date();
+			end.setHours(23,59,59,999);
+			break;
+		case "selectRange":
+			selectedDates = fp.selectedDates;	// this array holds our beginning and end dates
+			start = selectedDates[0];
+			end = selectedDates[1];
+			end.setHours(23,59,59,999);	
+			break;
+	}
 
 	const token = sessionStorage.getItem('token');
 	$.ajax({
@@ -32,26 +111,13 @@ function getDatedDataFuncion(callbackFn){
         },
 	    success: (response) => {
 	    	//console.log(response);
-	    	callbackFn(response);
+	    	callbackFn(response, groupDataBy);
         },
 	    error: function(err) { console.log(err); }
 	});
-	/*
-	let selectedData = [];
-
-	for(let i=0; i<MOCK_SHIFT_DATA.shifts.length; i++){
-		//let setDate = flatpickr.parseDate("2018-08-10", "Y-m-d");
-		let dateToTest = flatpickr.parseDate(MOCK_SHIFT_DATA.shifts[i].date, "d-m-y");
-		if(!(dateToTest < selectedDates[0]) && !(dateToTest > selectedDates[1])){
-			selectedData.push(MOCK_SHIFT_DATA.shifts[i]);
-		}
-	}
-
-	setTimeout(function(){ callbackFn(		selectedData		)}, 100);
-	*/
 };
 
-function displayData(data){
+function displayData(ungrouped_data, groupDataBy){
 	// a set of data arrays for easy access
 	let dataSet = {
 		"dates": [],
@@ -64,14 +130,49 @@ function displayData(data){
 		"ppa": [], // calc
 	}
 
-	console.log(data);
 	// first lets sort our data by date
-	data.sort(function(a,b){
+	ungrouped_data.sort(function(a,b){
 		var c = new Date(a.date);
 		var d = new Date(b.date);
 		return c-d;
 	});
-	console.log(data);
+
+	// now group the data into a new array "data"
+	let data = [];
+	let compareFunction = "";
+	if(groupDataBy == "weekly"){
+		compareFunction = compareWeek;
+	} else if(groupDataBy == "monthly"){
+		compareFunction = compareMonth;
+	};
+
+	if(groupDataBy != "daily"){	
+		for(let i=0; i<ungrouped_data.length; i++){
+			if(i==0){
+				data.push(ungrouped_data[i]);
+			} else {
+				if(compareFunction(ungrouped_data[i].date, data[data.length-1].date)){
+				// this is our compare function, if it returns true we loop through every key and combine values
+					data[data.length-1].alcoholicBeverages += ungrouped_data[i].alcoholicBeverages;
+					data[data.length-1].bar += ungrouped_data[i].bar;
+					data[data.length-1].food += ungrouped_data[i].food;
+					data[data.length-1].guests += ungrouped_data[i].guests;
+					data[data.length-1].hours += ungrouped_data[i].hours;
+					data[data.length-1].kitchen += ungrouped_data[i].kitchen;
+					data[data.length-1].netTips += ungrouped_data[i].netTips;
+					data[data.length-1].roomCharges += ungrouped_data[i].roomCharges;
+					data[data.length-1].servers += ungrouped_data[i].servers;
+					data[data.length-1].support += ungrouped_data[i].support;
+				} else {
+				// if it returns false we push a new entry. 
+					data.push(ungrouped_data[i]);
+				}
+			};
+		};
+	} else {
+		// its already grouped by date
+		data = ungrouped_data;
+	};
 
 	// iterate through our data to build our dataSet
 	for(let i=0; i<data.length; i++){
@@ -123,8 +224,6 @@ function displayData(data){
 			)
 		);
 	}
-	
-	//console.log(dataSet);
 
 	/***************************
 	*	myNetTipsChart
@@ -266,11 +365,65 @@ function displayChart(htmlElement, label, datasetLabel, dataArray){
 	});
 };
 
+// Adding this for getting and comparing week numbers
+Date.prototype.getWeekNumber = function(){
+  var d = new Date(Date.UTC(this.getFullYear(), this.getMonth(), this.getDate()));
+  var dayNum = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+  var yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+  return Math.ceil((((d - yearStart) / 86400000) + 1)/7)
+};
+
+function compareWeek(date1, date2){
+	if(new Date(date1).getWeekNumber() == new Date(date2).getWeekNumber()){
+		return true;
+	} else {
+		return false;
+	};
+};
+
+function compareMonth(date1, date2){
+	if(new Date(date1).getMonth() == new Date(date2).getMonth()){
+		return true;
+	} else {
+		return false;
+	};
+};
+
 function submitListener(){
-	$('.js_ViewGraphsBtn').click(function(e){
-        e.preventDefault();
-        getAndDisplayDatedData();
-    })
+	// $('.js_ViewGraphsBtn').click(function(e){
+ //        e.preventDefault();
+ //        getAndDisplayDatedData();
+ //    })
+    $('.viewDataFromSel').on("change", function(e){
+    	e.preventDefault();
+		viewDataFrom = $('.viewDataFromSel option:selected').val();
+    	if(viewDataFrom == "selectRange"){
+    		$('.resetDate').show();
+    	} else {		
+    		$('.resetDate').hide();
+    	};
+    });
+    $('.groupDataBySel').on("change", function(e){
+    	e.preventDefault();
+    	groupDataBy = $('.groupDataBySel option:selected').val();
+    });
+
+    $('.js_ViewGraphsBtn').on('click', function(e){
+    	e.preventDefault();
+    	let quit = false;
+    	if(!groupDataBy || groupDataBy == 0){
+    		alert("Please enter how you want your data grouped");
+    		quit = true;
+    	};
+    	if(!viewDataFrom || viewDataFrom == 0){
+    		alert("Please enter a time span for your data request");
+    		quit = true;
+    	}
+    	if(!quit){
+    		getAndDisplayDatedData();
+    	}
+    });
 };
 
 // This function will also stay

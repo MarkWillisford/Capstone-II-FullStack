@@ -133,7 +133,7 @@ set media query at >700px
     -o-background-size: cover;
     background-size: cover;    
     height: 90vh;
-    padding-top: 3vh;
+    padding-top: 4vh;
 }
 .loginButtons{
     width: 50%;
@@ -147,13 +147,13 @@ set media query at >700px
 #signupButton{
     background-color: #400000;
 }
-.centeredContainer{
+.centeredContainerLogin{
     background-color: #600000;
     color: white;
     opacity: .85;
     padding: 5px;
 }
-.centeredContainer input { 
+.centeredContainerLogin input { 
     font-size: 18px; 
     display: block;
     margin-top: 5px;
@@ -162,13 +162,27 @@ set media query at >700px
 }
 
 @media only screen and (min-width: 640px){
-    .centeredContainer{
+    .centeredContainerLogin{
 /*        border: 1px solid black;*/
         max-width: 400px;
         margin-right: auto;
         margin-left: auto;
         text-align: center;
     }
+    .centeredContainer{
+/*        border: 1px solid black;*/
+        max-width: 800px;
+        margin-right: auto;
+        margin-left: auto;
+        text-align: center;
+    }
+}
+
+.centeredContainer{
+    background-color: #200000;
+    color: white;
+    opacity: .75;
+    padding: 5px;    
 }
 
 /*************************/
@@ -351,112 +365,30 @@ set media query at >700px
     color: green;
 }
 
+/***************************/
+/*     Rules for Input     */
+/***************************/
 
-
-/*.wrapper{
-  min-height: calc(100vh - 50px);
-}
-
-h1{
-    color: white;
-    text-align: center;
-}
-main{
-    width: 90%;    
-    margin-top: 2vh;
+.newShiftForm{
+    max-width: 355px;
+    text-align: left;
     margin-left: auto;
     margin-right: auto;
-    padding: 12px;
-    background-color: rgba(0,0,0,0.5);
 }
-fieldset{
-    width: auto;
-    padding: 3px;
-}
-button{
-    margin: 3px;
-}
-button:not([disabled]){ 
-    font-weight: bold;   
-}
-button:not([disabled]):hover{
-    cursor: pointer;   
-    font-style: italic;
+.newPaycheckForm{
+    max-width: 355px;
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.welcomeViewSection{
-    text-align: center;    
-}*/
-
-/*  */
-/*.js-searchByIngredientsViewBtn, .js-submitButton, .backToSearchResults{
-    padding: 5px 9px;
-}
-.js-searchByIngredientsViewBtn:hover { 
-
-}
-.js-backToSearchBtn{
-    display: block;
-}
-
-.ingredientsSearchView{
-    text-align: center;        
-}
-
-.additionalSearchParamaters{
-    margin-top: 50px;
-    margin-bottom: 25px;
-}
-
-.js-result-name{
-  width: 100px;
-  height: 30px;
-}
-
-h3 span {
-    background: #864195;
-    border-color: #652872;
-    display: inline-block;
-    width: 9px;
-    height: 9px;
-    margin-right: 1em;
-    border: 1px solid silver;
-    vertical-align: middle;
-}*/
-
-/* For Phones */
-/*.flex{
-    display: flex;
-    flex-wrap: wrap;
-}*/
-
-/* Rules for 'animated' display */
-/*.recipePreview:hover>.moreData{
-    height: 2em;
-    line-height: 2em;    
-    font-size: 1em;
-}
-.moreData{
-    background-color: rgba(0,0,0,0.75);
+/****************************/
+/*     Rules for Graphs     */
+/****************************/
+.mainGraphs{
+    background-color: #600000;
     color: white;
-    bottom: 0;
-    right: 0;
-    text-align: right;
-    padding-right: 6px;
-    position: absolute;
-    width: 100% !important;
-    height: 0em;
-    line-height: 0em;
-    transition: .3s ease-in-out;
-    font-size: 0em;
-}*/
-
-/************************************/
-/* Rules for the recipe detail page */
-/************************************/
-
-
-
+}
 
 /* Change color of disabled buttons */
 .disabled {

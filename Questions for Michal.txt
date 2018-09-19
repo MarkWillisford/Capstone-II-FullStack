@@ -11,6 +11,8 @@ FIXED - settings.js doesn't seem to be saving settings data
 SKIPPED - testing getting a range of shifts returning unauthorized
 FIXED - sign up doesn't log you in.
 
+Graphs page white background
+
 - index.html   " under by $-0.44239999999999924. " Should be limited to 2 decimal places
 - graphs.html   display dates in an easy to read way, 
 - graphs.html   display data sorted by date
@@ -20,11 +22,9 @@ FIXED - sign up doesn't log you in.
 input shift   should have a way to easly see what days you have already entered. 
 
 TODO
-- change html links to 'index' to home
-- build landing page
-	- loosing background color when float:left is used at larger screen widths
+FIXED- change html links to 'index' to home
+FIXED- build landing page
+FIXED	- loosing background color when float:left is used at larger screen widths
 	loosing image behind header
-change singup / login pages to some sort of animated span
-Home page
-	dropdown isn't changing display on :hover
+SKIPPED - change singup / login pages to some sort of animated span
 

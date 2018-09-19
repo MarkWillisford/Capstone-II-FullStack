@@ -10,55 +10,77 @@
           crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/flatpickr.js"></script>        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
-        <!--<link href="css/main.css" rel="stylesheet" type="text/css" />
-        <link href="css/float-grid.css" rel="stylesheet" />-->
+        <link href="css/main.css" rel="stylesheet" type="text/css" />
+        <link href="css/float-grid.css" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">  
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/flatpickr.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/themes/dark.css">
     </head>
-    <body>
-      <p>Hello <span class="js_User"></span>.</p>
-      <hr>
-      <!-- daily / weekly / monthly -->
-      <div class="dataGrouping">
-        <select>
-          <option value="0">Group data by: </option>
-          <option value="daily">Daily</option>
-          <option value="weekly">Weekly</option>
-          <option value="monthly">Monthly</option>
-        </select>
-      </div>
+    <body>      
+      <header role="header" class="header">
+        <nav>
+          <a href="/index.html" class="main-title">Tip Tracker</a>
+          <div class="navbar">
+            <a href="/home.html">Home</a> ||
+            <a href="/graphs.html">Graphs</a> || 
+            <div class="dropdown-wrapper">
+              <span class="dropdown">Input </span><i class="fa fa-caret-down"></i>
+                <div class="dropdown-content">
+                  <a href="/input_shift.html">Enter a new Shift</a>
+                  <a href="/input_paycheck.html">Enter a new Paycheck</a>
+                </div>
+            </div>
+             || 
+            <a href="/settings.html">Settings</a>
+          </div>
+        </nav>
+      </header>
 
-      <!-- this month / 1 month / 3 months / 6 months / 1 year / total / selct range -->
-      <div class="">
-        <select>
-          <option value="0">View data from: </option>
-          <option value="thisMonth">This month</option>
-          <option value="1month">1 month</option>
-          <option value="3months">3 months</option>
-          <option value="6months">6 months</option>
-          <option value="1year">1 year</option>
-          <option value="all">All</option>
-          <option value="selectRange">Select range</option>
-        </select>
-      </div>
+      <main class="mainGraphs" aria-live="assertive">
+        <div class=backgroundImage>
+          <div class="centeredContainer">
+            <p>Hello <span class="js_User"></span>.</p>
+            <hr>
+            <!-- daily / weekly / monthly -->
+            <div class="dataGrouping">
+              <select class="groupDataBySel">
+                <option value="0">Group data by: </option>
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+              </select>
+            </div>
 
-      <div class=resetDate>
-        <input type="text" placeholder="Select Dates to view. . ." data-input>
-        <button class="input-button" title="clear" data-clear>RESET</button>
-      </div>
+            <!-- this month / 1 month / 3 months / 6 months / 1 year / total / selct range -->
+            <div class="">
+              <select class="viewDataFromSel">
+                <option value="0">View data from: </option>
+                <option value="thisMonth">This month</option>
+                <option value="1month">1 month</option>
+                <option value="3months">3 months</option>
+                <option value="6months">6 months</option>
+                <option value="1year">1 year</option>
+                <option value="all">All</option>
+                <option value="selectRange">Select range</option>
+              </select>
+            </div>
 
-      <button type="button" class="js_ViewGraphsBtn">View</button>
-      <br>
-      <a href="/home.html">Home</a><br>
+            <div class="resetDate" style="display: none">
+              <input type="text" placeholder="Select Dates to view. . ." data-input>
+              <button class="input-button" title="clear" data-clear>RESET</button>
+            </div>
 
-      <div class="canvasDiv"><canvas id="myNetTipsChart" width="100 px" height="100 px"></canvas></div>
-      <div class="canvasDiv"><canvas id="myTipsPercentageChart" width="100 px" height="100 px"></canvas></div>
-      <div class="canvasDiv"><canvas id="myCalculatedHourlyChart" width="100 px" height="100 px"></canvas></div>
-      <div class="canvasDiv"><canvas id="mySalesChart" width="100 px" height="100 px"></canvas></div>
-      <div class="canvasDiv"><canvas id="myAlcoholSalesChart" width="100 px" height="100 px"></canvas></div>
-      <div class="canvasDiv"><canvas id="myPPASalesChart" width="100 px" height="100 px"></canvas></div>
+            <button type="button" class="js_ViewGraphsBtn">Get Data</button>
 
+            <div class="canvasDiv"><canvas id="myNetTipsChart" width="100 px" height="100 px"></canvas></div>
+            <div class="canvasDiv"><canvas id="myTipsPercentageChart" width="100 px" height="100 px"></canvas></div>
+            <div class="canvasDiv"><canvas id="myCalculatedHourlyChart" width="100 px" height="100 px"></canvas></div>
+            <div class="canvasDiv"><canvas id="mySalesChart" width="100 px" height="100 px"></canvas></div>
+            <div class="canvasDiv"><canvas id="myAlcoholSalesChart" width="100 px" height="100 px"></canvas></div>
+            <div class="canvasDiv"><canvas id="myPPASalesChart" width="100 px" height="100 px"></canvas></div>
+          </div>
+        </div>
+      </main>
       <!-- Scripts -->
       <script src="js/MOCK_DATA.js"></script>
       <script src="js/protected.js"></script>

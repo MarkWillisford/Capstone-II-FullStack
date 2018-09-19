@@ -20,12 +20,13 @@
         <nav>
           <a href="/index.html" class="main-title">Tip Tracker</a>
           <div class="navbar">
+            <a href="/home.html">Home</a> ||
             <a href="/graphs.html">Graphs</a> || 
             <div class="dropdown-wrapper">
               <span class="dropdown">Input </span><i class="fa fa-caret-down"></i>
                 <div class="dropdown-content">
                   <a href="/input_shift.html">Enter a new Shift</a>
-                  <a href="/input_paycheck.html" class="blackText">Enter a new Paycheck</a>
+                  <a href="/input_paycheck.html">Enter a new Paycheck</a>
                 </div>
             </div>
              || 
@@ -35,73 +36,75 @@
       </header>
 
       <main class="main" aria-live="assertive">
-        <h2>Welcome back <span class="js_User"></span>.</h2>
-        <p style="text-align: center">Monthly data as of <span class="js_Date"></span>:</p>
-<!--         <span class="js_supportDifference"></span>.</p> -->
+        <div class=backgroundImage>
+          <div class="centeredContainer">
+            <h2>Welcome back <span class="js_User"></span>.</h2>
+            <p style="text-align: center">Monthly data as of <span class="js_Date"></span>:</p>
+    <!--         <span class="js_supportDifference"></span>.</p> -->
 
 
 
-        <div class="container">
-          <div class="circleDisplays">
-            <div class="circleCard">
-              <div class="topLabel"><span class="js_monthlyEarned bold"></span></div>
-              <div class="circleWrapper">
-                <div class="circle" id="incomeCircle" data-thickness="15">
-                  <strong><i>%</i></strong>
+            <div class="container">
+              <div class="circleDisplays">
+                <div class="circleCard">
+                  <div class="topLabel"><span class="js_monthlyEarned bold"></span></div>
+                  <div class="circleWrapper">
+                    <div class="circle" id="incomeCircle" data-thickness="15">
+                      <strong><i>%</i></strong>
+                    </div>
+                  </div>
+                  <div class="bottomLabel bold">Income Goal:<br>
+                    <span class="js_Target_monthlyEarned bold"></span></div>
+                </div>
+                <div class="overageArrowCard" style="display: none">
+                  <div class="topLabel"></div>
+                  <div class="arrowWrapper">
+                    <span class="arrowUp">&#8593;</span>
+                  </div>
+                  <div class="bottomLabel bold"><span class="js_Target_MonthlyEarned_Overage"></span></div>
+                </div>
+                <div class="circleCard">
+                  <div class="topLabel"></div>
+                  <div class="circleWrapper">
+                    <div class="circle" id="alcCircle" data-thickness="15">
+                      <strong><i>%</i></strong><br>
+                    </div>
+                  </div>
+                  <div class="bottomLabel bold">Alcohol Sales<br>
+                    <span class="bold"></span></div>
+                </div>            
+              </div>
+              <div class="statDisplays">
+                <div class="statsCard" id="calculatedWage">
+                  <div class="calculatedWageLabel bold">Calculated Hourly Wage</div>
+                  <div class="statsLabel"><span class="js_actualHourlyRate bold"></span></div>
+                  
+                </div>
+                <div class="statsCard" id="tipPercentages">
+                  <div class="tipPercentagesTopLabel bold">Tips</div>
+                  <div class="tipPercentagesStatsLabel">
+                    <div class="tipPercentagesSpanWrapper">
+                      <!-- Three spans, 1 default set to display, the others turned off -->
+                      <span class="js_TipoutPercentage bold gross" style="display: none"></span>
+                      <span class="js_TipoutPercentage bold walk"></span>
+                      <span class="js_TipoutPercentage tipout tipoutBar" style="display: none"></span><br>
+                      <span class="js_TipoutPercentage tipout tipoutSupport" style="display: none"></span>
+                    </div>
+                    <div class="tipButtonWrapper">
+                      <input type="radio" name="tips" value="gross">Gross
+                      <input type="radio" name="tips" value="walk" checked>Walk
+                      <input type="radio" name="tips" value="tipout">tipouts
+                    </div>
+                  </div>
+                  
                 </div>
               </div>
-              <div class="bottomLabel bold">Income Goal:<br>
-                <span class="js_Target_monthlyEarned bold"></span></div>
+
+
             </div>
-            <div class="overageArrowCard" style="display: none">
-              <div class="topLabel"></div>
-              <div class="arrowWrapper">
-                <span class="arrowUp">&#8593;</span>
-              </div>
-              <div class="bottomLabel bold"><span class="js_Target_MonthlyEarned_Overage"></span></div>
-            </div>
-            <div class="circleCard">
-              <div class="topLabel"></div>
-              <div class="circleWrapper">
-                <div class="circle" id="alcCircle" data-thickness="15">
-                  <strong><i>%</i></strong><br>
-                </div>
-              </div>
-              <div class="bottomLabel bold">Alcohol Sales<br>
-                <span class="bold"></span></div>
-            </div>            
+
           </div>
-          <div class="statDisplays">
-            <div class="statsCard" id="calculatedWage">
-              <div class="calculatedWageLabel bold">Calculated Hourly Wage</div>
-              <div class="statsLabel"><span class="js_actualHourlyRate bold"></span></div>
-              
-            </div>
-            <div class="statsCard" id="tipPercentages">
-              <div class="tipPercentagesTopLabel bold">Tips</div>
-              <div class="tipPercentagesStatsLabel">
-                <div class="tipPercentagesSpanWrapper">
-                  <!-- Three spans, 1 default set to display, the others turned off -->
-                  <span class="js_TipoutPercentage bold gross" style="display: none"></span>
-                  <span class="js_TipoutPercentage bold walk"></span>
-                  <span class="js_TipoutPercentage tipout tipoutBar" style="display: none"></span><br>
-                  <span class="js_TipoutPercentage tipout tipoutSupport" style="display: none"></span>
-                </div>
-                <div class="tipButtonWrapper">
-                  <input type="radio" name="tips" value="gross">Gross
-                  <input type="radio" name="tips" value="walk" checked>Walk
-                  <input type="radio" name="tips" value="tipout">tipouts
-                </div>
-              </div>
-              
-            </div>
-          </div>
-
-
         </div>
-
-
-
       </main>
 
       <!-- Scripts -->

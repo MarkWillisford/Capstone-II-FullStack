@@ -17,8 +17,13 @@ function editSettingsBtnListener(){
 	$('.changeSettingsBtn').click(function(e){
         e.preventDefault();
         // enable the edit form
-        $('.disabled').attr("disabled", false);
-        $('.disabled').removeClass("disabled");
+        // $('.disabled').attr("disabled", false);
+        // $('.disabled').removeClass("disabled");
+        $('.settingsForm').show();
+        $('.incomeGoalText').focus();
+
+
+
     });
 }
 

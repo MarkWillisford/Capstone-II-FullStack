@@ -8,31 +8,51 @@
           src="https://code.jquery.com/jquery-3.2.1.min.js"
           integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
           crossorigin="anonymous"></script>
-        <!--<link href="css/main.css" rel="stylesheet" type="text/css" />
-        <link href="css/float-grid.css" rel="stylesheet" />-->
+        <link href="css/main.css" rel="stylesheet" type="text/css" />
+        <link href="css/float-grid.css" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     </head>
     <body>
-      <p>Hello World (Setting Screen).</p>
-      <!-- Views -->
-      <p>Current User Settings:</p>
-      <p class="incomeGoalLbl">Income goal is: <span class="js_incomeGoalSpan"></span></p>
-      <p class="calHourlyWageGoalLbl">Calculated Hourly Wage is: <span class="js_calHourlyWageGoalSpan"></span></p>
-      <p class="hourlyWageLbl">Hourly Wage is: <span class="js_hourlyWageSpan"></span></p>
-      <br><button class="changeSettingsBtn">Edit Settings >></button>
+      <header role="header" class="header">
+        <nav>
+          <a href="/index.html" class="main-title">Tip Tracker</a>
+          <div class="navbar">
+            <a href="/home.html">Home</a> ||
+            <a href="/graphs.html">Graphs</a> || 
+            <div class="dropdown-wrapper">
+              <span class="dropdown">Input </span><i class="fa fa-caret-down"></i>
+                <div class="dropdown-content">
+                  <a href="/input_shift.html">Enter a new Shift</a>
+                  <a href="/input_paycheck.html">Enter a new Paycheck</a>
+                </div>
+            </div>
+             || 
+            <a href="/settings.html">Settings</a>
+          </div>
+        </nav>
+      </header>
 
       <main class="main" aria-live="assertive">
-        <form class="settingsForm disabled" disabled="true"> <!--action="js/signup.js" method="post">-->
-        <legend class="settingsFields disabled" disabled="true"></legend>
-          <label><input type="text" class="incomeGoalText disabled" placeholder="Enter a new income goal:" disabled="true"></label><label class="incomeGoalError"></label>
-          <label><input type="text" class="calHourlyWageGoalText disabled" placeholder="Enter a new calculated hourly wage" disabled="true"></label><label class="calHourlyWageGoalError"></label>
-          <label><input type="text" class="hourlyWageText disabled"" placeholder="Enter a new hourly wage" disabled="true"></label><label class="hourlyWageError"></label>
+        <div class=backgroundImage>
+          <div class="centeredContainer">
+            <p>Hello World (Setting Screen).</p>
+            <!-- Views -->
+            <p>Current User Settings:</p>
+            <p class="incomeGoalLbl">Income goal is: $<span class="js_incomeGoalSpan"></span></p>
+            <p class="calHourlyWageGoalLbl">Calculated Hourly Wage is: $<span class="js_calHourlyWageGoalSpan"></span>/hr</p>
+            <p class="hourlyWageLbl">Hourly Wage is: $<span class="js_hourlyWageSpan"></span>/hr</p>
+            <br><button class="changeSettingsBtn">Edit Settings >></button>
 
-          <button type="submit" class="submitButton disabled" disabled="true">Submit changes >></button>
-          <a href="/settings.html" class="disabled" disabled="true">Cancel changes >></a><br>
-        </form>
+            <form class="settingsForm" style="display: none"> <!--action="js/signup.js" method="post">-->
+            <legend class="settingsFields"></legend>
+              <label><input type="text" class="incomeGoalText" placeholder="Enter a new income goal:"></label><label class="incomeGoalError"></label><br>
+              <label><input type="text" class="calHourlyWageGoalText" placeholder="Enter a new calculated hourly wage"></label><label class="calHourlyWageGoalError"></label><br>
+              <label><input type="text" class="hourlyWageText" placeholder="Enter a new hourly wage"></label><label class="hourlyWageError"></label><br><br>
 
-      </main>
+              <button type="submit" class="submitButton">Submit changes >></button><br>
+              <a href="/settings.html">Cancel changes >></a><br>
+            </form>
+
       <!-- Scripts -->
       <script src="js/MOCK_DATA.js"></script>
       <script src="js/protected.js"></script>
