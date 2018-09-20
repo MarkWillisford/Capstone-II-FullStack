@@ -30,97 +30,62 @@ describe('tests', function(){
 		return closeServer();
 	});
 
-
-
-
-	
-
-
-
-
-
-
-	// describe('HTML Paths', function(){
-	// 	it('/ should return HTML and status code 200', function(){
-	// 		return chai
-	// 			.request(app)
-	// 			.get('/')
-	// 			.then(function(res){
-	// 				expect(res).to.have.status(200);
-	// 				expect(res).to.be.html;
-	// 			});
-	// 	});
-	// 	it('/login should return HTML and status code 200', function(){
-	// 		return chai
-	// 			.request(app)
-	// 			.get('/login.html')
-	// 			.then(function(res){
-	// 				expect(res).to.have.status(200);
-	// 				expect(res).to.be.html;
-	// 			});
-	// 	});
-	// 	it('/signup should return HTML and status code 200', function(){
-	// 		return chai
-	// 			.request(app)
-	// 			.get('/signup.html')
-	// 			.then(function(res){
-	// 				expect(res).to.have.status(200);
-	// 				expect(res).to.be.html;
-	// 			});
-	// 	});
-	// 	it('/input_shift should return HTML and status code 200', function(){
-	// 		return chai
-	// 			.request(app)
-	// 			.get('/input_shift.html')
-	// 			.then(function(res){
-	// 				expect(res).to.have.status(200);
-	// 				expect(res).to.be.html;
-	// 			});
-	// 	});
-	// 	it('/input_paycheck should return HTML and status code 200', function(){
-	// 		return chai
-	// 			.request(app)
-	// 			.get('/input_paycheck.html')
-	// 			.then(function(res){
-	// 				expect(res).to.have.status(200);
-	// 				expect(res).to.be.html;
-	// 			});
-	// 	});
-	// 	it('/paycheck_varification should return HTML and status code 200', function(){
-	// 		return chai
-	// 			.request(app)
-	// 			.get('/paycheck_varification.html')
-	// 			.then(function(res){
-	// 				expect(res).to.have.status(200);
-	// 				expect(res).to.be.html;
-	// 			});
-	// 	});
-	// 	it('/settings should return HTML and status code 200', function(){
-	// 		return chai
-	// 			.request(app)
-	// 			.get('/settings.html')
-	// 			.then(function(res){
-	// 				expect(res).to.have.status(200);
-	// 				expect(res).to.be.html;
-	// 			});
-	// 	});
-	// 	it('/graphs should return HTML and status code 200', function(){
-	// 		return chai
-	// 			.request(app)
-	// 			.get('/graphs.html')
-	// 			.then(function(res){
-	// 				expect(res).to.have.status(200);
-	// 				expect(res).to.be.html;
-	// 			});
-	// 	});
-	// });
-
-
-
-	
-
-
-
+	describe('HTML Paths', function(){
+		it('/ should return HTML and status code 200', function(){
+			return chai
+				.request(app)
+				.get('/')
+				.then(function(res){
+					expect(res).to.have.status(200);
+					expect(res).to.be.html;
+				});
+		});
+		it('/login should return HTML and status code 200', function(){
+			return chai
+				.request(app)
+				.get('/login.html')
+				.then(function(res){
+					expect(res).to.have.status(200);
+					expect(res).to.be.html;
+				});
+		});
+		it('/input_shift should return HTML and status code 200', function(){
+			return chai
+				.request(app)
+				.get('/input_shift.html')
+				.then(function(res){
+					expect(res).to.have.status(200);
+					expect(res).to.be.html;
+				});
+		});
+		it('/input_paycheck should return HTML and status code 200', function(){
+			return chai
+				.request(app)
+				.get('/input_paycheck.html')
+				.then(function(res){
+					expect(res).to.have.status(200);
+					expect(res).to.be.html;
+				});
+		});
+		it('/settings should return HTML and status code 200', function(){
+			return chai
+				.request(app)
+				.get('/settings.html')
+				.then(function(res){
+					expect(res).to.have.status(200);
+					expect(res).to.be.html;
+				});
+		});
+		it('/graphs should return HTML and status code 200', function(){
+			return chai
+				.request(app)
+				.get('/graphs.html')
+				.then(function(res){
+					expect(res).to.have.status(200);
+					expect(res).to.be.html;
+				});
+		});
+	});
 
 	describe('Api Calls', function(){
 		beforeEach(function(){
@@ -151,8 +116,6 @@ describe('tests', function(){
 		// // clearer code to prove smaller goals
 		describe('User GET endpoint', function(){
 			it('should return user with correct fields', function(){
-				// authenticatedUser has been populated
-
 				// strategy
 				// 1. get back all users returned by Get request to /users
 				// 2. prove res has right status and data type
@@ -167,9 +130,6 @@ describe('tests', function(){
 						res = _res;
 						expect(res).to.have.status(200);
 						expect(res).to.be.a('object');
-						// expect(res).to.include.keys(
-						// 	'id', 'email', 'username', 'password', 'monthlyIncomeGoal',
-						// 	'monthlyHourlyGoal', 'hourlyWage', 'role');
 						return User.findById(res.id);
 					})
 					then(function(user){
@@ -194,7 +154,6 @@ describe('tests', function(){
 					.send(testUser)
 					.then(function(res){
 						// had to find the data in the res.  not easy!
-						// console.log(res.request._data);
 						expect(res).to.have.status(201);
 					    expect(res).to.be.json;
 					    expect(res.body).to.be.a('object');
@@ -245,7 +204,6 @@ describe('tests', function(){
 		describe('Login endpoint', function(){
 			it('should return an authentication token', function(){
 				let testUser = generateUserData();		
-				// console.log(testUser.email);
 				return chai.request(app)
 					.post('/api/users')
 					.send(testUser)
@@ -337,69 +295,11 @@ describe('tests', function(){
 						});
 					});	
 			});
-			
-			// //************************** DON'T NEED! *************************************
-			// it('should return shifts within the date range', function(){
-			// 	// strategy
-			// 	// 1. authenticate
-			// 	return chai.request(app)
-			// 		.get('/api/users')
-			// 		.set('Authorization', `Bearer ${token}`)
-			// 	// 2. create array from Shift.find();
-			// 		.then(function(res){
-			// 			let shiftArray = [];
-			// 	// 3. pick two random dates
-			// 			let beginDate = faker.date.past(1);
-			// 			let endDate = faker.date.between(beginDate, new Date());
-			// 			let datedShiftsArray = [];
-			// 			Shift.find()
-			// 			.then(shifts => {
-			// 				//console.log(shifts);
-			// 				shiftArray = shifts;
-			// 				return shiftArray;
-			// 			})
-			// 			.then(function(){
-			// 	// 4. remove all shifts outside that range
-			// 				for(let i=0; i<shiftArray.length; i++){
-			// 					if(shiftArray[i].date < endDate && shiftArray[i].date > beginDate){
-			// 						//console.log('within range');
-			// 						datedShiftsArray.push(shiftArray[i]);
-			// 					};
-			// 				};
-			// 	// 5. ensure there is at least one shift available
-			// 	// well crap, can I put promises in loops?  keep trying to do xyz until . . .   ?
-			// 			})
-			// 	// 6. make get request with dates
-			// 			.then(function(){
-			// 				let _res;
-			// 				console.log(token);
-			// 				return chai.request(app)
-			// 				.get('/api/shifts')
-			// 				// .query({start: beginDate, end: endDate}) 
-			// 				.set('Authorization', `Bearer ${token}`)
-			// 				.then(function(res){
-			// 					_res = res;
-			// 					// console.log(_res);
-			// 				})
-
-			// 			})
-			// 			// .catch(e => {
-			// 			// 	console.error(e);
-			// 			// 	throw e;
-			// 			// })
-			// 		})
-			// 	// 7. prove res has correct status
-			// 	// 8. prove res has correct number of shifts
-			// 	// 9. prove res has correct shift._ids
-			// });
-			//********************************************************************/
-			
 		});
 
 		// describe('Paychecks POST endpoint', function(){});
 		describe('Paychecks POST endpoint', function(){
 			it('should return 201 with matching data', function(){
-				//let shiftDataArray = [];
 				return chai.request(app)
 					.get('/api/users')
 					.set('Authorization', `Bearer ${token}`)
@@ -532,23 +432,6 @@ function generateShift(){
 	return shift;		
 }
 
-/************************************
-* I am saving this because I want to 
-* eventurally test with multiple 
-* users in the DB
-*************************************
-function generateUserForShift(testUserID){
-	const _users = [0,1,2];
-	const _user = _users[Math.floor(Math.random() * _users.length)];
-	if(_user == 1){
-		// I need the user id!!!!
-		return testUserID;
-	} else {
-		return '1234asdf1234asdf';
-		maybe new mongoose.Types.ObjectId()?
-	};
-}*/
-
 // generates a fake check object for testing
 function generateCheckData(testUserID){
 	return {
@@ -592,53 +475,3 @@ function tearDownDb() {
   console.warn('Deleting database');
   return mongoose.connection.dropDatabase();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* okay here we go.  TODO!!!
-function generateTestUserID(){
-	const users = [ ];
-	const user = users[Math.floor(Math.random() * users.length)];
-	return user;
-}
-
-function generateShift(){
-	const shifts = ['firstOff', 'secondOff', 'closer', 'bar', 'mid', 'lateMid'];
-	const shift = shifts[Math.floor(Math.random() * shifts.length)];
-	return shift;
-}
-
-function generateDate(start, end) {
-    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-}
-// used to generate an object representing
-// a shift
-function generateShiftData(){
-	return {
-		user: type: ; 
-		date: generateDate(new Date(2018, 0, 1), new Date());
-		day: faker.random.number({min:1, max:30});
-		shift: generateShift();
-		food: faker.random.number({min:500, max:1000});
-		alcoholicBeverages: faker.random.number({min:100, max:500});
-		roomCharges: faker.random.number({min:0, max:250});
-		guests: faker.random.number({min:25, max:100});
-		support: faker.random.number({min:5, max:40});
-		bar: faker.random.number({min:0, max:20});
-		servers: type: faker.random.number({min:0, max:100});
-		kitchen: type: faker.random.number({min:0, max:25});
-		netTips: type: faker.random.number({min:150, max:400});
-		hours: type: faker.random.number({min:5, max:12});
-	};
-}
-*/
