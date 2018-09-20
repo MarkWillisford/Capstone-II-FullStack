@@ -1,7 +1,7 @@
 # Capstone II Tip Tracker
 The second capstone project for the Thinkful bootcamp utilizing a full stack architecture.
 
-Found at: https://github.com/MarkWillisford/Capstone-II-FullStack
+Found at: https://immense-coast-88549.herokuapp.com/
 
 Screenshots
 Landing Page:
