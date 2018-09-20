@@ -17,10 +17,11 @@ FIXED	- loosing background color when float:left is used at larger screen widths
 SKIPPED - change singup / login pages to some sort of animated span
 
 
-Graphs page white background
-Graphs too large
-API Documentation
-Forms having actions?
+FIXED - Graphs page white background
+IGNORED - Graphs too large
+SKIPPED - API Documentation
+NOTABUG - Forms having actions?
+FIXED - catching error message
 
 
 - index.html   " under by $-0.44239999999999924. " Should be limited to 2 decimal places

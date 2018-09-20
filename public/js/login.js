@@ -15,11 +15,8 @@ function loginListener() {
                 location.href = '/home.html';
             },
             error: (err) => {
-                // do cool html stuff
-                console.log(err.responseText);
-                console.log(err.responseText.generalMessage);
-                console.log(err.responseText["generalMessage"]);
-                console.log(err[responseText].generalMessage);
+                const errorMessage = JSON.parse(err.responseText);
+                alert(errorMessage.generalMessage);
             }
         })
     });    
