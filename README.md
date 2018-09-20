@@ -5,7 +5,7 @@ Found at: https://github.com/MarkWillisford/Capstone-II-FullStack
 
 Screenshots
 Landing Page:
-![Alt text](ScreenShots/Landingpage.jpg?raw=true "Landing Screen")
+![Alt text](/Screenshots/Landingpage.jpg "Landing Screen")
 
 Search Page:
 ![Alt text](ScreenShots/SearchScreen.png?raw=true "Search Screen")
