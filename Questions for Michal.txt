@@ -20,6 +20,7 @@ SKIPPED - change singup / login pages to some sort of animated span
 Graphs page white background
 Graphs too large
 API Documentation
+Forms having actions?
 
 
 - index.html   " under by $-0.44239999999999924. " Should be limited to 2 decimal places

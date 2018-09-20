@@ -40,10 +40,6 @@
           <div class="centeredContainer">
             <h2>Welcome back <span class="js_User"></span>.</h2>
             <p style="text-align: center">Monthly data as of <span class="js_Date"></span>:</p>
-    <!--         <span class="js_supportDifference"></span>.</p> -->
-
-
-
             <div class="container">
               <div class="circleDisplays">
                 <div class="circleCard">
@@ -77,8 +73,7 @@
               <div class="statDisplays">
                 <div class="statsCard" id="calculatedWage">
                   <div class="calculatedWageLabel bold">Calculated Hourly Wage</div>
-                  <div class="statsLabel"><span class="js_actualHourlyRate bold"></span></div>
-                  
+                  <div class="statsLabel"><span class="js_actualHourlyRate bold"></span></div>                  
                 </div>
                 <div class="statsCard" id="tipPercentages">
                   <div class="tipPercentagesTopLabel bold">Tips</div>
@@ -95,14 +90,10 @@
                       <input type="radio" name="tips" value="walk" checked>Walk
                       <input type="radio" name="tips" value="tipout">tipouts
                     </div>
-                  </div>
-                  
+                  </div>                  
                 </div>
               </div>
-
-
             </div>
-
           </div>
         </div>
       </main>
@@ -113,14 +104,5 @@
       <script src="js/protected.js"></script>
       <script src="js/get_shift.js"></script>
       <script src="js/home_app.js"></script>
-
-<!--         <script>
-          let variable = 1.1;
-            $('.circle').circleProgress({
-              value: variable
-            }).on('circle-animation-progress', function(event, progress) {
-              $(this).find('strong').html(Math.round(100 * progress) + '<i>%</i>');
-            });
-        </script> -->
     </body>
 </html>

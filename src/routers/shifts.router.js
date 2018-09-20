@@ -74,7 +74,6 @@ router.route('/shifts')
 	})
     // the GET all route
     .get(passport.authenticate('jwt', { session: false }), (req, res) => {
-        // const filters = {'user_id':req.query['user_id']};
         User.findById(req.user._id)
             .then(user => {
                 if(user){
@@ -83,8 +82,6 @@ router.route('/shifts')
                     const filters = { 
                         user_id: user._id,
                     };
-                    // console.log('within API, query is: ');
-                    // console.log(req.query);
                     // adding the ability to search for an optional range
                     if(req.query['start']){
                         filters['date'] = {
@@ -92,7 +89,6 @@ router.route('/shifts')
                             $lt: req.query.end
                         };                        
                     };
-                    // console.log(filters);
                     Shift.find(filters)                
                     .then(shifts => res.json(shifts))
                     .catch(err => {

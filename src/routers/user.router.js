@@ -20,7 +20,6 @@ router.route('/users')
 	// if we pass that, we call the requiredFields middleware which checks 
 	.post(disableWithToken, requiredFields('email', 'username', 'password'), (req, res) => {
 		// assuming it passes all tests, we create a user from the req data
-        // console.log('within the route');
 		User.create({
 			email: req.body.email,
 			password: req.body.password,
@@ -42,26 +41,8 @@ router.route('/users')
             const token = jwt.sign(tokenPayload, config.SECRET, {
                 expiresIn: config.EXPIRATION,
             }); // and return it
-            //console.log(token);
             return res.status(201).json({ token: token });
-
-            
         })
-
-
-
-		// .then(user => res.status(201).json({
-  //           id: user.id,
-  //           email: user.email,
-  //           username: user.username,
-  //           password: user.password,
-  //       }))                                            
-
-
-
-
-
-
 		// if there are errors we catch them and send a 400 code and generate an error
 		.catch(report => res.status(400).json(errorsParser.generateErrorResponse(report)));
 	})
@@ -78,9 +59,6 @@ router.route('/users')
             }
         });
 
-        // console.log('within user.router.js, req.body is: ');
-        // console.log(req.body);
-
         User
         .findByIdAndUpdate(req.body.id, { $set: updated }, { new: true })
         .then(updatedUser => res.status(204).end())
@@ -94,7 +72,6 @@ router.post('/login', disableWithToken, requiredFields('email', 'password'), (re
 	// Assuming you have both we look for a user with that email
     User.findOne({ email: req.body.email })
     .then((foundResult) => {
-        // console.log(foundResult);           
     	// if we didn't find it
         if (!foundResult) {
             return res.status(400).json({
@@ -106,7 +83,6 @@ router.post('/login', disableWithToken, requiredFields('email', 'password'), (re
     })                              // <!-- Solve one thing at at time. Jay suggested this, but now it breaks
                                     // everything!
     .then((foundUser) => {
-        // console.log(foundUser); //<!-- remove 
     	// okay we found a user, compare the password
         foundUser.comparePassword(req.body.password)
         .then((comparingResult) => {
