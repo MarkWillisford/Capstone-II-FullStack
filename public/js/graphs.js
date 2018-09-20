@@ -110,7 +110,6 @@ function getDatedDataFuncion(callbackFn){
         	end: end,
         },
 	    success: (response) => {
-	    	//console.log(response);
 	    	callbackFn(response, groupDataBy);
         },
 	    error: function(err) { console.log(err); }
@@ -305,14 +304,6 @@ function displayDoubleChart(htmlElement, label, datasetLabel, dataArray, dataset
 
 	let option = {
 		showLines: true,
-		/*	This will set the chart Y-axis to begin at 0
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
-        }*/
 	};
 	let myChart = Chart.Line(ctx,{
 		data:chartData,
@@ -350,14 +341,6 @@ function displayChart(htmlElement, label, datasetLabel, dataArray){
 
 	let option = {
 		showLines: true,
-		/*	This will set the chart Y-axis to begin at 0
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
-        }*/
 	};
 	let myChart = Chart.Line(ctx,{
 		data:chartData,
@@ -391,10 +374,6 @@ function compareMonth(date1, date2){
 };
 
 function submitListener(){
-	// $('.js_ViewGraphsBtn').click(function(e){
- //        e.preventDefault();
- //        getAndDisplayDatedData();
- //    })
     $('.viewDataFromSel').on("change", function(e){
     	e.preventDefault();
 		viewDataFrom = $('.viewDataFromSel option:selected').val();

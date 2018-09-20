@@ -20,9 +20,8 @@ function checkUser(callback) {
                 Authorization: `Bearer ${token}`,
             },
             success: (response) => {
-                //console.log(response)
                 $('#loader-wrapper').hide();
-                const payloadData = response; //parseJwt(token);
+                const payloadData = response; 
                 $('.js_User').html(`${payloadData.username}`);
                 globalUser_id = payloadData._id;
                 user_Settings = {

@@ -68,4 +68,3 @@ let MOCK_SHIFT_DATA = {
 		},
 	]
 };
-

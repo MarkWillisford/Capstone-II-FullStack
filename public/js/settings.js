@@ -17,13 +17,8 @@ function editSettingsBtnListener(){
 	$('.changeSettingsBtn').click(function(e){
         e.preventDefault();
         // enable the edit form
-        // $('.disabled').attr("disabled", false);
-        // $('.disabled').removeClass("disabled");
         $('.settingsForm').show();
         $('.incomeGoalText').focus();
-
-
-
     });
 }
 
@@ -43,13 +38,6 @@ function submitListener(){
 
         // set up our object to store it
         let newSettings = {};
-
-    	/**************************************************
-    	* I'm not really happy with this architecture. 
-    	* Maybe Michal can suggest something cleaner
-    	* I think there is an example of something similar 
-    	* in Thinkful's authentication section 
-    	**************************************************/
         // a few flags 
         let changed = false;
         let error = false;
@@ -126,7 +114,6 @@ function submitListener(){
                 }
             });         
         }
-
     });
 }
 

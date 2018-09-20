@@ -16,22 +16,13 @@ function loginListener() {
             },
             error: (err) => {
                 // do cool html stuff
+                console.log(err.responseText);
+                console.log(err.responseText.generalMessage);
+                console.log(err.responseText["generalMessage"]);
+                console.log(err[responseText].generalMessage);
             }
         })
-    });
-    
-    /*
-    let data = {
-            email: $('.loginEmailText').val(),
-            password: $('.loginPasswordText').val(),
-        };
-
-    if(JSON.stringify(data) === JSON.stringify(user)){
-            sessionStorage.setItem('token', response.token);
-            location.href = '/home.html';        
-    } else {
-        alert("Please enter a valid user and password");
-    }   */
+    });    
   };
 
 function signupListener(){
@@ -44,5 +35,4 @@ function signupListener(){
 $(function(){
     $('.loginEmailText').focus();
     loginListener();
-    //signupListener();
 });

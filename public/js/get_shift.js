@@ -14,11 +14,3 @@ function myGetFunction(globalUser_id){
 	    error: function(err) { console.log(err); }
 	});
 };
-
-
-// Get all for this month
-// Get all for three months
-	// Get all for a given day
-// Get all for the year
-	// Get all for a given day
-// Get all for a range

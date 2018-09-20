@@ -21,12 +21,6 @@ const fpPayPeriod = flatpickr(".payperiod", {
     weekNumbers: true,
 }); // flatpickr
 
-// const payPeriodPromiseCall = new Promise((resolve, reject) => {
-//     setTimeout(function () {
-//     resolve('in promise: ');
-//   }, 1000);
-// });
-
 function inputListener(){
     $('.newPaycheckForm').on('submit', function(e){
         e.preventDefault();

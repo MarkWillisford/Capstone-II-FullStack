@@ -144,14 +144,6 @@ function displayShiftData(data){
 
 
 	let wages = dataTotals.hours * user_Settings.hourlyWage;
-	// console.log('hours: ');
-	// console.log(dataTotals.hours);
-	// console.log("*")
-	// console.log('wages: ');
-	// console.log(user_Settings.hourlyWage);
-	// console.log('= ');
-	// console.log(wages);
-
 	// calculate the total earnings
 	let totalEarned = dataTotals["netTips"] + wages;
 	// if total earnings is over the target, activate the arrow
