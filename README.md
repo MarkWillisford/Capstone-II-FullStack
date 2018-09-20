@@ -14,8 +14,8 @@ This app allows a user to create and login to a secure profile, store income and
 **Tech**
 
 For this project I used;
-  *HTML/CSS
-  *JavaScript/jQuery
-  *Express / Node.js
-  *Mongoose and MongoDB
-  *with a number of npm plugins.
+- HTML/CSS
+- JavaScript/jQuery
+- Express / Node.js
+- Mongoose and MongoDB
+- with a number of npm plugins.
