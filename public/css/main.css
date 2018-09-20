@@ -389,6 +389,10 @@ set media query at >700px
     background-color: #600000;
     color: white;
 }
+.graphsBody{
+    background-color: #600000;
+    color: white;
+}
 
 /* Change color of disabled buttons */
 .disabled {
