@@ -7,21 +7,10 @@ Screenshots
 Landing Page:
 ![Alt text](/Screenshots/Landingpage.jpg "Landing Screen")
 
-Search Page:
-![Alt text](ScreenShots/SearchScreen.png?raw=true "Search Screen")
-
-Results Page:
-![Alt text](ScreenShots/SearchResults.png?raw=true "Search Results")
-
-Recipe Details Page:
-![Alt text](ScreenShots/RecipeScreenTop.png?raw=true "Recipe Details Screen")
-
-![Alt text](ScreenShots/RecipeScreenBottom.png?raw=true "Recipe Details Screen")
-
 Summery
 
-This app allows the user to easily search large databases for recipes that match given ingrediants. It then displays extra details about the recipe including pricing data, instructions, nutrition and ingrediants. 
+This app allows a user to create and login to a secure profile, store income and sales data in the form of "shifts" and "paychecks," and view that data in a number of helpful ways. Future features will allow a user to input custom tracking objects.  
 
 Tech
 
-I used HTML/CSS/JavaScript/jQuery for this project. 
+I used HTML/CSS/JavaScript/jQuery in addition to Express / Node.js, and Mongoose and MongoDB, with a number of npm plugins.
