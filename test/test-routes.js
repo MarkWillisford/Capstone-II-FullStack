@@ -187,7 +187,7 @@ describe('tests', function(){
 			                .send(updateData);
 					})
 					.then(function(res){
-			            expect(res).to.have.status(204);		
+			            expect(res).to.have.status(200);		
 
 	    				return User.findById(user._id);		
 					})
@@ -219,7 +219,7 @@ describe('tests', function(){
 							.then(function(res){
 							    expect(res).to.be.json;
 							    expect(res.body).to.be.a('object');
-							    expect(res.body).to.have.keys('token');
+							    expect(res.body).to.have.keys('token', '_id');
 							    expect('Location', '/index');
 							});
 					});
