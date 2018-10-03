@@ -108,7 +108,6 @@ function displayShiftData(data){
 						( dataTotals.sales["alcoholic beverages"] + dataTotals.sales["food and NA beverages"] )).toFixed(0))
 	}%`);
 
-	console.log(dataTotals);
 	$(".walk").html(`${
 		+((100 * dataTotals.netTips / ( dataTotals.sales["alcoholic beverages"]
 		+ dataTotals.sales["food and NA beverages"] + dataTotals.sales["room charges"])).toFixed(1))
@@ -141,7 +140,7 @@ function displayShiftData(data){
 
 
 
-
+	// isNaN();
 
 	let wages = dataTotals.hours * user_Settings.hourlyWage;
 	// calculate the total earnings

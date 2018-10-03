@@ -41,7 +41,7 @@ router.route('/users')
             const token = jwt.sign(tokenPayload, config.SECRET, {
                 expiresIn: config.EXPIRATION,
             }); // and return it
-            return res.status(201).json({ token: token });
+            return res.status(201).json({ token: token, _id: tokenPayload._id });
         })
 		// if there are errors we catch them and send a 400 code and generate an error
 		.catch(report => res.status(400).json(errorsParser.generateErrorResponse(report)));
@@ -61,7 +61,7 @@ router.route('/users')
 
         User
         .findByIdAndUpdate(req.body.id, { $set: updated }, { new: true })
-        .then(updatedUser => res.status(204).end())
+        .then(updatedUser => res.status(200).json(updatedUser))
         .catch(err => res.status(500).json({ message: 'Something went wrong' }));
 });
 
@@ -106,7 +106,7 @@ router.post('/login', disableWithToken, requiredFields('email', 'password'), (re
             const token = jwt.sign(tokenPayload, config.SECRET, {
                 expiresIn: config.EXPIRATION,
             }); // and return it
-            return res.json({ token: token });
+            return res.json({ token: token, _id: tokenPayload._id });
         });
     })
     .catch(report => res.status(400).json(errorsParser.generateErrorResponse(report)));

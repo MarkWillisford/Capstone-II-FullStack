@@ -105,4 +105,5 @@ router.route('/shifts')
         .catch(report => res.status(400).json(errorsParser.generateErrorResponse(report)));         
     });
 
+    
 module.exports = { router };

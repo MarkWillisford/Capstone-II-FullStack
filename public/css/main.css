@@ -46,6 +46,10 @@ h2{
     position: relative;
     display: inline-block;
 }
+.demoLoginLink{
+    text-decoration: underline;
+    cursor: pointer;   
+}
 .dropdown{
     text-decoration: underline;
     cursor: pointer;
@@ -70,6 +74,8 @@ h2{
 
 .main-title{
     color: white;
+    font-size: 32px;
+    text-decoration: none;
 }
 .loginLink{
     color: white;
@@ -182,7 +188,7 @@ set media query at >700px
     background-color: #200000;
     color: white;
     opacity: .75;
-    padding: 5px;    
+    padding: 15px;    
 }
 
 /*************************/
@@ -380,6 +386,17 @@ set media query at >700px
     text-align: left;
     margin-left: auto;
     margin-right: auto;
+    border: solid black 1px;
+}/*
+.newPaycheckForm label{
+    width: 75%;
+}*/
+.newPaycheckInput{
+    width: 75%;
+    margin-top: 2px;
+}
+.payperiod{
+    margin-top: 2px;
 }
 
 /****************************/

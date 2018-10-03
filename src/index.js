@@ -8,6 +8,7 @@ const morgan = require('morgan');
 const winston = require('winston');
 const mongoose = require('mongoose');
 const passport = require('passport');
+const { router: demoRouter } = require('./routers/demo.router');
 const { router: userRouter } = require('./routers/user.router');
 const { router: shiftsRouter } = require('./routers/shifts.router');
 const { router: paychecksRouter } = require('./routers/paycheck.router');
@@ -40,6 +41,7 @@ if (ENV === 'development') {
 }
 
 /* Routes */
+app.use('/api', demoRouter);
 app.use('/api', userRouter);
 app.use('/api', shiftsRouter);
 app.use('/api', paychecksRouter);
