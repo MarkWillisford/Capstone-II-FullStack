@@ -6,7 +6,7 @@ let globalUser_id = '';
 function getMonthlyShiftData(callbackFn){
 	//setTimeout(function(){ callbackFn(MOCK_SHIFT_DATA)}, 100);
 	// first I need the current month and year
-	let month = (new Date().getMonth()) + 1; // Jan = 0, Feb = 1 etc				TEMP
+	let month = (new Date().getMonth()) ;//+ 1; // Jan = 0, Feb = 1 etc				TEMP
 	let year = new Date().getFullYear(); 
 	let date = year + "-" + month + "-01";	// create a string
 
@@ -166,13 +166,16 @@ function displayShiftData(data){
 
 	$( ".js_monthlyEarned" ).html(`$${naNProtection(totalEarned.toFixed(2))}`);
     let monthlyEarnedPercentage = (+((totalEarned) / user_Settings.monthlyIncomeGoal).toFixed(2));
-    if(monthlyEarnedPercentage > 1){
+    if(!(monthlyEarnedPercentage < 1)){
     	monthlyEarnedPercentage = 1;
     };
 	    $('#incomeCircle').circleProgress({
 	      value: monthlyEarnedPercentage
 	    }).on('circle-animation-progress', function(event, progress, stepValue) {
-	      $(this).find('strong').html(naNProtection(100 * (stepValue.toFixed(2).substr(1))) + '<i>%</i>');
+    		let plus = false;
+	    	let percentage = (stepValue * 100).toFixed(0);
+	    	if(stepValue == 1){ plus = true; }
+	      $(this).find('strong').html(plus ? String.fromCodePoint('0x1F60D') : naNProtection(percentage) + '<i>%</i>');
 	    });
 
     let alcoholSalesPercentage = (+(shiftTotals.sales["alcoholic beverages"] / 
@@ -181,7 +184,6 @@ function displayShiftData(data){
 	      value: alcoholSalesPercentage
 	    }).on('circle-animation-progress', function(event, progress, stepValue) {
 	      $(this).find('strong').html(naNProtection(100 * (stepValue.toFixed(2).substr(1))) + '<i>%</i>');
-		  console.log();
 	    });
 };
 
