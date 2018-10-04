@@ -34,15 +34,16 @@ input shift   should have a way to easly see what days you have already entered.
 
 Feedback from Morgan Nixon:
 
-Unfortunately, the functionality is not working as planned right now. When I enter in a paycheck, it appears to work fine, but the data doesn't update on the welcome screen. This occurred in multiple browsers I tested.
+- Unfortunately, the functionality is not working as planned right now. When I enter in a paycheck, it appears to work fine, but the data doesn't update on the welcome screen. This occurred in multiple browsers I tested.
 
 	Could I have an option that can be set? 
 	Take the hourly out of the equation, 
 	2nd api call on the welcome screen. 
 
 	build an endpoint that return shifts and paychecks for a given timeframe and display appropriately.
+	Question in home_app.js
 
-I also think having nAN is too crude and the data need to be converted not to display that, a zero would be better for example.
+- I also think having nAN is too crude and the data need to be converted not to display that, a zero would be better for example.
 
 - The project title should stand out more; if you don't want to go as far as making a simple logo which is always a nice touch, I would at least make it larger and remove the underline.
 
@@ -52,7 +53,6 @@ The font feels small sitewide on a desktop, the font doesn't seem to be respondi
 
 - A demo login is needed to allow hiring managers to access the project quickly. I would pre-populate this with some example shifts and checks so they can see the app quickly in action.
 
-	endpoint drops data and reseeds db
 
 
 

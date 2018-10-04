@@ -75,15 +75,16 @@ router.post('/demo', disableWithToken, requiredFields('email', 'password'), (req
         })
         .then(token => {
             // 2.) clear any shifts or paychecks for this user
-            const myquery = { user: token._id};
+            const myquery = { user_id: token._id};
             Paycheck.deleteMany(myquery, function(err, obj) {
                 if (err) throw err;
             });
-            const myquery2 = { user_id: token._id}
+            const myquery2 = { user: token._id}
             Shift.deleteMany(myquery2, function(err, obj) {
                 if (err) throw err;
             });
             return token;
+            //return res.json(token);
         })
         .then(token => {
             // 3.) populate data with predetermined data

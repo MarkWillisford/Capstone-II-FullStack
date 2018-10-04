@@ -5,6 +5,9 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/main.config');
 const User = require('../models/user.model');
+const Paycheck = require('../models/paycheck.model');
+const Shift = require('../models/shift.model');
+const mongoose = require('mongoose');
 const errorsParser = require('../helpers/errorParser.helper');
 const disableWithToken = require('../middlewares/disableWithToken.middleware').disableWithToken;
 const requiredFields = require('../middlewares/requiredFields.middleware');
@@ -65,7 +68,6 @@ router.route('/users')
         .catch(err => res.status(500).json({ message: 'Something went wrong' }));
 });
 
-
 // To access the login page, we run through the disableWithToken
 // and the requiredFields
 router.post('/login', disableWithToken, requiredFields('email', 'password'), (req, res) => {
@@ -111,5 +113,63 @@ router.post('/login', disableWithToken, requiredFields('email', 'password'), (re
     })
     .catch(report => res.status(400).json(errorsParser.generateErrorResponse(report)));
 });
+
+// This route is for the home page summery. It returns both shifts and paychecks within the last period of time. 
+router.route('/summery')
+    .get(passport.authenticate('jwt', { session: false }), (req, res) => {
+        let obj = {};
+        User.findById(req.user._id)
+            .then(user => {
+                if(user){
+                    // turn the id into the right data type to search for
+                    let myObjectID = mongoose.Types.ObjectId(user._id);
+                    const filters = { 
+                        user_id: user._id,
+                    };
+                    // adding the ability to search for an optional range
+                    if(req.query['start']){
+                        filters['date'] = {
+                            $gte: req.query.start,
+                            $lt: req.query.end
+                        };                        
+                    };
+
+                    Shift.find(filters)  
+                        .then(shifts => {
+                            obj.shifts = shifts;
+                            const filters = { 
+                                user_id: user._id,
+                            };
+                            // adding the ability to search for an optional range
+                            if(req.query['start']){
+                                filters['dateOfCheck'] = {
+                                    $gte: req.query.start,
+                                    $lt: req.query.end
+                                };                        
+                            };
+
+                            Paycheck.find(filters)
+                                .then(paychecks => {
+                                    obj.paychecks = paychecks;
+                                    res.json(obj);
+                                })
+                                .catch(err => {
+                                    console.error(err);
+                                    res.status(500).json({ error: 'something went terribly wrong with Paychecks' });
+                                });
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            res.status(500).json({ error: 'something went terribly wrong with shifts' });
+                        });  
+                } else {
+                const message = `User not found which should never happen, contact your system admin`;
+                console.error(message);
+                return res.status(400).send(message);
+                }
+            })
+        // if there are errors we catch them and send a 400 code and generate an error
+        .catch(report => res.status(400).json(errorsParser.generateErrorResponse(report)));
+    });
 
 module.exports = { router };
