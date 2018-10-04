@@ -13,8 +13,6 @@ function demoListener(){
                 password: 'password',
             },
             success: (response) => {
-                console.log("yay!");
-                console.log(response);    
                 sessionStorage.setItem('token', response.token);
                 location.href = '/home.html';
             },

@@ -6,7 +6,7 @@ let globalUser_id = '';
 function getMonthlyShiftData(callbackFn){
 	//setTimeout(function(){ callbackFn(MOCK_SHIFT_DATA)}, 100);
 	// first I need the current month and year
-	let month = (new Date().getMonth()) + 1; // Jan = 0, Feb = 1 etc
+	let month = (new Date().getMonth()) ;//+ 1; // Jan = 0, Feb = 1 etc				TEMP
 	let year = new Date().getFullYear(); 
 	let date = year + "-" + month + "-01";	// create a string
 
@@ -15,7 +15,7 @@ function getMonthlyShiftData(callbackFn){
 
     const token = sessionStorage.getItem('token');
 	$.ajax({
-		url: '/api/shifts',
+		url: '/api/summery',
 	    type: 'GET',
         headers: {
             Authorization: `Bearer ${token}`,
@@ -76,60 +76,70 @@ function tipsListener(){
 // This function will stay when we connect to real API
 function displayShiftData(data){
 	// lets total the data we have recieved
-	let dataTotals = {};
+	let shiftTotals = {};
 
 	let key = "hours";
-	dataTotals[key] = sumOfObjects(data, key);
+	shiftTotals[key] = sumOfObjects(data.shifts, key);
 	key = "netTips";
-	dataTotals[key] = sumOfObjects(data, key);
+	shiftTotals[key] = sumOfObjects(data.shifts, key);
+	key = "netPay";
+	shiftTotals[key] = sumOfObjects(data.paychecks, key);
 
-	dataTotals.sales = {
-		"food and NA beverages": sumOfObjects(data, "food"),
-		"alcoholic beverages": sumOfObjects(data, "alcoholicBeverages"),
-		"room charges": sumOfObjects(data, "roomCharges")
+	shiftTotals.sales = {
+		"food and NA beverages": sumOfObjects(data.shifts, "food"),
+		"alcoholic beverages": sumOfObjects(data.shifts, "alcoholicBeverages"),
+		"room charges": sumOfObjects(data.shifts, "roomCharges")
 	};
-	dataTotals.tipouts = {
-		"support": sumOfObjects(data, "support"),
-		"bar": sumOfObjects(data, "bar"),
-		"kitchen": sumOfObjects(data, "kitchen")
+	shiftTotals.tipouts = {
+		"support": sumOfObjects(data.shifts, "support"),
+		"bar": sumOfObjects(data.shifts, "bar"),
+		"kitchen": sumOfObjects(data.shifts, "kitchen")
 	};
 
 	// Set HTML to display data
 	$( ".js_Date" ).html(getDate());
 	$( ".js_Target_monthlyEarned" ).html(`$${user_Settings.monthlyIncomeGoal}`);
 	$( ".js_monthlyEarnedPercentage" ).html(`${		
-		+((100 * dataTotals["netTips"] / user_Settings.monthlyIncomeGoal).toFixed(0))
+		+((100 * shiftTotals["netTips"] / user_Settings.monthlyIncomeGoal).toFixed(0))
 	}%`);	
 	$( ".js_actualHourlyRate" ).html(`$${
-		+(((dataTotals["netTips"] / dataTotals.hours) + user_Settings.hourlyWage).toFixed(2))
+		naNProtection(+(((shiftTotals["netTips"] / shiftTotals.hours) + user_Settings.hourlyWage).toFixed(2)))
 	}/hr`);
 	$( ".js_alcoholSalesPercentage" ).html(`${
-		+((100 * dataTotals.sales["alcoholic beverages"] / 
-						( dataTotals.sales["alcoholic beverages"] + dataTotals.sales["food and NA beverages"] )).toFixed(0))
+		+((100 * shiftTotals.sales["alcoholic beverages"] / 
+						( shiftTotals.sales["alcoholic beverages"] + shiftTotals.sales["food and NA beverages"] )).toFixed(0))
 	}%`);
 
 	$(".walk").html(`${
-		+((100 * dataTotals.netTips / ( dataTotals.sales["alcoholic beverages"]
-		+ dataTotals.sales["food and NA beverages"] + dataTotals.sales["room charges"])).toFixed(1))
+		naNProtection(
+			+((100 * shiftTotals.netTips / ( shiftTotals.sales["alcoholic beverages"]
+				+ shiftTotals.sales["food and NA beverages"] + shiftTotals.sales["room charges"])).toFixed(1))
+		)
 	}%`);
 	$(".gross").html(`${
-		+((100 * (dataTotals.netTips
-			+ dataTotals.tipouts.bar
-			+ dataTotals.tipouts.kitchen
-			+ dataTotals.tipouts.support) /  
-		( dataTotals.sales["alcoholic beverages"]
-		+ dataTotals.sales["food and NA beverages"] + dataTotals.sales["room charges"])).toFixed(1))
+		naNProtection(
+			+((100 * (shiftTotals.netTips
+					+ shiftTotals.tipouts.bar
+					+ shiftTotals.tipouts.kitchen
+					+ shiftTotals.tipouts.support) /  
+				( shiftTotals.sales["alcoholic beverages"]
+				+ shiftTotals.sales["food and NA beverages"] + shiftTotals.sales["room charges"])).toFixed(1))
+		)
 	}%`);
 	$(".tipoutBar").html(`Bar: ${
-		+((100 * dataTotals.tipouts["bar"] / dataTotals.sales["alcoholic beverages"]).toFixed(1))
+		naNProtection(
+			+((100 * shiftTotals.tipouts["bar"] / shiftTotals.sales["alcoholic beverages"]).toFixed(1))
+		)
 	}%`)
 	$(".tipoutSupport").html(`Support: ${
-		+((100 * dataTotals.tipouts["support"] / dataTotals.sales["food and NA beverages"]).toFixed(1))
+		naNProtection(
+			+((100 * shiftTotals.tipouts["support"] / shiftTotals.sales["food and NA beverages"]).toFixed(1))
+		)
 	}%`);
 
 
-	let fourPercent = dataTotals.sales["food and NA beverages"]*.04;
-	let diff = (dataTotals.tipouts["support"] - fourPercent).toFixed(2);
+	let fourPercent = shiftTotals.sales["food and NA beverages"]*.04;
+	let diff = (shiftTotals.tipouts["support"] - fourPercent).toFixed(2);
 	let OverUnder = "";
 	if(diff > 0){
 		OverUnder = "over"
@@ -138,37 +148,65 @@ function displayShiftData(data){
 	}
 	$(".js_supportDifference" ).html(`${OverUnder} by $${diff}`);
 
-
-
-	// isNaN();
-
-	let wages = dataTotals.hours * user_Settings.hourlyWage;
 	// calculate the total earnings
-	let totalEarned = dataTotals["netTips"] + wages;
+	/*****************************************************************
+	*	I've taken this out temporarily, I would like to perhaps add
+	* 	a toggle between types of displaying, I like to know how much
+	*	I've earned, even if I haven't received it yet, others prefer
+	*	to wait until they receive the check
+	*****************************************************************/
+	// let wages = shiftTotals.hours * user_Settings.hourlyWage;
+	// let totalEarned = shiftTotals["netTips"] + wages;
+	let totalEarned = shiftTotals["netTips"] + shiftTotals["netPay"];
 	// if total earnings is over the target, activate the arrow
 	if(totalEarned > user_Settings.monthlyIncomeGoal){
 		$(".overageArrowCard").show();
 		$(".js_Target_MonthlyEarned_Overage").html(`+$${(totalEarned - user_Settings.monthlyIncomeGoal).toFixed(2)}`);
 	};
 
-	$( ".js_monthlyEarned" ).html(`$${totalEarned.toFixed(2)}`);
+	$( ".js_monthlyEarned" ).html(`$${naNProtection(totalEarned.toFixed(2))}`);
     let monthlyEarnedPercentage = (+((totalEarned) / user_Settings.monthlyIncomeGoal).toFixed(2));
+    if(!(monthlyEarnedPercentage < 1)){
+    	monthlyEarnedPercentage = 1;
+    };
 	    $('#incomeCircle').circleProgress({
 	      value: monthlyEarnedPercentage
 	    }).on('circle-animation-progress', function(event, progress, stepValue) {
-	      $(this).find('strong').html(100 * (stepValue.toFixed(2).substr(1)) + '<i>%</i>');
+    		let plus = false;
+	    	let percentage = (stepValue * 100).toFixed(0);
+	    	if(stepValue == 1){ plus = true; }
+	      $(this).find('strong').html(plus ? String.fromCodePoint('0x1F60D') : naNProtection(percentage) + '<i>%</i>');
 	    });
 
-    let alcoholSalesPercentage = (+(dataTotals.sales["alcoholic beverages"] / 
-		( dataTotals.sales["alcoholic beverages"] + dataTotals.sales["food and NA beverages"] )).toFixed(2));
+    let alcoholSalesPercentage = (+(shiftTotals.sales["alcoholic beverages"] / 
+		( shiftTotals.sales["alcoholic beverages"] + shiftTotals.sales["food and NA beverages"] )).toFixed(2));
 	    $('#alcCircle').circleProgress({
 	      value: alcoholSalesPercentage
 	    }).on('circle-animation-progress', function(event, progress, stepValue) {
-	      $(this).find('strong').html(100 * (stepValue.toFixed(2).substr(1)) + '<i>%</i>');
+	      $(this).find('strong').html(naNProtection(100 * (stepValue.toFixed(2).substr(1))) + '<i>%</i>');
 	    });
-
-
 };
+
+/***************************************************
+*	
+*	To ask Michal, ln 169 and 175 above	
+*
+***************************************************/
+function isOver100(data){
+	if(data > 1){
+		return "";
+	} else {
+		return data;
+	}
+}
+
+function naNProtection(data){
+	if(isNaN(data)){
+		return 0;
+	} else {
+		return data;
+	}
+}
 
 // This function will save our user settings into our setting object
 function setUserSettings(data){	
