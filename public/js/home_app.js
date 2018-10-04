@@ -101,7 +101,7 @@ function displayShiftData(data){
 		+((100 * dataTotals["netTips"] / user_Settings.monthlyIncomeGoal).toFixed(0))
 	}%`);	
 	$( ".js_actualHourlyRate" ).html(`$${
-		+(((dataTotals["netTips"] / dataTotals.hours) + user_Settings.hourlyWage).toFixed(2))
+		naNProtection(+(((dataTotals["netTips"] / dataTotals.hours) + user_Settings.hourlyWage).toFixed(2)))
 	}/hr`);
 	$( ".js_alcoholSalesPercentage" ).html(`${
 		+((100 * dataTotals.sales["alcoholic beverages"] / 
@@ -109,22 +109,30 @@ function displayShiftData(data){
 	}%`);
 
 	$(".walk").html(`${
-		+((100 * dataTotals.netTips / ( dataTotals.sales["alcoholic beverages"]
-		+ dataTotals.sales["food and NA beverages"] + dataTotals.sales["room charges"])).toFixed(1))
+		naNProtection(
+			+((100 * dataTotals.netTips / ( dataTotals.sales["alcoholic beverages"]
+				+ dataTotals.sales["food and NA beverages"] + dataTotals.sales["room charges"])).toFixed(1))
+		)
 	}%`);
 	$(".gross").html(`${
-		+((100 * (dataTotals.netTips
-			+ dataTotals.tipouts.bar
-			+ dataTotals.tipouts.kitchen
-			+ dataTotals.tipouts.support) /  
-		( dataTotals.sales["alcoholic beverages"]
-		+ dataTotals.sales["food and NA beverages"] + dataTotals.sales["room charges"])).toFixed(1))
+		naNProtection(
+			+((100 * (dataTotals.netTips
+					+ dataTotals.tipouts.bar
+					+ dataTotals.tipouts.kitchen
+					+ dataTotals.tipouts.support) /  
+				( dataTotals.sales["alcoholic beverages"]
+				+ dataTotals.sales["food and NA beverages"] + dataTotals.sales["room charges"])).toFixed(1))
+		)
 	}%`);
 	$(".tipoutBar").html(`Bar: ${
-		+((100 * dataTotals.tipouts["bar"] / dataTotals.sales["alcoholic beverages"]).toFixed(1))
+		naNProtection(
+			+((100 * dataTotals.tipouts["bar"] / dataTotals.sales["alcoholic beverages"]).toFixed(1))
+		)
 	}%`)
 	$(".tipoutSupport").html(`Support: ${
-		+((100 * dataTotals.tipouts["support"] / dataTotals.sales["food and NA beverages"]).toFixed(1))
+		naNProtection(
+			+((100 * dataTotals.tipouts["support"] / dataTotals.sales["food and NA beverages"]).toFixed(1))
+		)
 	}%`);
 
 
@@ -164,11 +172,18 @@ function displayShiftData(data){
 	    $('#alcCircle').circleProgress({
 	      value: alcoholSalesPercentage
 	    }).on('circle-animation-progress', function(event, progress, stepValue) {
-	      $(this).find('strong').html(100 * (stepValue.toFixed(2).substr(1)) + '<i>%</i>');
+	      $(this).find('strong').html(naNProtection(100 * (stepValue.toFixed(2).substr(1))) + '<i>%</i>');
+		  console.log();
 	    });
-
-
 };
+
+function naNProtection(data){
+	if(isNaN(data)){
+		return 0;
+	} else {
+		return data;
+	}
+}
 
 // This function will save our user settings into our setting object
 function setUserSettings(data){	
